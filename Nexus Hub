@@ -1,4 +1,4 @@
-Local args = {
+local args = {
   "RolePlayName",
   "-Nexus Hub User-"
 }
@@ -178,76 +178,193 @@ Tab3 = Window:MakeTab({"الماب"})
 
 local gameInfo = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
 
-Tab3:AddParagraph({
- Title = "عدد الاعبين",
- Text = tostring(#game.Players:GetPlayers()) .. " / " .. tostring(gameInfo.MaxPlayers)
+local playerCountLabel = Tab3:AddParagraph({
+  Title = "عدد الاعبين",
+  Text = tostring(#game.Players:GetPlayers()) .. " / " .. tostring(gameInfo.MaxPlayers)
 })
 
 Tab3:AddParagraph({
- Title = "اسم الماب",
- Text = gameInfo.Name
+  Title = "اسم الماب",
+  Text = gameInfo.Name
 })
 
 Tab3:AddParagraph({
- Title = "وصف الماب",
- Text = gameInfo.Description or "لا يوجد وصف"
+  Title = "وصف الماب",
+  Text = gameInfo.Description or "لا يوجد وصف"
 })
 
 Tab3:AddParagraph({
- Title = "معرف الماب",
- Text = tostring(game.PlaceId)
+  Title = "معرف الماب",
+  Text = tostring(game.PlaceId)
 })
 
 Tab3:AddParagraph({
- Title = "معرف السيرفر",
- Text = tostring(game.JobId)
+  Title = "معرف السيرفر",
+  Text = tostring(game.JobId)
+})
+
+local scriptTimeLabel = Tab3:AddParagraph({
+  Title = "وقت تشغيل السكربت",
+  Text = "00:00:00"
 })
 
 Tab3:AddParagraph({
- Title = "وقت تشغيل السكربت",
- Text = os.date("%Y/%m/%d - %H:%M:%S")
+  Title = "اسم اللاعب",
+  Text = game.Players.LocalPlayer.Name
 })
 
 Tab3:AddParagraph({
- Title = "اسم اللاعب",
- Text = game.Players.LocalPlayer.Name
+  Title = "معرف اللاعب",
+  Text = tostring(game.Players.LocalPlayer.UserId)
 })
 
 Tab3:AddParagraph({
- Title = "معرف اللاعب",
- Text = tostring(game.Players.LocalPlayer.UserId)
+  Title = "فريق اللاعب",
+  Text = tostring(game.Players.LocalPlayer.Team) or "بدون فريق"
 })
 
-Tab3:AddParagraph({
- Title = "فريق اللاعب",
- Text = tostring(game.Players.LocalPlayer.Team) or "بدون فريق"
+local pingLabel = Tab3:AddParagraph({
+  Title = "البنج",
+  Text = "0 ms"
+})
+
+local fpsLabel = Tab3:AddParagraph({
+  Title = "فريماتك",
+  Text = "0 FPS"
+})
+
+task.spawn(function()
+  while true do
+    task.wait(2)
+    if playerCountLabel and playerCountLabel.SetText then
+      playerCountLabel:SetText(tostring(#game.Players:GetPlayers()) .. " / " .. tostring(gameInfo.MaxPlayers))
+    end
+  end
+end)
+
+local startTime = tick()
+
+task.spawn(function()
+  while true do
+    task.wait(1)
+    local elapsed = tick() - startTime
+    local hours = math.floor(elapsed / 3600)
+    local minutes = math.floor((elapsed % 3600) / 60)
+    local seconds = math.floor(elapsed % 60)
+    local timeString = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+    if scriptTimeLabel and scriptTimeLabel.SetText then
+      scriptTimeLabel:SetText(timeString)
+    end
+  end
+end)
+
+task.spawn(function()
+  while true do
+    task.wait(0.1)
+    local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+    local pingText = math.floor(ping) .. " ms"
+    if pingLabel and pingLabel.SetText then
+      pingLabel:SetText(pingText)
+    end
+  end
+end)
+
+task.spawn(function()
+  local RunService = game:GetService("RunService")
+  local frameCount = 0
+  local lastUpdate = tick()
+  
+  RunService.Heartbeat:Connect(function()
+    frameCount = frameCount + 1
+    local now = tick()
+    if now - lastUpdate >= 1 then
+      if fpsLabel and fpsLabel.SetText then
+        fpsLabel:SetText(tostring(frameCount) .. " FPS")
+      end
+      frameCount = 0
+      lastUpdate = now
+    end
+  end)
+end)
+
+Tab3:AddButton({
+  Name = "نسخ معلومات الماب",
+  Callback = function()
+    local info = "اسم الماب: " .. gameInfo.Name .. "\nمعرف الماب: " .. tostring(game.PlaceId) .. "\nمعرف السيرفر: " .. tostring(game.JobId) .. "\nعدد الاعبين: " .. tostring(#game.Players:GetPlayers())
+    setclipboard(info)
+  end
 })
 
 Tab3:AddButton({
- Name = "نسخ معلومات الماب",
- Callback = function()
-   local info = "اسم الماب: " .. gameInfo.Name .. "\nمعرف الماب: " .. tostring(game.PlaceId) .. "\nمعرف السيرفر: " .. tostring(game.JobId) .. "\nعدد الاعبين: " .. tostring(#game.Players:GetPlayers()) .. "\nالوقت: " .. os.date("%Y/%m/%d - %H:%M:%S")
-   setclipboard(info)
- end
+  Name = "اعادة دخول ل نفس السيرفر",
+  Callback = function()
+    game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+  end
 })
 
 Tab3:AddButton({
- Name = "اعادة دخول ل نفس السيرفر",
- Callback = function()
-   game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
- end
+  Name = "دخول سيرفر عشوائي",
+  Callback = function()
+    local servers = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+    if servers and servers.data and #servers.data > 0 then
+      local randomServer = servers.data[math.random(1, #servers.data)]
+      game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, randomServer.id, game.Players.LocalPlayer)
+    end
+  end
 })
 
-Tab3:AddButton({
- Name = "دخول سيرفر عشوائي",
- Callback = function()
-   local servers = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
-   if servers and servers.data and #servers.data > 0 then
-     local randomServer = servers.data[math.random(1, #servers.data)]
-     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, randomServer.id, game.Players.LocalPlayer)
-   end
- end
-})
+Tab3:AddSection({"اسماء الاعبين"})
+
+local playersFrame = Instance.new("Frame")
+playersFrame.Size = UDim2.new(1, 0, 0, 200)
+playersFrame.BackgroundTransparency = 1
+playersFrame.Parent = Tab3.Container
+
+local playersScrolling = Instance.new("ScrollingFrame")
+playersScrolling.Size = UDim2.new(1, 0, 1, 0)
+playersScrolling.BackgroundTransparency = 0.5
+playersScrolling.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+playersScrolling.BorderSizePixel = 0
+playersScrolling.ScrollBarThickness = 4
+playersScrolling.Parent = playersFrame
+
+local playersListLayout = Instance.new("UIListLayout")
+playersListLayout.Parent = playersScrolling
+playersListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+local function updatePlayersList()
+  for _, child in pairs(playersScrolling:GetChildren()) do
+    if child:IsA("TextLabel") then
+      child:Destroy()
+    end
+  end
+  
+  for _, player in ipairs(game.Players:GetPlayers()) do
+    local playerLabel = Instance.new("TextLabel")
+    playerLabel.Size = UDim2.new(1, -10, 0, 25)
+    playerLabel.BackgroundTransparency = 1
+    playerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    playerLabel.Text = player.DisplayName .. " (@" .. player.Name .. ")"
+    playerLabel.Font = Enum.Font.Gotham
+    playerLabel.TextSize = 14
+    playerLabel.TextXAlignment = Enum.TextXAlignment.Left
+    playerLabel.Parent = playersScrolling
+  end
+  
+  playersScrolling.CanvasSize = UDim2.new(0, 0, 0, playersListLayout.AbsoluteContentSize.Y)
+end
+
+updatePlayersList()
+
+game.Players.PlayerAdded:Connect(updatePlayersList)
+game.Players.PlayerRemoving:Connect(updatePlayersList)
+
+task.spawn(function()
+  while true do
+    task.wait(3)
+    updatePlayersList()
+  end
+end)
 
 Tab4 = Window:MakeTab({"الاسماء"})
 local namesList = {
@@ -1898,93 +2015,4 @@ ChildTab:AddToggle({
 ChildTab:AddParagraph({
    Title = "ملاحضه",
    Content = "هو ما يبين بس لك يبين للكل"
-})
-local CameraTab = Window:MakeTab({"الكاميرا", "rbxassetid://"})
-local Camera = workspace.CurrentCamera
-local RunService = game:GetService("RunService")
-
-CameraTab:AddSection({"إعدادات الرؤية"})
-
-CameraTab:AddSlider({
-    Name = "زاوية الرؤية",
-    Min = 30,
-    Max = 120,
-    Default = 70,
-    Color = Color3.fromRGB(128, 0, 128),
-    Increment = 1,
-    ValueName = "درجة",
-    Callback = function(Value)
-        Camera.FieldOfView = Value
-    end
-})
-
-CameraTab:AddButton({
-    Name = "إعادة ضبط الكاميرا",
-    Callback = function()
-        Camera.FieldOfView = 70
-        game.Players.LocalPlayer.CameraMaxZoomDistance = 400
-        game.Players.LocalPlayer.CameraMinZoomDistance = 0.5
-        Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-        Camera.CameraType = Enum.CameraType.Custom
-    end
-})
-
-CameraTab:AddSection({"حدود التقريب"})
-
-CameraTab:AddSlider({
-    Name = "أقصى مسافة للتقريب",
-    Min = 0,
-    Max = 2000,
-    Default = 400,
-    Color = Color3.fromRGB(255, 255, 255),
-    Increment = 10,
-    ValueName = "متر",
-    Callback = function(Value)
-        game.Players.LocalPlayer.CameraMaxZoomDistance = Value
-    end
-})
-
-CameraTab:AddSection({"اشياء اكثر بتعجبكم"})
-
-local freecamActive = false
-CameraTab:AddToggle({
-    Name = "كاميره حره",
-    Default = false,
-    Callback = function(Value)
-        freecamActive = Value
-        if Value then
-            Camera.CameraType = Enum.CameraType.Scriptable
-        else
-            Camera.CameraType = Enum.CameraType.Custom
-        end
-    end
-})
-
-CameraTab:AddToggle({
-    Name = "تثبيت الكاميرا",
-    Default = false,
-    Callback = function(Value)
-        if Value then
-            Camera.CameraType = Enum.CameraType.Fixed
-        else
-            Camera.CameraType = Enum.CameraType.Custom
-        end
-    end
-})
-
-CameraTab:AddButton({
-    Name = "تصوير",
-    Callback = function()
-        local gui = game:GetService("PlayerGui")
-        for _, v in pairs(gui:GetChildren()) do
-            if v:IsA("ScreenGui") then
-                v.Enabled = not v.Enabled
-            end
-        end
-    end
-})
-
-CameraTab:AddParagraph({
-    Title = "ملاحضه",
-    Text = "اذا سويت منظور رؤيه اعلي بتشوف الاشياء الي حوليك اكثر "
 })
