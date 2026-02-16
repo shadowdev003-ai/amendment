@@ -2518,7 +2518,9 @@ game.Players.PlayerRemoving:Connect(function()
     task.wait(0.1)
     playerChild:Refresh(getPlayerList(), true)
 end)
+
 ChatTab:AddSection({"تأكد ان انت و هو عندكم شات"})
+
 ChatTab:AddToggle({
     Name = "تحكم ب شات الاعب",
     Default = false,
