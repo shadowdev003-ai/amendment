@@ -2475,14 +2475,28 @@ ChatTab = Window:MakeTab({"الشات"})
 
 ChatTab:AddSection({"تحكم ب شات الاعبين"})
 
-local selectedChatPlayer = nil
+local chasingplayer = nil
 
-local chatPlayerDropdown = ChatTab:AddDropdown({
+local function getPlayerList()
+    local playerNames = {}
+    for _, p in ipairs(game.Players:GetPlayers()) do
+        if p ~= game.Players.LocalPlayer then
+            table.insert(playerNames, p.Name)
+        end
+    end
+    return playerNames
+end
+
+local chatplayer = ChatTab:AddDropdown({
     Name = "اختر لاعب",
-    Options = {},
+    Options = getPlayerList(),
     Default = "",
-    Callback = function(value)
-        selectedChatPlayer = value
+    Callback = function(selected)
+        if game.Players:FindFirstChild(selected) then
+            chasingplayer = selected
+        else
+            chasingplayer = nil
+        end
     end
 })
 
