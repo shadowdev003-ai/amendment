@@ -2019,7 +2019,7 @@ ChildTab:AddParagraph({
 
 CameraTab = Window:MakeTab({"الكاميرا"})
 
-CameraTab:AddSection({"الاشياء المضادات والحماية"})
+CameraTab:AddSection({"في اشياء ممكن تعليق معك بس بالحقيقه هو شغال"})
 
 local cameraSettings = {
     fov = 70,
@@ -2129,7 +2129,7 @@ CameraTab:AddSlider({
 local freeCamConnection = nil
 
 CameraTab:AddToggle({
-    Name = "كاميرا حرة",
+    Name = "كاميرا حرة تجريبيه",
     Default = false,
     Callback = function(value)
         cameraSettings.freeCam = value
