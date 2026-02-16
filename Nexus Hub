@@ -2517,9 +2517,10 @@ game.Players.PlayerRemoving:Connect(function()
     playerChild:Refresh(getPlayerList(), true)
 end)
 
-ChatTab:AddButton({
+ChatTab:AddToggle({
     Name = "تحكم ب شات الاعب",
-    Callback = function()
+    Default = false,
+    Callback = function(value)
         if not chasingplayer then
             return
         end
@@ -2529,29 +2530,31 @@ ChatTab:AddButton({
             return
         end
         
-        for i = 1, 6 do
-            local args = {
-                false
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("IncrementBodySize"):FireServer(unpack(args))
-        end
-        
-        local myChar = game.Players.LocalPlayer.Character
-        local targetHRP = target.Character:FindFirstChild("HumanoidRootPart")
-        local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
-        
-        if myHRP and targetHRP then
-            myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 3, 0)
-        end
-        
-        local chatService = game:GetService("TextChatService")
-        if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
-            local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then
-                channel:SendAsync("Server: Hacked [🥶STR HUB🥶]")
+        if value then
+            for i = 1, 10 do
+                local args = {
+                    false
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("IncrementBodySize"):FireServer(unpack(args))
             end
-        else
-            print("تم التفعيل - TextChatService غير مفعل")
+            
+            local myChar = game.Players.LocalPlayer.Character
+            local targetHRP = target.Character:FindFirstChild("HumanoidRootPart")
+            local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+            
+            if myHRP and targetHRP then
+                myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 3, 0)
+            end
+            
+            local chatService = game:GetService("TextChatService")
+            if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
+                if channel then
+                    channel:SendAsync("تم تهكير شاتك من قبل Nexus HUB")
+                end
+            else
+                print("تم التفعيل - TextChatService غير مفعل")
+            end
         end
     end
 })
