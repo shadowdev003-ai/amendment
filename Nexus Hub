@@ -2470,3 +2470,131 @@ CameraTab:AddButton({
         end
     end
 })
+
+ChatTab = Window:MakeTab({"الشات"})
+
+ChatTab:AddSection({"تحكم ب شات الاعبين"})
+
+local selectedChatPlayer = nil
+
+local chatPlayerDropdown = ChatTab:AddDropdown({
+    Name = "اختر لاعب",
+    Options = {},
+    Default = "",
+    Callback = function(value)
+        selectedChatPlayer = value
+    end
+})
+
+local function updateChatPlayerList()
+    local players = {}
+    for _, p in ipairs(game.Players:GetPlayers()) do
+        if p ~= game.Players.LocalPlayer then
+            table.insert(players, p.Name)
+        end
+    end
+    chatPlayerDropdown:Refresh(players, true)
+end
+
+ChatTab:AddButton({
+    Name = "تحديث اسماء الاعبين",
+    Callback = function()
+        updateChatPlayerList()
+    end
+})
+
+game.Players.PlayerAdded:Connect(updateChatPlayerList)
+game.Players.PlayerRemoving:Connect(updateChatPlayerList)
+
+ChatTab:AddButton({
+    Name = "تحكم ب شات الاعب",
+    Callback = function()
+        if not selectedChatPlayer then
+            return
+        end
+        
+        local target = game.Players:FindFirstChild(selectedChatPlayer)
+        if not target or not target.Character then
+            return
+        end
+        
+        for i = 1, 6 do
+            local args = {
+                false
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("IncrementBodySize"):FireServer(unpack(args))
+            task.wait(0.05)
+        end
+        
+        local myChar = game.Players.LocalPlayer.Character
+        local targetHRP = target.Character:FindFirstChild("HumanoidRootPart")
+        local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+        
+        if myHRP and targetHRP then
+            myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 3, 0)
+        end
+        
+        local chatService = game:GetService("TextChatService")
+        if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
+            if channel then
+                channel:SendAsync("تم التحكم ب شات الاعب")
+            end
+        end
+        
+        local Players = game:GetService("Players")
+        local Player = game.Players.LocalPlayer
+        
+        local function clearAllTools()
+            local args = {[1] = "ClearAllTools"}
+            game:GetService("ReplicatedStorage").RE:FindFirstChild("1Clea1rTool1s"):FireServer(unpack(args))
+        end
+        
+        local function getAssault()
+            local args = {
+                [1] = "PickingTools",
+                [2] = "Assault"
+            }
+            game:GetService("ReplicatedStorage").RE:FindFirstChild("1Too1l"):InvokeServer(unpack(args))
+        end
+        
+        local function hasAssault()
+            local char = Player.Character
+            if not char then return false end
+            for _, tool in ipairs(char:GetChildren()) do
+                if tool:IsA("Tool") and tool.Name == "Assault" then
+                    return true
+                end
+            end
+            return false
+        end
+        
+        local function fireAtPart(part)
+            local args = {
+                [1] = "Shooting",
+                [2] = part,
+                [3] = part.Position,
+                [4] = Vector3.new(0, -1, 0)
+            }
+            game:GetService("ReplicatedStorage").RE:FindFirstChild("1Shoo1t"):FireServer(unpack(args))
+        end
+        
+        local attackEnabled = true
+        
+        while attackEnabled do
+            clearAllTools()
+            getAssault()
+            repeat
+                task.wait(0.2)
+            until hasAssault() or not attackEnabled
+            for _, plr in ipairs(Players:GetPlayers()) do
+                if not attackEnabled then return end
+                if plr ~= Player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                    for i = 1, 10000 do
+                        fireAtPart(plr.Character.HumanoidRootPart)
+                    end
+                end
+            end
+        end
+    end
+})
