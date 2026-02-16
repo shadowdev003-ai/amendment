@@ -2016,4 +2016,457 @@ ChildTab:AddParagraph({
    Title = "ملاحضه",
    Content = "هو ما يبين بس لك يبين للكل"
 })
--- by Shadow
+
+CameraTab = Window:MakeTab({"الكاميرا"})
+
+CameraTab:AddSection({"الاشياء المضادات والحماية"})
+
+local cameraSettings = {
+    fov = 70,
+    distance = 10,
+    height = 2,
+    smoothness = 0.1,
+    lockOn = false,
+    freeCam = false,
+    thirdPerson = false,
+    noclipCam = false
+}
+
+CameraTab:AddSlider({
+    Name = "مجال الرؤية",
+    Min = 30,
+    Max = 120,
+    Default = 70,
+    Color = Color3.fromRGB(128, 0, 128),
+    Increment = 1,
+    ValueName = "درجة",
+    Callback = function(value)
+        cameraSettings.fov = value
+        game.Workspace.CurrentCamera.FieldOfView = value
+    end
+})
+
+CameraTab:AddButton({
+    Name = "إعادة مجال الرؤية للطبيعي",
+    Callback = function()
+        cameraSettings.fov = 70
+        game.Workspace.CurrentCamera.FieldOfView = 70
+    end
+})
+
+CameraTab:AddSection({"أوضاع الكاميرا"})
+
+CameraTab:AddToggle({
+    Name = "كاميرا الشخص الثالث",
+    Default = false,
+    Callback = function(value)
+        cameraSettings.thirdPerson = value
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        
+        if value and character then
+            local humanoid = character:FindFirstChild("Humanoid")
+            if humanoid then
+                humanoid.CameraOffset = Vector3.new(0, 0, -cameraSettings.distance)
+            end
+        else
+            if character then
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid then
+                    humanoid.CameraOffset = Vector3.new(0, 0, 0)
+                end
+            end
+        end
+    end
+})
+
+CameraTab:AddSlider({
+    Name = "مسافة الكاميرا",
+    Min = 2,
+    Max = 50,
+    Default = 10,
+    Color = Color3.fromRGB(128, 0, 128),
+    Increment = 0.5,
+    ValueName = "خطوة",
+    Callback = function(value)
+        cameraSettings.distance = value
+        if cameraSettings.thirdPerson then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid then
+                    humanoid.CameraOffset = Vector3.new(0, cameraSettings.height, -value)
+                end
+            end
+        end
+    end
+})
+
+CameraTab:AddSlider({
+    Name = "ارتفاع الكاميرا",
+    Min = -10,
+    Max = 10,
+    Default = 2,
+    Color = Color3.fromRGB(128, 0, 128),
+    Increment = 0.5,
+    ValueName = "خطوة",
+    Callback = function(value)
+        cameraSettings.height = value
+        if cameraSettings.thirdPerson then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            if character then
+                local humanoid = character:FindFirstChild("Humanoid")
+                if humanoid then
+                    humanoid.CameraOffset = Vector3.new(0, value, -cameraSettings.distance)
+                end
+            end
+        end
+    end
+})
+
+local freeCamConnection = nil
+
+CameraTab:AddToggle({
+    Name = "كاميرا حرة",
+    Default = false,
+    Callback = function(value)
+        cameraSettings.freeCam = value
+        local camera = workspace.CurrentCamera
+        local player = game.Players.LocalPlayer
+        
+        if value then
+            local character = player.Character
+            if character and character:FindFirstChild("HumanoidRootPart") then
+                local camPos = character.HumanoidRootPart.Position + Vector3.new(0, 5, 10)
+                camera.CameraType = Enum.CameraType.Scriptable
+                camera.CFrame = CFrame.new(camPos, character.HumanoidRootPart.Position)
+                
+                local speed = 1
+                local keys = {}
+                
+                freeCamConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                    local moveVec = Vector3.new(0, 0, 0)
+                    if keys[Enum.KeyCode.W] then moveVec = moveVec + camera.CFrame.LookVector end
+                    if keys[Enum.KeyCode.S] then moveVec = moveVec - camera.CFrame.LookVector end
+                    if keys[Enum.KeyCode.A] then moveVec = moveVec - camera.CFrame.RightVector end
+                    if keys[Enum.KeyCode.D] then moveVec = moveVec + camera.CFrame.RightVector end
+                    if keys[Enum.KeyCode.E] then moveVec = moveVec + Vector3.new(0, 1, 0) end
+                    if keys[Enum.KeyCode.Q] then moveVec = moveVec - Vector3.new(0, 1, 0) end
+                    
+                    camera.CFrame = camera.CFrame + moveVec * speed
+                end)
+                
+                game:GetService("UserInputService").InputBegan:Connect(function(input)
+                    keys[input.KeyCode] = true
+                end)
+                
+                game:GetService("UserInputService").InputEnded:Connect(function(input)
+                    keys[input.KeyCode] = false
+                end)
+            end
+        else
+            if freeCamConnection then
+                freeCamConnection:Disconnect()
+                freeCamConnection = nil
+            end
+            camera.CameraType = Enum.CameraType.Custom
+            local character = player.Character
+            if character and character:FindFirstChild("Humanoid") then
+                camera.CameraSubject = character.Humanoid
+            end
+        end
+    end
+})
+
+CameraTab:AddSlider({
+    Name = "سرعة الكاميرا الحرة",
+    Min = 0.1,
+    Max = 10,
+    Default = 1,
+    Color = Color3.fromRGB(128, 0, 128),
+    Increment = 0.1,
+    ValueName = "ضعف",
+    Callback = function(value)
+    end
+})
+
+CameraTab:AddSection({"ببعض الاحيان الكاميرا ممكن تعلق ضفتلكم ذا"})
+
+CameraTab:AddToggle({
+    Name = "مضاد قفل الزوم",
+    Default = false,
+    Callback = function(value)
+        if value then
+            game:GetService("RunService").Heartbeat:Connect(function()
+                local camera = workspace.CurrentCamera
+                if camera then
+                    if camera.CameraType == Enum.CameraType.Scriptable then
+                        camera.CameraType = Enum.CameraType.Custom
+                    end
+                end
+            end)
+        end
+    end
+})
+
+local antiCameraLockConnection = nil
+
+CameraTab:AddToggle({
+    Name = "مضاد تجميد الكاميرا",
+    Default = false,
+    Callback = function(value)
+        if value then
+            antiCameraLockConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                if character then
+                    local humanoid = character:FindFirstChild("Humanoid")
+                    if humanoid and workspace.CurrentCamera.CameraSubject ~= humanoid then
+                        workspace.CurrentCamera.CameraSubject = humanoid
+                    end
+                end
+            end)
+        else
+            if antiCameraLockConnection then
+                antiCameraLockConnection:Disconnect()
+            end
+        end
+    end
+})
+
+local antiShakeConnection = nil
+
+CameraTab:AddToggle({
+    Name = "مضاد اهتزار كاميرا",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local lastCFrame = workspace.CurrentCamera.CFrame
+            antiShakeConnection = game:GetService("RunService").RenderStepped:Connect(function()
+                local camera = workspace.CurrentCamera
+                if camera then
+                    local currentCFrame = camera.CFrame
+                    local diff = (currentCFrame.Position - lastCFrame.Position).Magnitude
+                    if diff > 10 then
+                        camera.CFrame = lastCFrame
+                    else
+                        lastCFrame = currentCFrame
+                    end
+                end
+            end)
+        else
+            if antiShakeConnection then
+                antiShakeConnection:Disconnect()
+            end
+        end
+    end
+})
+
+CameraTab:AddSection({"تثبيت كامرتك علي الاعب الي تختاره"})
+
+local lockOnConnection = nil
+local selectedTarget = nil
+
+local targetDropdown = CameraTab:AddDropdown({
+    Name = "اختر لاعب للتثبيت",
+    Options = {},
+    Default = "",
+    Callback = function(value)
+        selectedTarget = value
+    end
+})
+
+local function updateTargetList()
+    local players = {}
+    for _, p in ipairs(game.Players:GetPlayers()) do
+        if p ~= game.Players.LocalPlayer then
+            table.insert(players, p.Name)
+        end
+    end
+    targetDropdown:Refresh(players, true)
+end
+
+CameraTab:AddButton({
+    Name = "تحديث قائمة اللاعبين",
+    Callback = function()
+        updateTargetList()
+    end
+})
+
+game.Players.PlayerAdded:Connect(updateTargetList)
+game.Players.PlayerRemoving:Connect(updateTargetList)
+
+CameraTab:AddToggle({
+    Name = "تثبيت الكاميرا على اللاعب",
+    Default = false,
+    Callback = function(value)
+        cameraSettings.lockOn = value
+        if value then
+            if not selectedTarget then
+                return
+            end
+            lockOnConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                local target = game.Players:FindFirstChild(selectedTarget)
+                local player = game.Players.LocalPlayer
+                if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+                    local camera = workspace.CurrentCamera
+                    local targetPos = target.Character.HumanoidRootPart.Position
+                    local playerChar = player.Character
+                    if playerChar and playerChar:FindFirstChild("HumanoidRootPart") then
+                        local playerPos = playerChar.HumanoidRootPart.Position
+                        camera.CFrame = CFrame.new(playerPos, targetPos)
+                    end
+                end
+            end)
+        else
+            if lockOnConnection then
+                lockOnConnection:Disconnect()
+                lockOnConnection = nil
+            end
+        end
+    end
+})
+
+CameraTab:AddSection({"المميزات الإضافية"})
+
+CameraTab:AddToggle({
+    Name = "إظهار الجسم في الشخص الأول",
+    Default = false,
+    Callback = function(value)
+        local player = game.Players.LocalPlayer
+        if value then
+            player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Invisicam
+        else
+            player.DevCameraOcclusionMode = Enum.DevCameraOcclusionMode.Zoom
+        end
+    end
+})
+
+CameraTab:AddToggle({
+    Name = "إخفاء الواجهة للصور",
+    Default = false,
+    Callback = function(value)
+        local player = game.Players.LocalPlayer
+        local gui = player:FindFirstChild("PlayerGui")
+        if gui then
+            for _, g in ipairs(gui:GetChildren()) do
+                if g:IsA("ScreenGui") then
+                    g.Enabled = not value
+                end
+            end
+        end
+        game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.All, not value)
+    end
+})
+
+CameraTab:AddSection({"تأثيرات الكاميرا"})
+
+CameraTab:AddToggle({
+    Name = "طمس الحركة",
+    Default = false,
+    Callback = function(value)
+        local lighting = game:GetService("Lighting")
+        local blur = lighting:FindFirstChild("CameraMotionBlur")
+        if value then
+            if not blur then
+                blur = Instance.new("BlurEffect")
+                blur.Name = "CameraMotionBlur"
+                blur.Size = 10
+                blur.Parent = lighting
+            end
+        else
+            if blur then
+                blur:Destroy()
+            end
+        end
+    end
+})
+
+CameraTab:AddToggle({
+    Name = "تكبير تلقائي على الاشخاص القريبة",
+    Default = false,
+    Callback = function(value)
+        if value then
+            game:GetService("RunService").Heartbeat:Connect(function()
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                if not character then return end
+                
+                local closestPlayer = nil
+                local closestDistance = 999999
+                
+                for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+                    if otherPlayer ~= player and otherPlayer.Character then
+                        local otherChar = otherPlayer.Character
+                        local otherHRP = otherChar:FindFirstChild("HumanoidRootPart")
+                        local myHRP = character:FindFirstChild("HumanoidRootPart")
+                        
+                        if otherHRP and myHRP then
+                            local distance = (otherHRP.Position - myHRP.Position).Magnitude
+                            if distance < closestDistance and distance < 20 then
+                                closestDistance = distance
+                                closestPlayer = otherPlayer
+                            end
+                        end
+                    end
+                end
+                
+                if closestPlayer then
+                    workspace.CurrentCamera.FieldOfView = 30 + (closestDistance / 20) * 40
+                else
+                    workspace.CurrentCamera.FieldOfView = cameraSettings.fov
+                end
+            end)
+        else
+            workspace.CurrentCamera.FieldOfView = cameraSettings.fov
+        end
+    end
+})
+
+CameraTab:AddSection({"معلومات الكاميرا"})
+
+local camInfoLabel = CameraTab:AddParagraph({
+    Title = "موقع الكاميرا",
+    Text = "س: 0, ص: 0, ع: 0"
+})
+
+local camRotLabel = CameraTab:AddParagraph({
+    Title = "دوران الكاميرا",
+    Text = "س: 0°, ص: 0°, ع: 0°"
+})
+
+game:GetService("RunService").Heartbeat:Connect(function()
+    local camera = workspace.CurrentCamera
+    if camera then
+        local pos = camera.CFrame.Position
+        local rot = camera.CFrame.Rotation:ToEulerAnglesXYZ()
+        camInfoLabel:SetText(string.format("س: %.2f, ص: %.2f, ع: %.2f", pos.X, pos.Y, pos.Z))
+        camRotLabel:SetText(string.format("س: %.0f°, ص: %.0f°, ع: %.0f°", 
+            math.deg(rot.X), math.deg(rot.Y), math.deg(rot.Z)))
+    end
+end)
+
+CameraTab:AddButton({
+    Name = "إعادة ضبط الكاميرا",
+    Callback = function()
+        local camera = workspace.CurrentCamera
+        local player = game.Players.LocalPlayer
+        camera.FieldOfView = 70
+        camera.CameraType = Enum.CameraType.Custom
+        local character = player.Character
+        if character and character:FindFirstChild("Humanoid") then
+            camera.CameraSubject = character.Humanoid
+        end
+        cameraSettings.thirdPerson = false
+        cameraSettings.freeCam = false
+        cameraSettings.lockOn = false
+        if lockOnConnection then
+            lockOnConnection:Disconnect()
+        end
+        if freeCamConnection then
+            freeCamConnection:Disconnect()
+        end
+    end
+})
