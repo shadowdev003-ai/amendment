@@ -2516,9 +2516,9 @@ game.Players.PlayerRemoving:Connect(function()
     task.wait(0.1)
     playerChild:Refresh(getPlayerList(), true)
 end)
-
+ChatTab:AddSection({"تأكد ان انت و هو عندكم شات"})
 ChatTab:AddToggle({
-    Name = "تحكم ب شات الاعب",
+    Name = "تحكم ب شات الاعب" 
     Default = false,
     Callback = function(value)
         if not chasingplayer then
@@ -2550,7 +2550,7 @@ ChatTab:AddToggle({
             if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
                 local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
                 if channel then
-                    channel:SendAsync("تم تهكير شاتك من قبل Nexus HUB")
+                    channel:SendAsync("تم تهكير شاتك من قبل NEXUS HUB")
                 end
             else
                 print("تم التفعيل - TextChatService غير مفعل")
