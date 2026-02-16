@@ -2476,6 +2476,8 @@ ChatTab = Window:MakeTab({"الشات"})
 ChatTab:AddSection({"تحكم ب شات الاعبين"})
 
 local chasingplayer = nil
+local controlConnection = nil
+local originalSpeed = 16
 
 local function getPlayerList()
     local playerNames = {}
@@ -2518,7 +2520,7 @@ game.Players.PlayerRemoving:Connect(function()
 end)
 ChatTab:AddSection({"تأكد ان انت و هو عندكم شات"})
 ChatTab:AddToggle({
-    Name = "تحكم ب شات الاعب" 
+    Name = "تحكم ب شات الاعب",
     Default = false,
     Callback = function(value)
         if not chasingplayer then
@@ -2530,7 +2532,15 @@ ChatTab:AddToggle({
             return
         end
         
+        local myChar = game.Players.LocalPlayer.Character
+        if not myChar then return end
+        
+        local myHumanoid = myChar:FindFirstChild("Humanoid")
+        if not myHumanoid then return end
+        
         if value then
+            originalSpeed = myHumanoid.WalkSpeed
+            
             for i = 1, 10 do
                 local args = {
                     false
@@ -2538,12 +2548,14 @@ ChatTab:AddToggle({
                 game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("IncrementBodySize"):FireServer(unpack(args))
             end
             
-            local myChar = game.Players.LocalPlayer.Character
-            local targetHRP = target.Character:FindFirstChild("HumanoidRootPart")
-            local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+            myHumanoid.WalkSpeed = 0
+            myHumanoid.JumpPower = 0
             
-            if myHRP and targetHRP then
-                myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, 3, 0)
+            local targetHead = target.Character:FindFirstChild("Head")
+            local myHRP = myChar:FindFirstChild("HumanoidRootPart")
+            
+            if myHRP and targetHead then
+                myHRP.CFrame = targetHead.CFrame * CFrame.new(0, 0.5, 0)
             end
             
             local chatService = game:GetService("TextChatService")
@@ -2554,6 +2566,27 @@ ChatTab:AddToggle({
                 end
             else
                 print("تم التفعيل - TextChatService غير مفعل")
+            end
+            
+            controlConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                if not chasingplayer then return end
+                local currentTarget = game.Players:FindFirstChild(chasingplayer)
+                if currentTarget and currentTarget.Character then
+                    local currentHead = currentTarget.Character:FindFirstChild("Head")
+                    local currentHRP = myChar:FindFirstChild("HumanoidRootPart")
+                    if currentHead and currentHRP then
+                        currentHRP.CFrame = currentHead.CFrame * CFrame.new(0, 0.5, 0)
+                    end
+                end
+            end)
+        else
+            if controlConnection then
+                controlConnection:Disconnect()
+                controlConnection = nil
+            end
+            if myHumanoid then
+                myHumanoid.WalkSpeed = originalSpeed
+                myHumanoid.JumpPower = 50
             end
         end
     end
