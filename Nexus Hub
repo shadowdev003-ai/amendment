@@ -313,7 +313,7 @@ Tab3:AddButton({
   end
 })
 
-Tab3:AddSection({"اسماء الاعبين"})
+Tab3:AddSection({""})
 
 local playersFrame = Instance.new("Frame")
 playersFrame.Size = UDim2.new(1, 0, 0, 200)
