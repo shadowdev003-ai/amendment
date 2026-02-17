@@ -2614,3 +2614,21 @@ ChatTab:AddToggle({
         end
     end
 })
+local hacktab = Window:MakeTab({ Title = "الهاكات", Icon = "rbxassetid://" })
+
+local function safeLoad(urlOrCode, isRawCode)
+    local ok, err = pcall(function()
+        if isRawCode then
+            loadstring(urlOrCode)()
+        else
+            loadstring(game:HttpGet(urlOrCode))()
+        end
+    end)
+    if not ok then
+        warn("Error loading script: "..tostring(err))
+    end
+end
+
+hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
+hacktab:AddButton({Name = "فيلكس", Callback = function() safeLoad("https://pastebin.com/raw/mw4AqAs8") end})
+hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
