@@ -36,15 +36,15 @@ Window:AddMinimizeButton({
 
 task.defer(function()
   Window:Dialog({
-      Title = "مرحبآ بك", 
-      Text = "اتمني ان يعجبك السكربت ",
+      Title = "مرحبا بك", 
+      Text = "اتمنى ان يعجبك السكربت ",
       Options = {
           {"قفل", function()  
               if MainFrame:FindFirstChild("Dialog") then
                   MainFrame.Dialog:Destroy()
               end
           end},
-          {"لاحقاً", function()
+          {"لاحقا", function()
               if MainFrame:FindFirstChild("Dialog") then
                   MainFrame.Dialog:Destroy()
               end
@@ -57,7 +57,7 @@ Tab1 = Window:MakeTab({"الحقوق"})
 
 Tab1:AddDiscordInvite({
   Name = "Nexus Hub",
-  Description = "انضم إلى مجتمعنا على تليجرام لتكون جزءًا من التحديثات القادمة والمشاريع الجديدة",
+  Description = "انضم الى مجتمعنا على تليجرام لتكون جزءا من التحديثات القادمة والمشاريع الجديدة",
   Logo = "rbxassetid://83554422321074",
   Invite = "https://t.me/+MsdEPY0EixQ4MjA0"
 })
@@ -77,6 +77,7 @@ Tab1:AddButton({
       setclipboard("@ShadowDev1253")
   end
 })
+
 Tab2 = Window:MakeTab({"اوامر الاعب"})
 
 Tab2:AddSection({"اوامر التحكم في اللاعب"})
@@ -119,7 +120,7 @@ Tab2:AddButton({
 })
 
 Tab2:AddButton({
-  Name = "ما تموت ابدآ",
+  Name = "ما تموت ابدا",
   Callback = function()
       game.Players.LocalPlayer.Character.Humanoid.MaxHealth = math.huge
       game.Players.LocalPlayer.Character.Humanoid.Health = math.huge
@@ -174,6 +175,7 @@ Tab2:AddButton({
       loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
   end
 })
+
 Tab3 = Window:MakeTab({"الماب"})
 
 local gameInfo = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
@@ -368,9 +370,9 @@ end)
 
 Tab4 = Window:MakeTab({"الاسماء"})
 local namesList = {
-   "محمد", "أحمد", "علي", "حسن", "حسين", "عمر", "عثمان", "عبدالله", "عبدالرحمن", "سعد",
+   "محمد", "احمد", "علي", "حسن", "حسين", "عمر", "عثمان", "عبدالله", "عبدالرحمن", "سعد",
    "سعيد", "فهد", "نايف", "سلطان", "بندر", "خالد", "فيصل", "ماجد", "ناصر", "تركي",
-   "منصور", "جمال", "كريم", "عمرو", "طارق", "وائل", "هشام", "إبراهيم", "يوسف",
+   "منصور", "جمال", "كريم", "عمرو", "طارق", "وائل", "هشام", "ابراهيم", "يوسف",
    "ياسر", "باسم", "تميم", "مشعل", "نواف", "مبارك", "عبدالعزيز", "عبدالله", "ناصر", "فهد",
    "Shadow", "Phoenix", "Dragon", "Ninja", "Hunter", "Warrior", "Knight", "Assassin", "Mage", "Wizard",
    "Viper", "Cobra", "Wolf", "Tiger", "Lion", "Eagle", "Falcon", "Raven", "Ghost", "Phantom",
@@ -417,16 +419,16 @@ local colorsList = {
 }
 
 local colorNames = {
-   "أحمر", "أخضر", "أزرق", "أصفر", "أرجواني", "سماوي", "برتقالي", "بنفسجي", "وردي", "بني",
-   "ذهبي", "فضي", "أسود", "أبيض", "رمادي", "أحمر داكن", "أخضر داكن", "أزرق داكن", "برتقالي داكن", "نيلي",
-   "مرجاني فاتح", "أزرق فولاذي", "شوكولاتة", "أزرق رمادي", "طماطمي", "أخضر مائل للصفرة", "وردي غامق", "أخضر بحري فاتح", "أزرق سماوي فاتح", "وردي ساخن",
-   "أوركيد", "برقوقي", "سلموني فاتح", "أخضر باهت", "فيروزي باهت", "أرجواني باهت", "بني رملي", "خوخي", "ذهبي فاتح", "خزامى",
-   "بيج فاتح", "أبيض نافاجو", "أسمر", "خشبي", "أبيض عتيق", "بيج", "فيروزي", "فيروزي داكن", "أكوامارين متوسط", "أكوامارين",
-   "فيروزي متوسط", "أرجواني متوسط", "فوشيا", "بنفسجي فاتح", "ذهبي مائل للصفرة", "ذهبي داكن", "أحمر هندي", "طوبي", "بني سادي", "سيينا",
-   "بيرو", "خشبي فاتح", "أخضر مائل للصفرة", "أخضر ربيعي", "أخضر بحري متوسط", "أخضر بحري", "أخضر غابي", "أخضر", "أخضر داكن", "زيتوني داكن",
-   "زيتوني", "أخضر عشبي", "أخضر مائل للصفرة", "أزرق سماوي غامق", "أزرق دودجر", "أزرق ذرة", "أزرق ملكي", "أزرق متوسط", "أزرق داكن", "أزرق منتصف الليل",
-   "أزرق بنفسجي", "نيلي", "أزرق رمادي", "أزرق رمادي متوسط", "بنفسجي متوسط", "قرمزي داكن", "بنفسجي", "أوركيد داكن", "بنفسجي داكن", "أوركيد متوسط",
-   "كستنائي", "أحمر داكن", "قرمزي", "أحمر", "طماطمي", "مرجاني", "أحمر هندي", "سلموني"
+   "احمر", "اخضر", "ازرق", "اصفر", "ارجواني", "سماوي", "برتقالي", "بنفسجي", "وردي", "بني",
+   "ذهبي", "فضي", "اسود", "ابيض", "رمادي", "احمر داكن", "اخضر داكن", "ازرق داكن", "برتقالي داكن", "نيلي",
+   "مرجاني فاتح", "ازرق فولاذي", "شوكولاتة", "ازرق رمادي", "طماطمي", "اخضر مائل للصفرة", "وردي غامق", "اخضر بحري فاتح", "ازرق سماوي فاتح", "وردي ساخن",
+   "اوركيد", "برقوقي", "سلموني فاتح", "اخضر باهت", "فيروزي باهت", "ارجواني باهت", "بني رملي", "خوخي", "ذهبي فاتح", "خزامى",
+   "بيج فاتح", "ابيض نافاجو", "اسمر", "خشبي", "ابيض عتيق", "بيج", "فيروزي", "فيروزي داكن", "اكوامارين متوسط", "اكوامارين",
+   "فيروزي متوسط", "ارجواني متوسط", "فوشيا", "بنفسجي فاتح", "ذهبي مائل للصفرة", "ذهبي داكن", "احمر هندي", "طوبي", "بني سادي", "سيينا",
+   "بيرو", "خشبي فاتح", "اخضر مائل للصفرة", "اخضر ربيعي", "اخضر بحري متوسط", "اخضر بحري", "اخضر غابي", "اخضر", "اخضر داكن", "زيتوني داكن",
+   "زيتوني", "اخضر عشبي", "اخضر مائل للصفرة", "ازرق سماوي غامق", "ازرق دودجر", "ازرق ذرة", "ازرق ملكي", "ازرق متوسط", "ازرق داكن", "ازرق منتصف الليل",
+   "ازرق بنفسجي", "نيلي", "ازرق رمادي", "ازرق رمادي متوسط", "بنفسجي متوسط", "قرمزي داكن", "بنفسجي", "اوركيد داكن", "بنفسجي داكن", "اوركيد متوسط",
+   "كستنائي", "احمر داكن", "قرمزي", "احمر", "طماطمي", "مرجاني", "احمر هندي", "سلموني"
 }
 
 local selectedName = ""
@@ -565,14 +567,14 @@ end
 end
 
 Tab:AddTextBox({
-Name = "اكـتب رسـالتك",
+Name = "اكتب رسالتك",
 Default = "",
 TextDisappear = true,
 Callback = function(text) TextSave = text end
 })
 
 Tab:AddDropdown({
-Name = "سـرعه السـبام",
+Name = "سرعه السبام",
 Options = {"0.1","0.2","0.3","0.4","0.5","0.6","0.7","0.8","0.9","1"},
 Default = "0.5",
 Flag = "SpeedSelect",
@@ -580,7 +582,7 @@ Callback = function(selected) Speed = tonumber(selected) end
 })
 
 Tab:AddToggle({
-Name = "ابـدأ السـبام",
+Name = "ابدأ السبام",
 Default = false,
 Callback = function(state)
 IsSpamming = state
@@ -596,11 +598,11 @@ end
 end
 })
 
-Tab:AddSection({Name = "مـمكن تفـيدك"})
+Tab:AddSection({Name = "ممكن تفيدك"})
 local lastPosition = nil
 
 Tab:AddButton({
-Name = "تـروح الفضـاء يفيـدك لمـا شخـص يسـويلك Bang",
+Name = "تروح الفضاء يفيدك لما شخص يسويلك Bang",
 Callback = function()
 local character = game.Players.LocalPlayer.Character
 if (character and character:FindFirstChild("HumanoidRootPart")) then
@@ -611,7 +613,7 @@ end
 })
 
 Tab:AddButton({
-Name = "ارجـع لـمكانك",
+Name = "ارجع لمكانك",
 Callback = function()
 local character = game.Players.LocalPlayer.Character
 if (character and character:FindFirstChild("HumanoidRootPart")) then
@@ -622,21 +624,21 @@ end
 end
 })
 
-Tab:AddSection({Name = "أزعـاج صـوت"})
-Tab:AddButton({Name = "ازعـاج صـوت {1}", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/MS7top/Diverse/refs/heads/main/harassment1"))() end})
-Tab:AddButton({Name = "ازعـاج صـوت {2}", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/MS7top/Diverse/refs/heads/main/harassment2"))() end})
+Tab:AddSection({Name = "ازعاج صوت"})
+Tab:AddButton({Name = "ازعاج صوت {1}", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/MS7top/Diverse/refs/heads/main/harassment1"))() end})
+Tab:AddButton({Name = "ازعاج صوت {2}", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/MS7top/Diverse/refs/heads/main/harassment2"))() end})
 Tab:AddButton({
-Name = "وقـف الازعـاج",
+Name = "وقف الازعاج",
 Callback = function()
 local args = {[1] = "ClearAllTools"}
 game:GetService("ReplicatedStorage").RE:FindFirstChild("1Clea1rTool1s"):FireServer(unpack(args))
 end
 })
 
-Tab:AddSection({Name = "سـكربت تـجسس عـلى محـادثات الاعـبين الخـاصه"})
+Tab:AddSection({Name = "سكربت تجسس على محادثات الاعبين الخاصه"})
 Tab:AddButton({Name = "Spy Chat", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/MS7top/Diverse/refs/heads/main/CHATTTT.txt"))() end})
 
-Tab:AddSection({Name = "كشـف امـاكن"})
+Tab:AddSection({Name = "كشف اماكن"})
 local toggle = false
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
@@ -703,22 +705,22 @@ end
 end)
 
 Tab:AddDropdown({
-Name = "حـدد لـون الـكشف",
-Options = {"احـمر","اخـضر","ازرق","اصـفر","سـمائي","وردي","بـرتقالي","بـنفسجي","اسـود","ابـيض"},
-Default = "احـمر",
+Name = "حدد لون الكشف",
+Options = {"احمر","اخضر","ازرق","اصفر","سمائي","وردي","برتقالي","بنفسجي","اسود","ابيض"},
+Default = "احمر",
 Callback = function(selected)
 local colorMap = {
-["احـمر"] = colors[1], ["اخـضر"] = colors[2], ["ازرق"] = colors[3],
-["اصـفر"] = colors[4], ["سـمائي"] = colors[5], ["وردي"] = colors[6],
-["بـرتقالي"] = colors[7], ["بـنفسجي"] = colors[8], ["اسـود"] = colors[9],
-["ابـيض"] = colors[10]
+["احمر"] = colors[1], ["اخضر"] = colors[2], ["ازرق"] = colors[3],
+["اصفر"] = colors[4], ["سمائي"] = colors[5], ["وردي"] = colors[6],
+["برتقالي"] = colors[7], ["بنفسجي"] = colors[8], ["اسود"] = colors[9],
+["ابيض"] = colors[10]
 }
 currentColor = colorMap[selected] or currentColor
 end
 })
 
 Tab:AddDropdown({
-Name = "حـدد خـط الـكشف",
+Name = "حدد خط الكشف",
 Options = {"Ubuntu","Gotham","SourceSans","Legacy","Arial","Code","SourceSansSemibold","Fantasy","GothamSemibold","TitilliumWeb"},
 Default = "Ubuntu",
 Callback = function(selected)
@@ -733,7 +735,7 @@ end
 })
 
 Tab:AddToggle({
-Name = "كشـف أسامـي الاعبيـن",
+Name = "كشف اسامي الاعبين",
 Default = false,
 Callback = function(state)
 toggle = state
@@ -752,6 +754,7 @@ end
 end
 end
 })
+
 Tab6 = Window:MakeTab({"المضادات"})
 
 local sitConnection = nil
@@ -874,20 +877,21 @@ Tab6:AddToggle({
        end
    end
 })
+
 TeleportTab = Window:MakeTab({"التنقلات","rbxassetid://"})
 TeleportLocations = {
 {Name="مكان النجمة {الترند}", CFrame=CFrame.new(-6, -133, 12)},
 {Name="النافورة بالبداية", CFrame=CFrame.new(-26, 19, 14)},
-{Name="فوق القوس الأبيض", CFrame=CFrame.new(623, 134, -59)},
+{Name="فوق القوس الابيض", CFrame=CFrame.new(623, 134, -59)},
 {Name="السفينة البيضاء", CFrame=CFrame.new(-111, 7, 870)},
 {Name="الكنيسة", CFrame=CFrame.new(-57, 39, -182)},
 {Name="فوق الجبل", CFrame=CFrame.new(-663, 251, 757)},
-{Name="تحت الأرض {1}", CFrame=CFrame.new(505, -76, 143)},
-{Name="تحت الأرض {2}", CFrame=CFrame.new(-306, 4, -606)},
+{Name="تحت الارض {1}", CFrame=CFrame.new(505, -76, 143)},
+{Name="تحت الارض {2}", CFrame=CFrame.new(-306, 4, -606)},
 {Name="تحت الجبل (مكان سري)", CFrame=CFrame.new(672, 4, -296)},
 {Name="لوحة {1}", CFrame=CFrame.new(-243, 89, -550)},
 {Name="لوحة {2}", CFrame=CFrame.new(-630, 26, 365)},
-{Name="مكان الأسلحة", CFrame=CFrame.new(-119, -27, 235)},
+{Name="مكان الاسلحة", CFrame=CFrame.new(-119, -27, 235)},
 {Name="بيت الرجل العجوز", CFrame=CFrame.new(986, 4, 63)}
 }
 
@@ -902,7 +906,7 @@ blur:Destroy()
 end
 
 for _, loc in pairs(TeleportLocations) do
-TeleportTab:AddButton({Name = loc.Name, Description = "اذهب إلى " .. loc.Name, Callback = function()
+TeleportTab:AddButton({Name = loc.Name, Description = "اذهب الى " .. loc.Name, Callback = function()
 player = game.Players.LocalPlayer
 if not player.Character or not player.Character:FindFirstChild("HumanoidRootPart") then
 player.CharacterAdded:Wait()
@@ -912,6 +916,7 @@ playTeleportEffect()
 player.Character.HumanoidRootPart.CFrame = loc.CFrame
 end})
 end
+
 BangTab = Window:MakeTab({"بانق","rbxassetid://"})
 Players = game:GetService("Players")
 RunService = game:GetService("RunService")
@@ -972,12 +977,13 @@ end
 
 createBangToggle("Bang v1 | خلفي v1", -1, false)
 createBangToggle("Bang v2 | خلفي v2", -1.5, false)
-createBangToggle("Face Bang v1 | أمامي v1", 1, true)
-createBangToggle("Face Bang v2 | أمامي v2", 1.5, true)
-local ToolTab = Window:MakeTab({"الادوات","rbxassetid://"})
+createBangToggle("Face Bang v1 | امامي v1", 1, true)
+createBangToggle("Face Bang v2 | امامي v2", 1.5, true)
+
+ToolTab = Window:MakeTab({"الادوات","rbxassetid://"})
 
 ToolTab:AddButton({
-Name = "كـرسـتـال / 1",
+Name = "كرستال / 1",
 Callback = function()
 local args = {
    [1] = "PickingTools",
@@ -988,7 +994,7 @@ end
 })
 
 ToolTab:AddButton({
-Name = "كـرسـتـال / 2",
+Name = "كرستال / 2",
 Callback = function()
 local args = {
    [1] = "PickingTools",
@@ -998,17 +1004,17 @@ game:GetService("ReplicatedStorage").RE:FindFirstChild("1Too1l"):InvokeServer(un
 end
 })
 
-ToolTab:AddSection({"اشـيـاء تـبـيـن بـس لـك"})
+ToolTab:AddSection({"اشياء تبين بس لك"})
 
 ToolTab:AddButton({
-Name = "يـضـرب راچـدي",
+Name = "يضرب راجدي",
 Callback = function()
 loadstring(game:HttpGet(('http://pastefy.app/GvnHVjT5/raw'),true))()
 end
 })
 
 ToolTab:AddButton({
-Name = "الـتـحـريـك الـذهـنـي",
+Name = "التحريك الذهني",
 Callback = function()
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/SAZXHUB/Control-update/main/README.md'),true))()
 end
@@ -1022,14 +1028,14 @@ end
 })
 
 ToolTab:AddButton({
-Name = "مـعـدات الـبـنـاء",
+Name = "معدات البناء",
 Callback = function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/err0r129/PqpHadesBlair/main/Bao.lua"))()
 end
 })
 
 ToolTab:AddButton({
-Name = "الـتـنـقـل",
+Name = "التنقل",
 Callback = function()
    loadstring(game:HttpGet("https://raw.githubusercontent.com/err0r129/KptHadesBlair/main/Bao.lua"))()
 end
@@ -1047,7 +1053,7 @@ game:GetService("ReplicatedStorage").RE:FindFirstChild("1Too1l"):InvokeServer(un
 })
 
 ToolTab:AddButton({
-Name = "اخـذ صـنـدوق",
+Name = "اخذ صندوق",
 Callback = function()
 local args = {
    [1] = "PickingTools",
@@ -1068,10 +1074,10 @@ game:GetService("ReplicatedStorage").RE:FindFirstChild("1Too1l"):InvokeServer(un
 end
 })
 
-ToolTab:AddSection({"مـوارد الـبـنـك"})
+ToolTab:AddSection({"موارد البنك"})
 
 ToolTab:AddButton({
-Name = "حـقـيـبـة بـتـكـويـن",
+Name = "حقيبة بتكوين",
 Callback = function()
  local args = {
    [1] = "PickingTools",
@@ -1082,7 +1088,7 @@ end
 })
 
 ToolTab:AddButton({
-Name = "حـقـيـبـة الـالـمـاس",
+Name = "حقيبة الالماس",
 Callback = function()
  local args = {
    [1] = "PickingTools",
@@ -1093,7 +1099,7 @@ end
 })
 
 ToolTab:AddButton({
-Name = "حـقـيـبـة الـذهـب",
+Name = "حقيبة الذهب",
 Callback = function()
  local args = {
    [1] = "PickingTools",
@@ -1104,7 +1110,7 @@ end
 })
 
 ToolTab:AddButton({
-Name = "بـطـاقـة جـاتـا كـي كـارد",
+Name = "بطاقة جاتا كي كارد",
 Callback = function()
  local args = {
    [1] = "PickingTools",
@@ -1115,7 +1121,7 @@ end
 })
 
 ToolTab:AddButton({
- Name = "بـطـاقـة جـاتـا كـي كـارد بـيـضـاء",
+ Name = "بطاقة جاتا كي كارد بيضاء",
 Callback = function()
  local args = {
    [1] = "PickingTools",
@@ -1124,7 +1130,8 @@ Callback = function()
 game:GetService("ReplicatedStorage").RE:FindFirstChild("1Too1l"):InvokeServer(unpack(args))
 end
 })
-local  Main = Window:MakeTab({"اغاني المجانية", "rbxassetid://"})
+
+Main = Window:MakeTab({"اغاني المجانية", "rbxassetid://"})
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -1136,7 +1143,7 @@ getgenv().Audio_All_loop_fast = false
 local audios = {
    
    {Name = "قران 1", ID = 4711690175},
-   {Name = "قرأن 2", ID = 1836685929},
+   {Name = "قران 2", ID = 1836685929},
    {Name = "سب 1", ID = 6536444735},
    {Name = "سب 2", ID = 7127692762},
    {Name = "ياميت كوداساي", ID = 75542410501896},
@@ -1147,35 +1154,35 @@ local audios = {
    {Name = "جامبسكير 2", ID = 110637995610528},
    {Name = "ضحكة الساحرة ماين كرافت", ID = 116214940486087},
    {Name = "ذا بويلد وان", ID = 137177653817621},
-   {Name = "دقيت أبا ماريا ديويدو", ID = 128669424001766},
+   {Name = "دقيت ابا ماريا ديويدو", ID = 128669424001766},
    {Name = "ماندريك ديتيكتيد", ID = 9068077052},
-   {Name = "آآآآآااا", ID = 80156405968805},
-   {Name = "آآآآه", ID = 9084006093},
-   {Name = "أمونغاس", ID = 6651571134},
+   {Name = "اااااااا", ID = 80156405968805},
+   {Name = "ااااه", ID = 9084006093},
+   {Name = "امونغاس", ID = 6651571134},
    {Name = "سوس", ID = 6701126635},
-   {Name = "غريتاو آآآآآاااا", ID = 5853668794},
-   {Name = "أووه كووف كووف", ID = 7056720271},
+   {Name = "غريتاو ااااااااا", ID = 5853668794},
+   {Name = "اووه كووف كووف", ID = 7056720271},
    {Name = "سوس", ID = 7153419575},
-   {Name = "سونيك إكس إي", ID = 2496367477},
+   {Name = "سونيك اكس اي", ID = 2496367477},
    {Name = "توبيرز93 1", ID = 270145703},
    {Name = "توبيرز93 2", ID = 18131809532},
    {Name = "ضحكة جون", ID = 130759239},
-   {Name = "ما أعرف كككك", ID = 6549021381},
+   {Name = "ما اعرف كككك", ID = 6549021381},
    {Name = "غريتو", ID = 80156405968805},
-   {Name = "سوس أوديو", ID = 7705506391},
-   {Name = "آآآه", ID = 7772283448},
+   {Name = "سوس اوديو", ID = 7705506391},
+   {Name = "ااااه", ID = 7772283448},
    {Name = "غاي، غاي", ID = 18786647417},
    {Name = "ضربة بات", ID = 7129073354},
    {Name = "سيرين نووي", ID = 675587093},
    {Name = "ما عندي فكرة عن الاسم كك", ID = 7520729342},
    {Name = "غريتو 2", ID = 91412024101709},
-   {Name = "إستورا تيمبانو", ID = 268116333},
+   {Name = "استورا تيمبانو", ID = 268116333},
    {Name = "جميداو", ID = 106835463235574},
    {Name = "توما جاك", ID = 132603645477541},
-   {Name = "بديت آيفود بديت", ID = 133843750864059},
-   {Name = "آي غوست ذا داون", ID = 84663543883498},
-   {Name = "كومبري أونلاين نا شوب", ID = 8747441609},
-   {Name = "أووه كي نوجو", ID = 103440368630269},
+   {Name = "بديت ايفود بديت", ID = 133843750864059},
+   {Name = "اي غوست ذا داون", ID = 84663543883498},
+   {Name = "كومبري اونلاين نا شوب", ID = 8747441609},
+   {Name = "اووه كي نوجو", ID = 103440368630269},
    {Name = "ساي داي لافا براتو", ID = 101232400175829},
    {Name = "سيلوكو نو كومبنساسيون", ID = 78442476709262},
    {Name = "اغنيه 1", ID = 118507373399694},
@@ -1298,13 +1305,12 @@ Main:AddToggle({
        end
    end
 })
-local shadersTab = Window:MakeTab({ Title = "الشادر", Icon = "rbxassetid://" })
+
+shadersTab = Window:MakeTab({ Title = "الشادر", Icon = "rbxassetid://" })
 
 shadersTab:AddSection({ "شادر بيعجبك" })
 shadersTab:AddParagraph({"اذا تريد تشيله اطلع و ادخل"})
 shadersTab:AddButton({"شادر 1", function()
-   -- Aviso: script otimizado, ativação automática sem interface gráfica.
-
 local workspace = game:GetService("Workspace")
 local Lighting = game:GetService("Lighting")
 local RunService = game:GetService("RunService")
@@ -1315,14 +1321,12 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local model = workspace:FindFirstChild("Model")
 
--- Som de ativação
 local sound = Instance.new("Sound")
 sound.SoundId = "rbxassetid://131644923"
 sound.Volume = 1
 sound.Parent = SoundService
 sound:Play()
 
--- Aplicar materiais ao mapa
 if model then
    local function setMat(obj)
    	for _, c in pairs(obj:GetChildren()) do
@@ -1517,10 +1521,10 @@ local function createShootingStar()
    local moveConn
    moveConn = RunService.Heartbeat:Connect(function(dt)
    	if not active then moveConn:Disconnect() if star.Parent then star:Destroy() end return end
-   	timePassed += dt
+   	timePassed = timePassed + dt
    	if timePassed >= lifetime then moveConn:Disconnect() if star.Parent then star:Destroy() end return end
    	local curve = math.sin(timePassed*20)*0.5
-   	star.Position += (dir+Vector3.new(0,curve,0)).Unit*speed*dt
+   	star.Position = star.Position + (dir+Vector3.new(0,curve,0)).Unit*speed*dt
    end)
    Debris:AddItem(star,4)
 end
@@ -1647,7 +1651,6 @@ task.spawn(function()
    end
 end)
 
--- Iluminação e ambiente geral
 Lighting.Brightness = 2
 Lighting.GlobalShadows = true
 Lighting.OutdoorAmbient = Color3.fromRGB(70, 70, 70)
@@ -1684,7 +1687,8 @@ sunRays.Spread = 0.8
 local blur = Instance.new("BlurEffect", Lighting)
 blur.Size = 0
 end})
-local ChildTab = Window:MakeTab({"اطفال", ""})
+
+ChildTab = Window:MakeTab({"اطفال", ""})
 local Section = ChildTab:AddSection({ Name = "الاطفال" })
 
 ChildTab:AddParagraph({"ملاحظه:", "تقدر ترسل طفل لاي شخص تبيه."}) 
@@ -1710,7 +1714,7 @@ end
 local function checkDeveloperProtection(selectedName)
    if selectedName == developerName then
        if warnedPlayers[game.Players.LocalPlayer.UserId] then
-           game.Players.LocalPlayer:Kick("تم طردك لأنك لم تتبع القوانين")
+           game.Players.LocalPlayer:Kick("تم طردك لانك لم تتبع القوانين")
            return false
        else
            warnedPlayers[game.Players.LocalPlayer.UserId] = true
@@ -2614,7 +2618,8 @@ ChatTab:AddToggle({
         end
     end
 })
-local Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
+
+Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
 Tab:AddSection({ Name = "نسخ سكنات عدلتهولكم خليته سريع و قوي و ينسخ كل شي" })
 
 local Players = game:GetService("Players")
