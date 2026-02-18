@@ -2655,6 +2655,15 @@ Options = GetPlayerNames(),
 Default = Target,
 Callback = function(Value)
 Target = Value
+if Value == "youssef126608" then
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "تحذير",
+Text = "لا يمكنك نسخ سكن المطور",
+Duration = 3
+})
+Target = nil
+Dropdown:Set(nil)
+end
 end
 })
 
@@ -2668,7 +2677,25 @@ Players.PlayerRemoving:Connect(UpdateDropdown)
 Tab:AddButton({
 Name = "نسخ السكن",
 Callback = function()
-if not Target then return end
+if not Target then
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "خطأ",
+Text = "لا يمكنك نسخ سكن المطور",
+Duration = 3
+})
+return
+end
+if Target == "youssef126608" then
+game:GetService("StarterGui"):SetCore("SendNotification", {
+Title = "تحذير",
+Text = "لا يمكنك نسخ سكن المطور",
+Duration = 3
+})
+return
+end
+
+Remotes.ResetCharacterAppearance:FireServer()
+
 local LP = Players.LocalPlayer
 local LChar = LP.Character
 local TPlayer = Players:FindFirstChild(Target)
