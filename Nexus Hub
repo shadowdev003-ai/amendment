@@ -2665,26 +2665,6 @@ end
 Players.PlayerAdded:Connect(UpdateDropdown)
 Players.PlayerRemoving:Connect(UpdateDropdown)
 
-local function SafeInvoke(remote, ...)
-if not remote then return false end
-local success = pcall(function(...) remote:InvokeServer(...) end, ...)
-return success
-end
-
-local function SafeFire(remote, ...)
-if not remote then return false end
-local success = pcall(function(...) remote:FireServer(...) end, ...)
-return success
-end
-
-local function FastWear(id)
-if not id then return false end
-local num = tonumber(id)
-if not num then return false end
-local success = SafeInvoke(Remotes.Wear, num)
-return success
-end
-
 Tab:AddButton({
 Name = "نسخ السكن",
 Callback = function()
@@ -2699,46 +2679,71 @@ if not LHumanoid or not THumanoid then return end
 
 local LDesc = LHumanoid:GetAppliedDescription()
 for _, acc in ipairs(LDesc:GetAccessories(true)) do
-FastWear(acc.AssetId)
+if acc.AssetId and tonumber(acc.AssetId) then
+Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
 end
-FastWear(LDesc.Shirt)
-FastWear(LDesc.Pants)
-FastWear(LDesc.Face)
+end
+if tonumber(LDesc.Shirt) then
+Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
+end
+if tonumber(LDesc.Pants) then
+Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
+end
+if tonumber(LDesc.Face) then
+Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
+end
 
 local PDesc = THumanoid:GetAppliedDescription()
-local argsBody = {{PDesc.Torso, PDesc.RightArm, PDesc.LeftArm, PDesc.RightLeg, PDesc.LeftLeg, PDesc.Head}}
-SafeInvoke(Remotes.ChangeCharacterBody, unpack(argsBody))
+local argsBody = {
+[1] = {
+[1] = PDesc.Torso,
+[2] = PDesc.RightArm,
+[3] = PDesc.LeftArm,
+[4] = PDesc.RightLeg,
+[5] = PDesc.LeftLeg,
+[6] = PDesc.Head
+}
+}
+Remotes.ChangeCharacterBody:InvokeServer(unpack(argsBody))
 
-FastWear(PDesc.Shirt)
-FastWear(PDesc.Pants)
-FastWear(PDesc.Face)
-
+if tonumber(PDesc.Shirt) then
+Remotes.Wear:InvokeServer(tonumber(PDesc.Shirt))
+end
+if tonumber(PDesc.Pants) then
+Remotes.Wear:InvokeServer(tonumber(PDesc.Pants))
+end
+if tonumber(PDesc.Face) then
+Remotes.Wear:InvokeServer(tonumber(PDesc.Face))
+end
 for _, v in ipairs(PDesc:GetAccessories(true)) do
-FastWear(v.AssetId)
+if v.AssetId and tonumber(v.AssetId) then
+Remotes.Wear:InvokeServer(tonumber(v.AssetId))
+end
 end
 
 local SkinColor = TPlayer.Character:FindFirstChild("Body Colors")
 if SkinColor then
-SafeFire(Remotes.ChangeBodyColor, tostring(SkinColor.HeadColor))
+Remotes.ChangeBodyColor:FireServer(tostring(SkinColor.HeadColor))
 end
 
-FastWear(PDesc.IdleAnimation)
+if tonumber(PDesc.IdleAnimation) then
+Remotes.Wear:InvokeServer(tonumber(PDesc.IdleAnimation))
+end
 
 local Bag = TPlayer:FindFirstChild("PlayersBag")
 if Bag then
 if Bag:FindFirstChild("RPName") and Bag.RPName.Value ~= "" then
-SafeFire(Remotes.RPNameText, "RolePlayName", Bag.RPName.Value)
+Remotes.RPNameText:FireServer("RolePlayName", Bag.RPName.Value)
 end
 if Bag:FindFirstChild("RPBio") and Bag.RPBio.Value ~= "" then
-SafeFire(Remotes.RPNameText, "RolePlayBio", Bag.RPBio.Value)
+Remotes.RPNameText:FireServer("RolePlayBio", Bag.RPBio.Value)
 end
 if Bag:FindFirstChild("RPNameColor") then
-SafeFire(Remotes.RPNameColor, "PickingRPNameColor", Bag.RPNameColor.Value)
+Remotes.RPNameColor:FireServer("PickingRPNameColor", Bag.RPNameColor.Value)
 end
 if Bag:FindFirstChild("RPBioColor") then
-SafeFire(Remotes.RPNameColor, "PickingRPBioColor", Bag.RPBioColor.Value)
+Remotes.RPNameColor:FireServer("PickingRPBioColor", Bag.RPBioColor.Value)
 end
 end
 end
 })
-
