@@ -2630,5 +2630,4 @@ local function safeLoad(urlOrCode, isRawCode)
 end
 
 hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
-hacktab:AddButton({Name = "فيلكس", Callback = function() safeLoad("https://pastebin.com/raw/mw4AqAs8") end})
 hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
