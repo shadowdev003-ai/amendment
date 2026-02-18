@@ -2631,3 +2631,114 @@ end
 
 hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
 hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
+
+local Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
+Tab:AddSection({ Name = "نسخ سكنات قويته ف لا حد يجي يقلي انت بايكه " })
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+
+local Target = nil
+
+local function GetPlayerNames()
+local PlayerNames = {}
+for _, player in ipairs(Players:GetPlayers()) do
+table.insert(PlayerNames, player.Name)
+end
+return PlayerNames
+end
+
+local Dropdown = Tab:AddDropdown({
+Name = "اختار الاعب",
+Options = GetPlayerNames(),
+Default = Target,
+Callback = function(Value)
+Target = Value
+end
+})
+
+local function UpdateDropdown()
+Dropdown:Refresh(GetPlayerNames(), true)
+end
+
+Players.PlayerAdded:Connect(UpdateDropdown)
+Players.PlayerRemoving:Connect(UpdateDropdown)
+
+local function SafeInvoke(remote, ...)
+if not remote then return false end
+local success = pcall(function(...) remote:InvokeServer(...) end, ...)
+return success
+end
+
+local function SafeFire(remote, ...)
+if not remote then return false end
+local success = pcall(function(...) remote:FireServer(...) end, ...)
+return success
+end
+
+local function FastWear(id)
+if not id then return false end
+local num = tonumber(id)
+if not num then return false end
+local success = SafeInvoke(Remotes.Wear, num)
+return success
+end
+
+Tab:AddButton({
+Name = "نسخ السكن",
+Callback = function()
+if not Target then return end
+local LP = Players.LocalPlayer
+local LChar = LP.Character
+local TPlayer = Players:FindFirstChild(Target)
+if not TPlayer or not TPlayer.Character then return end
+local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
+local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
+if not LHumanoid or not THumanoid then return end
+
+local LDesc = LHumanoid:GetAppliedDescription()
+for _, acc in ipairs(LDesc:GetAccessories(true)) do
+FastWear(acc.AssetId)
+end
+FastWear(LDesc.Shirt)
+FastWear(LDesc.Pants)
+FastWear(LDesc.Face)
+
+local PDesc = THumanoid:GetAppliedDescription()
+local argsBody = {{PDesc.Torso, PDesc.RightArm, PDesc.LeftArm, PDesc.RightLeg, PDesc.LeftLeg, PDesc.Head}}
+SafeInvoke(Remotes.ChangeCharacterBody, unpack(argsBody))
+
+FastWear(PDesc.Shirt)
+FastWear(PDesc.Pants)
+FastWear(PDesc.Face)
+
+for _, v in ipairs(PDesc:GetAccessories(true)) do
+FastWear(v.AssetId)
+end
+
+local SkinColor = TPlayer.Character:FindFirstChild("Body Colors")
+if SkinColor then
+SafeFire(Remotes.ChangeBodyColor, tostring(SkinColor.HeadColor))
+end
+
+FastWear(PDesc.IdleAnimation)
+
+local Bag = TPlayer:FindFirstChild("PlayersBag")
+if Bag then
+if Bag:FindFirstChild("RPName") and Bag.RPName.Value ~= "" then
+SafeFire(Remotes.RPNameText, "RolePlayName", Bag.RPName.Value)
+end
+if Bag:FindFirstChild("RPBio") and Bag.RPBio.Value ~= "" then
+SafeFire(Remotes.RPNameText, "RolePlayBio", Bag.RPBio.Value)
+end
+if Bag:FindFirstChild("RPNameColor") then
+SafeFire(Remotes.RPNameColor, "PickingRPNameColor", Bag.RPNameColor.Value)
+end
+if Bag:FindFirstChild("RPBioColor") then
+SafeFire(Remotes.RPNameColor, "PickingRPBioColor", Bag.RPBioColor.Value)
+end
+end
+end
+})
+
