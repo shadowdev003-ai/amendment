@@ -2631,7 +2631,6 @@ end
 
 hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
 hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
-
 local Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
 Tab:AddSection({ Name = "نسخ سكنات قويته ف لا حد يجي يقلي انت بايكه " })
 
@@ -2640,140 +2639,282 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 
 local Target = nil
+local CopyType = "داخلي"
 
 local function GetPlayerNames()
-local PlayerNames = {}
-for _, player in ipairs(Players:GetPlayers()) do
-table.insert(PlayerNames, player.Name)
-end
-return PlayerNames
+    local PlayerNames = {}
+    for _, player in ipairs(Players:GetPlayers()) do
+        table.insert(PlayerNames, player.Name)
+    end
+    return PlayerNames
 end
 
 local Dropdown = Tab:AddDropdown({
-Name = "اختار الاعب",
-Options = GetPlayerNames(),
-Default = Target,
-Callback = function(Value)
-Target = Value
-if Value == "youssef126608" then
-game:GetService("StarterGui"):SetCore("SendNotification", {
-Title = "تحذير",
-Text = "لا يمكنك نسخ سكن المطور",
-Duration = 3
+    Name = "اختار الاعب",
+    Options = GetPlayerNames(),
+    Default = Target,
+    Callback = function(Value)
+        Target = Value
+        if Value == "youssef126608" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "تحذير",
+                Text = "لا يمكنك نسخ سكن المطور",
+                Duration = 3
+            })
+            Target = nil
+            Dropdown:Set(nil)
+        end
+    end
 })
-Target = nil
-Dropdown:Set(nil)
-end
-end
+
+local TypeDropdown = Tab:AddDropdown({
+    Name = "اختار نوع النسخ",
+    Options = {"داخلي", "خارجي"},
+    Default = "داخلي",
+    Callback = function(Value)
+        CopyType = Value
+    end
 })
 
 local function UpdateDropdown()
-Dropdown:Refresh(GetPlayerNames(), true)
+    Dropdown:Refresh(GetPlayerNames(), true)
 end
 
 Players.PlayerAdded:Connect(UpdateDropdown)
 Players.PlayerRemoving:Connect(UpdateDropdown)
 
+local function GetCurrentSavedItems()
+    local saved = {
+        Face = nil,
+        Head = nil,
+        Shirt = nil,
+        Pants = nil,
+        Accessories = {},
+        BodyColors = nil
+    }
+    
+    local char = Players.LocalPlayer.Character
+    if not char then return saved end
+    
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return saved end
+    
+    local desc = humanoid:GetAppliedDescription()
+    if desc then
+        saved.Face = desc.Face
+        saved.Head = desc.Head
+        saved.Shirt = desc.Shirt
+        saved.Pants = desc.Pants
+        
+        for _, acc in ipairs(desc:GetAccessories(true)) do
+            if acc.AssetId then
+                table.insert(saved.Accessories, acc.AssetId)
+            end
+        end
+    end
+    
+    local bodyColors = char:FindFirstChild("Body Colors")
+    if bodyColors then
+        saved.BodyColors = tostring(bodyColors.HeadColor)
+    end
+    
+    return saved
+end
+
+local function ApplySavedItems(saved)
+    if saved.Face and tonumber(saved.Face) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Face))
+        task.wait(0.1)
+    end
+    
+    if saved.Head and tonumber(saved.Head) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Head))
+        task.wait(0.1)
+    end
+    
+    if saved.Shirt and tonumber(saved.Shirt) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Shirt))
+        task.wait(0.1)
+    end
+    
+    if saved.Pants and tonumber(saved.Pants) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Pants))
+        task.wait(0.1)
+    end
+    
+    for _, accId in ipairs(saved.Accessories) do
+        if tonumber(accId) then
+            Remotes.Wear:InvokeServer(tonumber(accId))
+            task.wait(0.1)
+        end
+    end
+    
+    if saved.BodyColors then
+        Remotes.ChangeBodyColor:FireServer(saved.BodyColors)
+    end
+end
+
 Tab:AddButton({
-Name = "نسخ السكن",
-Callback = function()
-if not Target then
-game:GetService("StarterGui"):SetCore("SendNotification", {
-Title = "خطأ",
-Text = "لا يمكنك نسخ سكن المطور",
-Duration = 3
+    Name = "نسخ السكن",
+    Callback = function()
+        if not Target then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "خطأ",
+                Text = "اختر لاعب اولا",
+                Duration = 3
+            })
+            return
+        end
+        
+        if Target == "youssef126608" then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "تحذير",
+                Text = "لا يمكنك نسخ سكن المطور",
+                Duration = 3
+            })
+            return
+        end
+        
+        if CopyType == "خارجي" then
+            local savedItems = GetCurrentSavedItems()
+            
+            local target = Players:FindFirstChild(Target)
+            if not target then return end
+            
+            local success = pcall(function()
+                local userId = target.UserId
+                local avatarData = game:GetService("Players"):GetCharacterAppearanceInfoAsync(userId)
+                
+                if avatarData then
+                    if avatarData.bodyColors then
+                        local headColor = avatarData.bodyColors.headColorId
+                        Remotes.ChangeBodyColor:FireServer(tostring(headColor))
+                        task.wait(0.1)
+                    end
+                    
+                    for _, asset in ipairs(avatarData.assets) do
+                        if asset.id then
+                            local assetType = asset.assetType.name
+                            
+                            if assetType == "Hat" or assetType == "HairAccessory" or assetType == "FaceAccessory" or assetType == "NeckAccessory" or assetType == "ShoulderAccessory" or assetType == "FrontAccessory" or assetType == "BackAccessory" or assetType == "WaistAccessory" then
+                                Remotes.Wear:InvokeServer(tonumber(asset.id))
+                                task.wait(0.1)
+                            elseif assetType == "Shirt" then
+                                Remotes.Wear:InvokeServer(tonumber(asset.id))
+                                task.wait(0.1)
+                            elseif assetType == "Pants" then
+                                Remotes.Wear:InvokeServer(tonumber(asset.id))
+                                task.wait(0.1)
+                            elseif assetType == "Face" then
+                                Remotes.Wear:InvokeServer(tonumber(asset.id))
+                                task.wait(0.1)
+                            end
+                        end
+                    end
+                end
+            end)
+            
+            task.wait(0.5)
+            ApplySavedItems(savedItems)
+            
+            if success then
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "تم",
+                    Text = "تم نسخ السكن الخارجي بنجاح",
+                    Duration = 3
+                })
+            else
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "خطأ",
+                    Text = "فشل في نسخ السكن",
+                    Duration = 3
+                })
+            end
+            
+            return
+        end
+        
+        Remotes.ResetCharacterAppearance:FireServer()
+        
+        local LP = Players.LocalPlayer
+        local LChar = LP.Character
+        local TPlayer = Players:FindFirstChild(Target)
+        if not TPlayer or not TPlayer.Character then return end
+        local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
+        local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if not LHumanoid or not THumanoid then return end
+        
+        local LDesc = LHumanoid:GetAppliedDescription()
+        for _, acc in ipairs(LDesc:GetAccessories(true)) do
+            if acc.AssetId and tonumber(acc.AssetId) then
+                Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
+            end
+        end
+        if tonumber(LDesc.Shirt) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
+        end
+        if tonumber(LDesc.Pants) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
+        end
+        if tonumber(LDesc.Face) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
+        end
+        
+        local PDesc = THumanoid:GetAppliedDescription()
+        local argsBody = {
+            [1] = {
+                [1] = PDesc.Torso,
+                [2] = PDesc.RightArm,
+                [3] = PDesc.LeftArm,
+                [4] = PDesc.RightLeg,
+                [5] = PDesc.LeftLeg,
+                [6] = PDesc.Head
+            }
+        }
+        Remotes.ChangeCharacterBody:InvokeServer(unpack(argsBody))
+        
+        if tonumber(PDesc.Shirt) then
+            Remotes.Wear:InvokeServer(tonumber(PDesc.Shirt))
+        end
+        if tonumber(PDesc.Pants) then
+            Remotes.Wear:InvokeServer(tonumber(PDesc.Pants))
+        end
+        if tonumber(PDesc.Face) then
+            Remotes.Wear:InvokeServer(tonumber(PDesc.Face))
+        end
+        for _, v in ipairs(PDesc:GetAccessories(true)) do
+            if v.AssetId and tonumber(v.AssetId) then
+                Remotes.Wear:InvokeServer(tonumber(v.AssetId))
+            end
+        end
+        
+        local SkinColor = TPlayer.Character:FindFirstChild("Body Colors")
+        if SkinColor then
+            Remotes.ChangeBodyColor:FireServer(tostring(SkinColor.HeadColor))
+        end
+        
+        if tonumber(PDesc.IdleAnimation) then
+            Remotes.Wear:InvokeServer(tonumber(PDesc.IdleAnimation))
+        end
+        
+        local Bag = TPlayer:FindFirstChild("PlayersBag")
+        if Bag then
+            if Bag:FindFirstChild("RPName") and Bag.RPName.Value ~= "" then
+                Remotes.RPNameText:FireServer("RolePlayName", Bag.RPName.Value)
+            end
+            if Bag:FindFirstChild("RPBio") and Bag.RPBio.Value ~= "" then
+                Remotes.RPNameText:FireServer("RolePlayBio", Bag.RPBio.Value)
+            end
+            if Bag:FindFirstChild("RPNameColor") then
+                Remotes.RPNameColor:FireServer("PickingRPNameColor", Bag.RPNameColor.Value)
+            end
+            if Bag:FindFirstChild("RPBioColor") then
+                Remotes.RPNameColor:FireServer("PickingRPBioColor", Bag.RPBioColor.Value)
+            end
+        end
+    end
 })
-return
-end
-if Target == "youssef126608" then
-game:GetService("StarterGui"):SetCore("SendNotification", {
-Title = "تحذير",
-Text = "لا يمكنك نسخ سكن المطور",
-Duration = 3
-})
-return
-end
 
-Remotes.ResetCharacterAppearance:FireServer()
-
-local LP = Players.LocalPlayer
-local LChar = LP.Character
-local TPlayer = Players:FindFirstChild(Target)
-if not TPlayer or not TPlayer.Character then return end
-local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
-local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
-if not LHumanoid or not THumanoid then return end
-
-local LDesc = LHumanoid:GetAppliedDescription()
-for _, acc in ipairs(LDesc:GetAccessories(true)) do
-if acc.AssetId and tonumber(acc.AssetId) then
-Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
-end
-end
-if tonumber(LDesc.Shirt) then
-Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
-end
-if tonumber(LDesc.Pants) then
-Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
-end
-if tonumber(LDesc.Face) then
-Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
-end
-
-local PDesc = THumanoid:GetAppliedDescription()
-local argsBody = {
-[1] = {
-[1] = PDesc.Torso,
-[2] = PDesc.RightArm,
-[3] = PDesc.LeftArm,
-[4] = PDesc.RightLeg,
-[5] = PDesc.LeftLeg,
-[6] = PDesc.Head
-}
-}
-Remotes.ChangeCharacterBody:InvokeServer(unpack(argsBody))
-
-if tonumber(PDesc.Shirt) then
-Remotes.Wear:InvokeServer(tonumber(PDesc.Shirt))
-end
-if tonumber(PDesc.Pants) then
-Remotes.Wear:InvokeServer(tonumber(PDesc.Pants))
-end
-if tonumber(PDesc.Face) then
-Remotes.Wear:InvokeServer(tonumber(PDesc.Face))
-end
-for _, v in ipairs(PDesc:GetAccessories(true)) do
-if v.AssetId and tonumber(v.AssetId) then
-Remotes.Wear:InvokeServer(tonumber(v.AssetId))
-end
-end
-
-local SkinColor = TPlayer.Character:FindFirstChild("Body Colors")
-if SkinColor then
-Remotes.ChangeBodyColor:FireServer(tostring(SkinColor.HeadColor))
-end
-
-if tonumber(PDesc.IdleAnimation) then
-Remotes.Wear:InvokeServer(tonumber(PDesc.IdleAnimation))
-end
-
-local Bag = TPlayer:FindFirstChild("PlayersBag")
-if Bag then
-if Bag:FindFirstChild("RPName") and Bag.RPName.Value ~= "" then
-Remotes.RPNameText:FireServer("RolePlayName", Bag.RPName.Value)
-end
-if Bag:FindFirstChild("RPBio") and Bag.RPBio.Value ~= "" then
-Remotes.RPNameText:FireServer("RolePlayBio", Bag.RPBio.Value)
-end
-if Bag:FindFirstChild("RPNameColor") then
-Remotes.RPNameColor:FireServer("PickingRPNameColor", Bag.RPNameColor.Value)
-end
-if Bag:FindFirstChild("RPBioColor") then
-Remotes.RPNameColor:FireServer("PickingRPBioColor", Bag.RPBioColor.Value)
-end
-end
-end
-})
 local TrollTab = Window:MakeTab({"التخريب", "rbxassetid://"})
 
 TrollTab:AddSection({Name = "انشاء الله التخريب بيعجبك"})
