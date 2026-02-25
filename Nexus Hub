@@ -2822,21 +2822,8 @@ Tab:AddButton({
                     
                     for _, asset in ipairs(avatarData.assets) do
                         if asset.id then
-                            local assetType = asset.assetType.name
-                            
-                            if assetType == "Hat" or assetType == "HairAccessory" or assetType == "FaceAccessory" or assetType == "NeckAccessory" or assetType == "ShoulderAccessory" or assetType == "FrontAccessory" or assetType == "BackAccessory" or assetType == "WaistAccessory" then
-                                Remotes.Wear:InvokeServer(tonumber(asset.id))
-                                task.wait(0.1)
-                            elseif assetType == "Shirt" then
-                                Remotes.Wear:InvokeServer(tonumber(asset.id))
-                                task.wait(0.1)
-                            elseif assetType == "Pants" then
-                                Remotes.Wear:InvokeServer(tonumber(asset.id))
-                                task.wait(0.1)
-                            elseif assetType == "Face" then
-                                Remotes.Wear:InvokeServer(tonumber(asset.id))
-                                task.wait(0.1)
-                            end
+                            Remotes.Wear:InvokeServer(tonumber(asset.id))
+                            task.wait(0.1)
                         end
                     end
                 end
@@ -2860,7 +2847,7 @@ Tab:AddButton({
         end
         
         Remotes.ResetCharacterAppearance:FireServer()
-        
+
         local LP = Players.LocalPlayer
         local LChar = LP.Character
         local TPlayer = Players:FindFirstChild(Target)
@@ -2868,7 +2855,7 @@ Tab:AddButton({
         local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
         local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
         if not LHumanoid or not THumanoid then return end
-        
+
         local LDesc = LHumanoid:GetAppliedDescription()
         for _, acc in ipairs(LDesc:GetAccessories(true)) do
             if acc.AssetId and tonumber(acc.AssetId) then
@@ -2884,7 +2871,7 @@ Tab:AddButton({
         if tonumber(LDesc.Face) then
             Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
         end
-        
+
         local PDesc = THumanoid:GetAppliedDescription()
         local argsBody = {
             [1] = {
@@ -2897,7 +2884,7 @@ Tab:AddButton({
             }
         }
         Remotes.ChangeCharacterBody:InvokeServer(unpack(argsBody))
-        
+
         if tonumber(PDesc.Shirt) then
             Remotes.Wear:InvokeServer(tonumber(PDesc.Shirt))
         end
@@ -2912,16 +2899,16 @@ Tab:AddButton({
                 Remotes.Wear:InvokeServer(tonumber(v.AssetId))
             end
         end
-        
+
         local SkinColor = TPlayer.Character:FindFirstChild("Body Colors")
         if SkinColor then
             Remotes.ChangeBodyColor:FireServer(tostring(SkinColor.HeadColor))
         end
-        
+
         if tonumber(PDesc.IdleAnimation) then
             Remotes.Wear:InvokeServer(tonumber(PDesc.IdleAnimation))
         end
-        
+
         local Bag = TPlayer:FindFirstChild("PlayersBag")
         if Bag then
             if Bag:FindFirstChild("RPName") and Bag.RPName.Value ~= "" then
@@ -2961,6 +2948,7 @@ Tab:AddButton({
         })
     end
 })
+
 local TrollTab = Window:MakeTab({"التخريب", "rbxassetid://"})
 
 TrollTab:AddSection({Name = "انشاء الله التخريب بيعجبك"})
