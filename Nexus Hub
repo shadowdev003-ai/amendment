@@ -2789,6 +2789,8 @@ local selectedPlayerName = nil
 local selectedMethod = nil
 local selectedFlingPlayer = nil
 local DeveloperName = "youssef126608"
+local shipFollowActive = false
+local shipConnection = nil
 
 local function GetPlayerList()
     local list = {}
@@ -2835,7 +2837,7 @@ end)
 
 TrollTab:AddDropdown({
     Name = "اختار طريقة القتل",
-    Options = {"باص", "كنبه", "كنبه من بعيد تجريبيه", "فلنق بالسياره", "فلنق بالكره", "قتل باند البيت", "فلنق بالقارب"},
+    Options = {"باص", "كنبه", "كنبه من بعيد تجريبيه", "فلنق بالسياره", "فلنق بالتريلا", "فلنق بالكره", "قتل باند البيت", "فلنق بالقارب"},
     Callback = function(value)
         selectedMethod = value
     end
@@ -3229,6 +3231,157 @@ local function KillCar()
     if trackConn and trackConn.Connected then trackConn:Disconnect() end
 end
 
+local function KillTruck()
+    if CheckDeveloper() then return end
+    local targetPlayer = Players:FindFirstChild(selectedPlayerName)
+    if not targetPlayer or not targetPlayer.Character then return end
+    
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local originalCFrame = hrp.CFrame
+    local spawnPos = Vector3.new(-53, 3, -56)
+    local movePos = Vector3.new(-53, 3, -64)
+    local destinationCFrame = CFrame.new(50000, 5000000, 3972823)
+    
+    local function FireSpawnTruck()
+        pcall(function()
+            ReplicatedStorage:WaitForChild("RE"):WaitForChild("1Ca1r"):FireServer("PickingCar", "Semi")
+        end)
+    end
+    
+    local function GetTruck()
+        local vehicles = workspace:FindFirstChild("Vehicles")
+        if vehicles then
+            local byName = vehicles:FindFirstChild(LocalPlayer.Name .. "Car")
+            if byName then return byName end
+        end
+        for _, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("Model") and string.find(v.Name:lower(), "semi") then
+                return v
+            end
+        end
+        return nil
+    end
+    
+    local function GetDriverSeat(model)
+        if not model then return nil end
+        for _, obj in pairs(model:GetDescendants()) do
+            if obj:IsA("VehicleSeat") then
+                return obj
+            end
+        end
+        return nil
+    end
+    
+    local function forceSitOnSeat(seat, hrp, humanoid)
+        if not seat or not humanoid then return end
+        local timeout = tick() + 6
+        repeat
+            hrp.CFrame = seat.CFrame * CFrame.new(0, 2, 0)
+            task.wait(0.05)
+        until humanoid.Sit or tick() > timeout
+        if not humanoid.Sit then
+            pcall(function() seat:Sit(humanoid) end)
+        end
+    end
+    
+    hrp.CFrame = CFrame.new(spawnPos)
+    task.wait(0.6)
+    FireSpawnTruck()
+    task.wait(1.2)
+    local truck = GetTruck()
+    
+    if not truck then
+        hrp.CFrame = CFrame.new(1118.81, 75.998, -1138.61)
+        task.wait(0.5)
+        FireSpawnTruck()
+        task.wait(1)
+        truck = GetTruck()
+    end
+    
+    if not truck then return end
+    if not truck.PrimaryPart then
+        local primary = truck:FindFirstChildWhichIsA("BasePart", true) or truck:FindFirstChild("Body")
+        if primary then truck.PrimaryPart = primary end
+    end
+    
+    hrp.CFrame = CFrame.new(movePos)
+    task.wait(0.3)
+    local driverSeat = GetDriverSeat(truck)
+    forceSitOnSeat(driverSeat, hrp, humanoid)
+    
+    local rotationSpeed = 360
+    local rotating = true
+    local trackConn
+    local escalateStart = tick()
+    
+    trackConn = RunService.RenderStepped:Connect(function()
+        if not truck or not truck.PrimaryPart then return end
+        if not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then return end
+        
+        local targetRoot = targetPlayer.Character.HumanoidRootPart
+        local targetHum = targetPlayer.Character:FindFirstChildOfClass("Humanoid")
+        
+        if targetHum and targetHum.Sit then
+            pcall(function()
+                if truck.PrimaryPart then truck:SetPrimaryPartCFrame(destinationCFrame) end
+            end)
+            rotating = false
+            trackConn:Disconnect()
+            return
+        end
+        
+        local elapsed = tick() - escalateStart
+        rotationSpeed = 360 + math.clamp(elapsed * 240, 0, 2400)
+        local t = tick() * 8
+        local lateral = math.sin(t) * (12 + math.clamp(elapsed * 4, 0, 48))
+        local front = -6
+        local desiredPos = targetRoot.Position + targetRoot.CFrame.LookVector * front + Vector3.new(lateral, 0, 0)
+        local rot = CFrame.Angles(0, tick() * math.rad(rotationSpeed), 0)
+        local newCFrame = CFrame.new(desiredPos) * rot
+        pcall(function() if truck.PrimaryPart then truck:SetPrimaryPartCFrame(newCFrame) end end)
+    end)
+    
+    spawn(function()
+        while rotating and truck and truck.Parent do
+            pcall(function()
+                if truck.PrimaryPart then
+                    truck:SetPrimaryPartCFrame(truck.PrimaryPart.CFrame * CFrame.Angles(0, math.rad(60), 0))
+                end
+            end)
+            task.wait(0.02)
+        end
+    end)
+    
+    local waitTimeout = tick() + 20
+    repeat
+        if not truck or not truck.Parent then break end
+        if (truck.PrimaryPart.Position - destinationCFrame.Position).Magnitude < 150 then break end
+        task.wait(0.15)
+    until tick() > waitTimeout
+    
+    if truck and truck.PrimaryPart and (truck.PrimaryPart.Position - destinationCFrame.Position).Magnitude < 300 then
+        pcall(function()
+            if humanoid then humanoid.Jump = true end
+            task.wait(0.4)
+        end)
+        pcall(function()
+            local targetHum = targetPlayer.Character and targetPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if targetHum then
+                targetHum.Jump = true
+                task.wait(0.3)
+                targetHum.Health = 0
+            end
+        end)
+        pcall(function() hrp.CFrame = originalCFrame end)
+    else
+        pcall(function() hrp.CFrame = originalCFrame end)
+    end
+    
+    if trackConn and trackConn.Connected then trackConn:Disconnect() end
+end
+
 local function KillBall()
     if CheckDeveloper() then return end
     local target = Players:FindFirstChild(selectedPlayerName)
@@ -3536,6 +3689,8 @@ TrollTab:AddButton({
             KillCouchFar()
         elseif selectedMethod == "فلنق بالسياره" then
             KillCar()
+        elseif selectedMethod == "فلنق بالتريلا" then
+            KillTruck()
         elseif selectedMethod == "فلنق بالكره" then
             KillBall()
         elseif selectedMethod == "قتل باند البيت" then
@@ -3696,6 +3851,130 @@ TrollTab:AddButton({
             local cf = CFrame.new(newPos) * CFrame.Angles(0, currentRotation, 0)
             PCar:SetPrimaryPartCFrame(cf)
         end)
+    end
+})
+
+TrollTab:AddToggle({
+    Name = "خل السفينه تتبعك",
+    Default = false,
+    Callback = function(value)
+        if value then
+            if shipFollowActive then return end
+            shipFollowActive = true
+            
+            local RS = game:GetService("ReplicatedStorage")
+            local Player = game.Players.LocalPlayer
+            local Character = Player.Character or Player.CharacterAdded:Wait()
+            local Humanoid = Character:WaitForChild("Humanoid")
+            local RootPart = Character:WaitForChild("HumanoidRootPart")
+            local Vehicles = workspace:WaitForChild("Vehicles")
+            local destinationCFrame = CFrame.new(50000, 5000000, 3972823)
+            
+            local function spawnShip()
+                RootPart.CFrame = CFrame.new(1754, -2, 58)
+                task.wait(0.5)
+                RS:WaitForChild("RE"):WaitForChild("1Ca1r"):FireServer("PickingBoat", "PirateFree")
+                task.wait(1)
+                return Vehicles:FindFirstChild(Player.Name .. "Car")
+            end
+            
+            local Ship = spawnShip()
+            if not Ship then 
+                shipFollowActive = false
+                return 
+            end
+            
+            if not Ship.PrimaryPart then
+                local primary = Ship:FindFirstChildWhichIsA("BasePart", true) or Ship:FindFirstChild("Body")
+                if primary then Ship.PrimaryPart = primary end
+            end
+            
+            local Spin = Instance.new("BodyAngularVelocity")
+            Spin.Name = "ShipSpin"
+            Spin.Parent = Ship.PrimaryPart
+            Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+            Spin.AngularVelocity = Vector3.new(0, 369, 0)
+            
+            local touchedPlayers = {}
+            
+            local function flingPlayer(targetPlayer)
+                if targetPlayer == Player then return end
+                if IsDeveloper(targetPlayer.Name) then return end
+                if touchedPlayers[targetPlayer.Name] then return end
+                
+                touchedPlayers[targetPlayer.Name] = true
+                
+                local TargetC = targetPlayer.Character
+                if not TargetC then return end
+                local TargetH = TargetC:FindFirstChildOfClass("Humanoid")
+                local TargetRP = TargetC:FindFirstChild("HumanoidRootPart")
+                if not TargetH or not TargetRP then return end
+                
+                if Ship and Ship.PrimaryPart then
+                    Ship:SetPrimaryPartCFrame(destinationCFrame)
+                end
+                
+                task.wait(0.2)
+                
+                if TargetH then
+                    TargetH.Jump = true
+                    task.wait(0.3)
+                    TargetH.Health = 0
+                end
+            end
+            
+            for _, part in pairs(Ship:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.Touched:Connect(function(hit)
+                        if not shipFollowActive then return end
+                        local character = hit:FindFirstAncestorOfClass("Model")
+                        if not character then return end
+                        local player = Players:GetPlayerFromCharacter(character)
+                        if player and player ~= Player then
+                            flingPlayer(player)
+                        end
+                    end)
+                end
+            end
+            
+            shipConnection = game:GetService("RunService").Heartbeat:Connect(function()
+                if not shipFollowActive then return end
+                if not Ship or not Ship.Parent then return end
+                if not RootPart then return end
+                
+                local targetPos = RootPart.Position + RootPart.CFrame.LookVector * 5
+                local newCFrame = CFrame.new(targetPos) * CFrame.Angles(0, tick() * 5, 0)
+                
+                pcall(function()
+                    if Ship.PrimaryPart then
+                        Ship:SetPrimaryPartCFrame(newCFrame)
+                        Ship.PrimaryPart.Velocity = Vector3.new(500, 500, 500)
+                    end
+                end)
+            end)
+            
+            Notify("تم", "السفينه تتبعك الان واي لاعب يلمسها يروح الفويد")
+        else
+            shipFollowActive = false
+            if shipConnection then
+                shipConnection:Disconnect()
+                shipConnection = nil
+            end
+            
+            local Player = game.Players.LocalPlayer
+            local Vehicles = workspace:WaitForChild("Vehicles")
+            local Ship = Vehicles:FindFirstChild(Player.Name .. "Car")
+            
+            if Ship and Ship.PrimaryPart then
+                local Spin = Ship.PrimaryPart:FindFirstChild("ShipSpin")
+                if Spin then Spin:Destroy() end
+            end
+            
+            local deleteArgs = {[1] = "DeleteAllVehicles"}
+            ReplicatedStorage:WaitForChild("RE"):WaitForChild("1Ca1r"):FireServer(unpack(deleteArgs))
+            
+            Notify("تم", "تم ايقاف تتبع السفينه")
+        end
     end
 })
 
