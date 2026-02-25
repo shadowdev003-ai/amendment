@@ -2522,7 +2522,7 @@ game.Players.PlayerRemoving:Connect(function()
 end)
 
 ChatTab:AddSection({"تأكد ان انت و هو عندكم شات"})
-
+ChatTab:AddSection({"هو مو حقيقي يصغرك ويخليك تروح للضحيه و تطلع فوقه"})
 ChatTab:AddToggle({
     Name = "تحكم ب شات الاعب",
     Default = false,
@@ -2631,6 +2631,7 @@ end
 
 hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
 hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
+
 local Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
 Tab:AddSection({ Name = "نسخ سكنات قويته ف لا حد يجي يقلي انت بايكه " })
 
@@ -2640,6 +2641,7 @@ local Remotes = ReplicatedStorage:WaitForChild("Remotes")
 
 local Target = nil
 local CopyType = "داخلي"
+local OriginalSkin = nil
 
 local function GetPlayerNames()
     local PlayerNames = {}
@@ -2647,6 +2649,97 @@ local function GetPlayerNames()
         table.insert(PlayerNames, player.Name)
     end
     return PlayerNames
+end
+
+local function SaveOriginalSkin()
+    local saved = {
+        Face = nil,
+        Head = nil,
+        Shirt = nil,
+        Pants = nil,
+        Accessories = {},
+        BodyColors = nil,
+        Torso = nil,
+        RightArm = nil,
+        LeftArm = nil,
+        RightLeg = nil,
+        LeftLeg = nil
+    }
+    
+    local char = Players.LocalPlayer.Character
+    if not char then return saved end
+    
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return saved end
+    
+    local desc = humanoid:GetAppliedDescription()
+    if desc then
+        saved.Face = desc.Face
+        saved.Head = desc.Head
+        saved.Shirt = desc.Shirt
+        saved.Pants = desc.Pants
+        saved.Torso = desc.Torso
+        saved.RightArm = desc.RightArm
+        saved.LeftArm = desc.LeftArm
+        saved.RightLeg = desc.RightLeg
+        saved.LeftLeg = desc.LeftLeg
+        
+        for _, acc in ipairs(desc:GetAccessories(true)) do
+            if acc.AssetId then
+                table.insert(saved.Accessories, acc.AssetId)
+            end
+        end
+    end
+    
+    local bodyColors = char:FindFirstChild("Body Colors")
+    if bodyColors then
+        saved.BodyColors = tostring(bodyColors.HeadColor)
+    end
+    
+    return saved
+end
+
+local function ApplySkin(saved)
+    if not saved then return end
+    
+    local argsBody = {
+        [1] = {
+            [1] = saved.Torso,
+            [2] = saved.RightArm,
+            [3] = saved.LeftArm,
+            [4] = saved.RightLeg,
+            [5] = saved.LeftLeg,
+            [6] = saved.Head
+        }
+    }
+    Remotes.ChangeCharacterBody:InvokeServer(unpack(argsBody))
+    task.wait(0.1)
+    
+    if saved.Face and tonumber(saved.Face) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Face))
+        task.wait(0.1)
+    end
+    
+    if saved.Shirt and tonumber(saved.Shirt) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Shirt))
+        task.wait(0.1)
+    end
+    
+    if saved.Pants and tonumber(saved.Pants) then
+        Remotes.Wear:InvokeServer(tonumber(saved.Pants))
+        task.wait(0.1)
+    end
+    
+    for _, accId in ipairs(saved.Accessories) do
+        if tonumber(accId) then
+            Remotes.Wear:InvokeServer(tonumber(accId))
+            task.wait(0.1)
+        end
+    end
+    
+    if saved.BodyColors then
+        Remotes.ChangeBodyColor:FireServer(saved.BodyColors)
+    end
 end
 
 local Dropdown = Tab:AddDropdown({
@@ -2683,77 +2776,6 @@ end
 Players.PlayerAdded:Connect(UpdateDropdown)
 Players.PlayerRemoving:Connect(UpdateDropdown)
 
-local function GetCurrentSavedItems()
-    local saved = {
-        Face = nil,
-        Head = nil,
-        Shirt = nil,
-        Pants = nil,
-        Accessories = {},
-        BodyColors = nil
-    }
-    
-    local char = Players.LocalPlayer.Character
-    if not char then return saved end
-    
-    local humanoid = char:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return saved end
-    
-    local desc = humanoid:GetAppliedDescription()
-    if desc then
-        saved.Face = desc.Face
-        saved.Head = desc.Head
-        saved.Shirt = desc.Shirt
-        saved.Pants = desc.Pants
-        
-        for _, acc in ipairs(desc:GetAccessories(true)) do
-            if acc.AssetId then
-                table.insert(saved.Accessories, acc.AssetId)
-            end
-        end
-    end
-    
-    local bodyColors = char:FindFirstChild("Body Colors")
-    if bodyColors then
-        saved.BodyColors = tostring(bodyColors.HeadColor)
-    end
-    
-    return saved
-end
-
-local function ApplySavedItems(saved)
-    if saved.Face and tonumber(saved.Face) then
-        Remotes.Wear:InvokeServer(tonumber(saved.Face))
-        task.wait(0.1)
-    end
-    
-    if saved.Head and tonumber(saved.Head) then
-        Remotes.Wear:InvokeServer(tonumber(saved.Head))
-        task.wait(0.1)
-    end
-    
-    if saved.Shirt and tonumber(saved.Shirt) then
-        Remotes.Wear:InvokeServer(tonumber(saved.Shirt))
-        task.wait(0.1)
-    end
-    
-    if saved.Pants and tonumber(saved.Pants) then
-        Remotes.Wear:InvokeServer(tonumber(saved.Pants))
-        task.wait(0.1)
-    end
-    
-    for _, accId in ipairs(saved.Accessories) do
-        if tonumber(accId) then
-            Remotes.Wear:InvokeServer(tonumber(accId))
-            task.wait(0.1)
-        end
-    end
-    
-    if saved.BodyColors then
-        Remotes.ChangeBodyColor:FireServer(saved.BodyColors)
-    end
-end
-
 Tab:AddButton({
     Name = "نسخ السكن",
     Callback = function()
@@ -2775,11 +2797,18 @@ Tab:AddButton({
             return
         end
         
+        OriginalSkin = SaveOriginalSkin()
+        
         if CopyType == "خارجي" then
-            local savedItems = GetCurrentSavedItems()
-            
             local target = Players:FindFirstChild(Target)
-            if not target then return end
+            if not target then
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "خطأ",
+                    Text = "اللاعب غير موجود",
+                    Duration = 3
+                })
+                return
+            end
             
             local success = pcall(function()
                 local userId = target.UserId
@@ -2814,9 +2843,6 @@ Tab:AddButton({
                 end
             end)
             
-            task.wait(0.5)
-            ApplySavedItems(savedItems)
-            
             if success then
                 game:GetService("StarterGui"):SetCore("SendNotification", {
                     Title = "تم",
@@ -2836,29 +2862,10 @@ Tab:AddButton({
         
         Remotes.ResetCharacterAppearance:FireServer()
         
-        local LP = Players.LocalPlayer
-        local LChar = LP.Character
         local TPlayer = Players:FindFirstChild(Target)
         if not TPlayer or not TPlayer.Character then return end
-        local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
         local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if not LHumanoid or not THumanoid then return end
-        
-        local LDesc = LHumanoid:GetAppliedDescription()
-        for _, acc in ipairs(LDesc:GetAccessories(true)) do
-            if acc.AssetId and tonumber(acc.AssetId) then
-                Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
-            end
-        end
-        if tonumber(LDesc.Shirt) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
-        end
-        if tonumber(LDesc.Pants) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
-        end
-        if tonumber(LDesc.Face) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
-        end
+        if not THumanoid then return end
         
         local PDesc = THumanoid:GetAppliedDescription()
         local argsBody = {
@@ -2914,6 +2921,29 @@ Tab:AddButton({
         end
     end
 })
+
+Tab:AddButton({
+    Name = "ارجع لسكنك الأصلي",
+    Callback = function()
+        if not OriginalSkin then
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "خطأ",
+                Text = "ما في سكن محفوظ ترجع له",
+                Duration = 3
+            })
+            return
+        end
+        
+        ApplySkin(OriginalSkin)
+        
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "تم",
+            Text = "تم الرجوع للسكن الأصلي",
+            Duration = 3
+        })
+    end
+})
+
 
 local TrollTab = Window:MakeTab({"التخريب", "rbxassetid://"})
 
