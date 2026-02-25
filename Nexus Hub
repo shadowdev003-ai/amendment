@@ -2631,7 +2631,6 @@ end
 
 hacktab:AddButton({Name = "Arceus", Callback = function() safeLoad("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3") end})
 hacktab:AddButton({Name = "Synapse X", Callback = function() safeLoad("https://raw.githubusercontent.com/AR3AB/AR3AB/main/README.md") end})
-
 local Tab = Window:MakeTab({"نسخ سكنات", "rbxassetid://"})
 Tab:AddSection({ Name = "نسخ سكنات قويته ف لا حد يجي يقلي انت بايكه " })
 
@@ -2782,7 +2781,7 @@ Tab:AddButton({
         if not Target then
             game:GetService("StarterGui"):SetCore("SendNotification", {
                 Title = "خطأ",
-                Text = "اختر لاعب اولا",
+                Text = "لا يمكنك نسخ سكن المطور",
                 Duration = 3
             })
             return
@@ -2862,10 +2861,29 @@ Tab:AddButton({
         
         Remotes.ResetCharacterAppearance:FireServer()
         
+        local LP = Players.LocalPlayer
+        local LChar = LP.Character
         local TPlayer = Players:FindFirstChild(Target)
         if not TPlayer or not TPlayer.Character then return end
+        local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
         local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if not THumanoid then return end
+        if not LHumanoid or not THumanoid then return end
+        
+        local LDesc = LHumanoid:GetAppliedDescription()
+        for _, acc in ipairs(LDesc:GetAccessories(true)) do
+            if acc.AssetId and tonumber(acc.AssetId) then
+                Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
+            end
+        end
+        if tonumber(LDesc.Shirt) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
+        end
+        if tonumber(LDesc.Pants) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
+        end
+        if tonumber(LDesc.Face) then
+            Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
+        end
         
         local PDesc = THumanoid:GetAppliedDescription()
         local argsBody = {
@@ -2943,8 +2961,6 @@ Tab:AddButton({
         })
     end
 })
-
-
 local TrollTab = Window:MakeTab({"التخريب", "rbxassetid://"})
 
 TrollTab:AddSection({Name = "انشاء الله التخريب بيعجبك"})
