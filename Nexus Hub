@@ -2754,29 +2754,10 @@ Tab:AddButton({
         
         Remotes.ResetCharacterAppearance:FireServer()
 
-        local LP = Players.LocalPlayer
-        local LChar = LP.Character
         local TPlayer = Players:FindFirstChild(Target)
         if not TPlayer or not TPlayer.Character then return end
-        local LHumanoid = LChar and LChar:FindFirstChildOfClass("Humanoid")
         local THumanoid = TPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if not LHumanoid or not THumanoid then return end
-
-        local LDesc = LHumanoid:GetAppliedDescription()
-        for _, acc in ipairs(LDesc:GetAccessories(true)) do
-            if acc.AssetId and tonumber(acc.AssetId) then
-                Remotes.Wear:InvokeServer(tonumber(acc.AssetId))
-            end
-        end
-        if tonumber(LDesc.Shirt) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Shirt))
-        end
-        if tonumber(LDesc.Pants) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Pants))
-        end
-        if tonumber(LDesc.Face) then
-            Remotes.Wear:InvokeServer(tonumber(LDesc.Face))
-        end
+        if not THumanoid then return end
 
         local PDesc = THumanoid:GetAppliedDescription()
         local argsBody = {
