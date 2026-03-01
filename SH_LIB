@@ -1352,10 +1352,10 @@ AddEle("Button", function(parent, props, ...)
 	}), props), "Frame")
 	
 	New.MouseEnter:Connect(function()
-		New.BackgroundTransparency = 0.4
+		CreateTween({New, "BackgroundTransparency", 0.4, 0.3})
 	end)
 	New.MouseLeave:Connect(function()
-		New.BackgroundTransparency = 0
+		CreateTween({New, "BackgroundTransparency", 0, 0.3})
 	end)
 	if args[1] then
 		New.Activated:Connect(args[1])
@@ -1370,6 +1370,7 @@ AddEle("Gradient", function(parent, props, ...)
 	}), props), "Gradient")
 	return New
 end)
+
 
 local function ButtonFrame(Instance, Title, Description, HolderSize)
 	local TitleL = InsertTheme(Create("TextLabel", {
