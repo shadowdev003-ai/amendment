@@ -1191,14 +1191,11 @@ local GetFlag, SetFlag, CheckFlag do
 	end)
 end
 
-local ScreenGui = Create("ScreenGui", CoreGui, {
-	Name = "Nexus Library V1",
-}, {
-	Create("UIScale", {
-		Scale = UIScale,
-		Name = "Scale"
-	})
-})
+local Main = InsertTheme(Create("Frame", ScreenGui, {
+    Name = "Main",
+    BackgroundColor3 = Theme["Color Theme"]
+}), "Theme")
+
 local ClickSound = Instance.new("Sound", ScreenGui)
 ClickSound.SoundId = "rbxassetid://1412830636"
 ClickSound.Volume = 0.5
