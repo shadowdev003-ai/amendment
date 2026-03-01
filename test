@@ -4044,17 +4044,7 @@ local function startAssaultLoop()
     end)
 end
 
-FunTab:AddToggle({
-    Name = "تجميد اللاعبين جديد ينيك الاعبين حرفيا",
-    Description = "يقوم بتوزيع 10000 طلقه علي كل لاعب لتجميده يعني ينيكه حرفيا",
-    Default = false,
-    Callback = function(state)
-        attackEnabled = state
-        if attackEnabled then
-            startAssaultLoop()
-        end
-    end
-})
+
 
 FunTab:AddSection({ "هالة ابواب" })
 
@@ -4341,222 +4331,358 @@ FunTab:AddToggle({
     end
 })
 
-local Tab19 = Window:MakeTab({
-    "تخريب سماء",
-    "rbxassetid://114769879906735"
+
+local SkyboxTab = Window:MakeTab({ Title = "SKYBOX FE", Icon = "rbxassetid://114769879906735" })
+
+local skyboxEnabled = false
+local skyboxTrack = nil
+local rigidTrack = nil
+local savedNukeBody = {}
+
+local function stopAllAnimations()
+    if rigidTrack then
+        pcall(function()
+            rigidTrack:Stop()
+            rigidTrack:Destroy()
+        end)
+        rigidTrack = nil
+    end
+    
+    if skyboxTrack then
+        pcall(function()
+            skyboxTrack:Stop()
+            skyboxTrack:Destroy()
+        end)
+        skyboxTrack = nil
+    end
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            local animator = humanoid:FindFirstChild("Animator")
+            if animator then
+                for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+                    if track.Animation then
+                        local animId = track.Animation.AnimationId
+                        if animId == "rbxassetid://70883871260184" or animId == "rbxassetid://3695333486" then
+                            pcall(function()
+                                track:Stop()
+                            end)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+SkyboxTab:AddToggle({
+    Name = "V1",
+    Default = false,
+    Callback = function(value)
+        skyboxEnabled = value
+        
+        if value then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    local description = humanoid:GetAppliedDescription()
+                    
+                    savedNukeBody = {
+                        Torso = description.Torso,
+                        RightArm = description.RightArm,
+                        LeftArm = description.LeftArm,
+                        RightLeg = description.RightLeg,
+                        LeftLeg = description.LeftLeg,
+                        Head = description.Head
+                    }
+                    
+                    task.wait(0.2)
+                    
+                    local args = {
+                        [1] = 123402086843885,
+                        [2] = 100839513065432,
+                        [3] = 78300682916056,
+                        [4] = 86276701020724,
+                        [5] = 78409653958165,
+                        [6] = 15093053680
+                    }
+                    
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(args)
+                    end)
+                    
+                    task.wait(0.3)
+                    
+                    local newAnim = Instance.new("Animation")
+                    newAnim.AnimationId = "rbxassetid://70883871260184"
+                    
+                    skyboxTrack = humanoid:LoadAnimation(newAnim)
+                    skyboxTrack.Priority = Enum.AnimationPriority.Action4
+                    skyboxTrack:Play(0.1, 1, 0.01)
+                    
+                    task.wait(0.5)
+                    
+                    local plankAnim = Instance.new("Animation")
+                    plankAnim.AnimationId = "rbxassetid://3695333486"
+                    rigidTrack = humanoid:LoadAnimation(plankAnim)
+                    rigidTrack.Priority = Enum.AnimationPriority.Movement
+                    rigidTrack:Play(0.1, 1, 0)
+                end
+            end
+        else
+            stopAllAnimations()
+            
+            task.wait(0.2)
+            
+            if next(savedNukeBody) then
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                
+                if character then
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        local restoreBody = {
+                            [1] = savedNukeBody.Torso,
+                            [2] = savedNukeBody.RightArm,
+                            [3] = savedNukeBody.LeftArm,
+                            [4] = savedNukeBody.RightLeg,
+                            [5] = savedNukeBody.LeftLeg,
+                            [6] = savedNukeBody.Head
+                        }
+                        
+                        local args = {
+                            [1] = restoreBody
+                        }
+                        
+                        pcall(function()
+                            game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                        end)
+                        
+                        savedNukeBody = {}
+                    end
+                end
+            end
+        end
+    end
 })
-Tab19:AddButton({
-Name = "تخريب سماء Skiliton نادر",
-Callback = function()
-local imageOne = "http://www.roblox.com/asset/?id=169585459"
-local imageTwo = "http://www.roblox.com/asset/?id=169585475"
-local imageThree = "http://www.roblox.com/asset/?id=169585485"
-local imageFour = "http://www.roblox.com/asset/?id=169585502"
-local imageFive = "http://www.roblox.com/asset/?id=169585515"
-local imageSix = "http://www.roblox.com/asset/?id=169585502"
-local imageSeven = "http://www.roblox.com/asset/?id=169585485"
-local imageEight = "http://www.roblox.com/asset/?id=169585475"
-local Spooky = Instance.new("Sound", workspace)
-Spooky.Name = "Spooky"
-Spooky.SoundId = "rbxassetid://174270407"
-Spooky.Volume = 15
-Spooky.Looped = true
-Spooky:Play()
-local Sky = Instance.new("Sky", game.Lighting)
-Sky.SkyboxBk = imageOne
-Sky.SkyboxDn = imageOne
-Sky.SkyboxFt = imageOne
-Sky.SkyboxLf = imageOne
-Sky.SkyboxRt = imageOne
-Sky.SkyboxUp = imageOne
-while true do
-Sky.SkyboxBk = imageOne
-Sky.SkyboxDn = imageOne
-Sky.SkyboxFt = imageOne
-Sky.SkyboxLf = imageOne
-Sky.SkyboxRt = imageOne
-Sky.SkyboxUp = imageOne
-task.wait(0.15)
-Sky.SkyboxBk = imageTwo
-Sky.SkyboxDn = imageTwo
-Sky.SkyboxFt = imageTwo
-Sky.SkyboxLf = imageTwo
-Sky.SkyboxRt = imageTwo
-Sky.SkyboxUp = imageTwo
-task.wait(0.15)
-Sky.SkyboxBk = imageThree
-Sky.SkyboxDn = imageThree
-Sky.SkyboxFt = imageThree
-Sky.SkyboxLf = imageThree
-Sky.SkyboxRt = imageThree
-Sky.SkyboxUp = imageThree
-task.wait(0.15)
-Sky.SkyboxBk = imageFour
-Sky.SkyboxDn = imageFour
-Sky.SkyboxFt = imageFour
-Sky.SkyboxLf = imageFour
-Sky.SkyboxRt = imageFour
-Sky.SkyboxUp = imageFour
-task.wait(0.15)
-Sky.SkyboxBk = imageFive
-Sky.SkyboxDn = imageFive
-Sky.SkyboxFt = imageFive
-Sky.SkyboxLf = imageFive
-Sky.SkyboxRt = imageFive
-Sky.SkyboxUp = imageFive
-task.wait(0.15)
-Sky.SkyboxBk = imageSix
-Sky.SkyboxDn = imageSix
-Sky.SkyboxFt = imageSix
-Sky.SkyboxLf = imageSix
-Sky.SkyboxRt = imageSix
-Sky.SkyboxUp = imageSix
-task.wait(0.15)
-Sky.SkyboxBk = imageSeven
-Sky.SkyboxDn = imageSeven
-Sky.SkyboxFt = imageSeven
-Sky.SkyboxLf = imageSeven
-Sky.SkyboxRt = imageSeven
-Sky.SkyboxUp = imageSeven
-task.wait(0.15)
-Sky.SkyboxBk = imageEight
-Sky.SkyboxDn = imageEight
-Sky.SkyboxFt = imageEight
-Sky.SkyboxLf = imageEight
-Sky.SkyboxRt = imageEight
-Sky.SkyboxUp = imageEight
-task.wait(0.15)
+local nukeFlashEnabled = false
+local nukeFlashTrack = nil
+local flashRigidTrack = nil
+local savedNukeFlashBody = {}
+
+local function stopFlashAnimations()
+    if flashRigidTrack then
+        pcall(function()
+            flashRigidTrack:Stop()
+            flashRigidTrack:Destroy()
+        end)
+        flashRigidTrack = nil
+    end
+    
+    if nukeFlashTrack then
+        pcall(function()
+            nukeFlashTrack:Stop()
+            nukeFlashTrack:Destroy()
+        end)
+        nukeFlashTrack = nil
+    end
 end
-end
+
+SkyboxTab:AddToggle({
+    Name = "V2",
+    Default = false,
+    Callback = function(value)
+        nukeFlashEnabled = value
+        
+        if value then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    local description = humanoid:GetAppliedDescription()
+                    
+                    savedNukeFlashBody = {
+                        Torso = description.Torso,
+                        RightArm = description.RightArm,
+                        LeftArm = description.LeftArm,
+                        RightLeg = description.RightLeg,
+                        LeftLeg = description.LeftLeg,
+                        Head = description.Head
+                    }
+                    
+                    task.wait(0.2)
+                    
+                    local args = {
+                        [1] = 123402086843885,
+                        [2] = 100839513065432,
+                        [3] = 78300682916056,
+                        [4] = 86276701020724,
+                        [5] = 78409653958165,
+                        [6] = 15093053680
+                    }
+                    
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(args)
+                    end)
+                    
+                    task.wait(0.3)
+                    
+                    local newAnim = Instance.new("Animation")
+                    newAnim.AnimationId = "rbxassetid://70883871260184"
+                    
+                    nukeFlashTrack = humanoid:LoadAnimation(newAnim)
+                    nukeFlashTrack.Priority = Enum.AnimationPriority.Action4
+                    nukeFlashTrack:Play(0.1, 1, 1)
+                    
+                    task.wait(0.1)
+                    nukeFlashTrack:AdjustSpeed(5)
+                    
+                    task.wait(0.3)
+                    
+                    local plankAnim = Instance.new("Animation")
+                    plankAnim.AnimationId = "rbxassetid://3695333486"
+                    flashRigidTrack = humanoid:LoadAnimation(plankAnim)
+                    flashRigidTrack.Priority = Enum.AnimationPriority.Movement
+                    flashRigidTrack:Play(0.1, 1, 0)
+                end
+            end
+        else
+            stopFlashAnimations()
+            
+            task.wait(0.2)
+            
+            if next(savedNukeFlashBody) then
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                
+                if character then
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        local restoreBody = {
+                            [1] = savedNukeFlashBody.Torso,
+                            [2] = savedNukeFlashBody.RightArm,
+                            [3] = savedNukeFlashBody.LeftArm,
+                            [4] = savedNukeFlashBody.RightLeg,
+                            [5] = savedNukeFlashBody.LeftLeg,
+                            [6] = savedNukeFlashBody.Head
+                        }
+                        
+                        local args = {
+                            [1] = restoreBody
+                        }
+                        
+                        pcall(function()
+                            game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                        end)
+                        
+                        savedNukeFlashBody = {}
+                    end
+                end
+            end
+        end
+    end
 })
 
-local Section = Tab19:AddSection({"تخريب الجو تحت تعديل لأنه معطل"})
-local selectedColor = nil
-local dropdown = Tab19:AddDropdown({
-Name = "اختار لون التخريب",
-Options = {"أحمر", "بطه", "أبيض"},
-Default = "أحمر",
-Callback = function(Value)
-selectedColor = Value
-end
-})
-
-Tab19:AddButton({
-Name = "ابدأ",
-Description = "إذا تريد توقفه سوي رست",
-Callback = function()
-local chatService = game:GetService("TextChatService")
-if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
-local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
-if channel then
-channel:SendAsync("server:(STR Wath hacked the server) ")
-end
-end
-if selectedColor == "أحمر" then
-local args = {5831429758}
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("WearShirt"):InvokeServer(unpack(args))
-elseif selectedColor == "بطه" then
-local args = {5438523557}
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("WearShirt"):InvokeServer(unpack(args))
-elseif selectedColor == "أبيض" then
-local args = {7402745350}
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("WearShirt"):InvokeServer(unpack(args))
-end
-task.wait(1)
-local args2 = {{100839513065432}}
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody"):InvokeServer(unpack(args2))
-local function missing(t, f, fallback)
-if type(f) == t then return f end
-return fallback 
-end
-cloneref = missing("function", cloneref, function(...) return ... end)
-local Services = setmetatable({}, {
-__index = function(_, name)
-return cloneref(game:GetService(name))
-end
-})
-local Players = Services.Players
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-player.CharacterAdded:Connect(function(newCharacter)
-character = newCharacter
-humanoid = character:WaitForChild("Humanoid")
-end)
-local Settings = {
-["Fade In"] = 0.1,
-["Fade Out"] = 0.1,
-["Weight"] = 1,
-["Speed"] = 1,
-["Time Position"] = 0
-}
-local CurrentTrack
-local function LoadTrack(id)
-if CurrentTrack then 
-CurrentTrack:Stop(0) 
-end
-local animId
-local ok, result = pcall(function()
-return game:GetObjects("rbxassetid://" .. tostring(id))
-end)
-if ok and result and #result > 0 then
-local anim = result[1]
-if anim:IsA("Animation") then
-animId = anim.AnimationId
-else
-animId = "rbxassetid://" .. tostring(id)
-end
-else
-animId = "rbxassetid://" .. tostring(id)
-end
-local newAnim = Instance.new("Animation")
-newAnim.AnimationId = animId
-local newTrack = humanoid:LoadAnimation(newAnim)
-newTrack.Priority = Enum.AnimationPriority.Action4
-local weight = Settings["Weight"]
-if weight == 0 then weight = 0.001 end
-newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
-CurrentTrack = newTrack
-CurrentTrack.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * CurrentTrack.Length
-return newTrack
-end
-local EmoteId = 101852027997337
-LoadTrack(EmoteId)
-end
-})
-
-local Section2 = Tab19:AddSection({"خلي ال SkyBox يلف"})
-local spinning = false
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild("HumanoidRootPart")
-player.CharacterAdded:Connect(function(c)
-character = c
-hrp = c:WaitForChild("HumanoidRootPart")
-end)
-Tab19:AddToggle({
-Name = "لف ال skybox",
-Default = false,
-Callback = function(Value)
-spinning = Value
-if Value then
-local chatService = game:GetService("TextChatService")
-if chatService.ChatVersion == Enum.ChatVersion.TextChatService then
-local channel = chatService.TextChannels:FindFirstChild("RBXGeneral")
-if channel then
-channel:SendAsync("STR: sky box Turning ")
+local LocalPlayer = Players.LocalPlayer
+
+local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+local ResetAppearance = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ResetCharacterAppearance")
+
+local LoopAnim = false
+local CurrentTrack
+local Initialized = false
+
+local function ApplyFreshBang()
+	pcall(function()
+		local args = {
+			[1] = {
+				96655874457685,
+				123402086843885,
+				78300682916056,
+				86276701020724,
+				78409653958165,
+				120668655481073
+			}
+		}
+		ChangeCharacterBody:InvokeServer(unpack(args))
+	end)
 end
+
+local function PlayAnimation()
+	local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local humanoid = char:WaitForChild("Humanoid")
+	local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
+
+	local anim = Instance.new("Animation")
+	anim.AnimationId = "rbxassetid://70883871260184"
+
+	local track = animator:LoadAnimation(anim)
+	track.Priority = Enum.AnimationPriority.Action
+	track.Looped = false
+	track:Play()
+
+	CurrentTrack = track
 end
-task.spawn(function()
-while spinning and hrp and hrp.Parent do
-hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(20), 0)
-task.wait(0.05)
+
+local function StopEverything()
+	LoopAnim = false
+
+	if CurrentTrack then
+		pcall(function()
+			CurrentTrack:Stop()
+		end)
+		CurrentTrack = nil
+	end
+
+	pcall(function()
+		ResetAppearance:FireServer()
+	end)
+
+	task.wait(0.5)
+
+	local char = LocalPlayer.Character
+	if char then
+		local hum = char:FindFirstChildOfClass("Humanoid")
+		if hum then
+			hum.Health = 0
+		end
+	end
 end
-end)
-end
-end
+
+SkyboxTab:AddToggle({
+	Name = "V4",
+	Default = false,
+	Callback = function(Value)
+		if not Initialized then
+			Initialized = true
+			return
+		end
+
+		if Value then
+			if LoopAnim then return end
+			LoopAnim = true
+
+			task.spawn(function()
+				while LoopAnim do
+					PlayAnimation()
+					task.wait(0.1)
+				end
+			end)
+
+			task.delay(1.2, ApplyFreshBang)
+		else
+			StopEverything()
+		end
+	end
 })
 
 local bombTab = Window:MakeTab({
