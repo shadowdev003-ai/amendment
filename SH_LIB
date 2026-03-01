@@ -2697,6 +2697,44 @@ function Tab:AddSideDropdown()
     })
 end
 
+function Tab:AddThemeDropdown()
+    local NamesInArabic = {
+        ["بنفسجي غامق جداً"] = "Darker",
+        ["بنفسجي غامق"] = "Dark",
+        ["أحمر"] = "Red",
+        ["أزرق"] = "Blue",
+        ["أخضر"] = "Green",
+        ["برتقالي"] = "Orange",
+        ["وردي"] = "Pink",
+        ["أصفر"] = "Yellow",
+        ["سماوي"] = "Cyan",
+        ["أبيض"] = "White",
+        ["بنفسجي"] = "Purple",
+        ["رمادي"] = "Gray",
+        ["ليموني"] = "Lime",
+        ["ذهبي"] = "Gold",
+        ["سماوي فاتح"] = "Sky"
+    }
+
+    local ArabicOptions = {}
+    for ArabicName, _ in pairs(NamesInArabic) do
+        table.insert(ArabicOptions, ArabicName)
+    end
+
+    return Tab:AddDropdown({
+        Name = "تغيير ثيم الواجهة",
+        Options = ArabicOptions,
+        Default = "بنفسجي غامق جداً",
+        Callback = function(Value)
+            local EnglishName = NamesInArabic[Value]
+            if redzlib.Themes[EnglishName] then
+                redzlib:SetTheme(EnglishName)
+            end
+        end
+    })
+end
+
+
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
 			local SDesc = Configs.Desc or Configs.Description or ""
