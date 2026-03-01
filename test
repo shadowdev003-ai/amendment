@@ -4044,7 +4044,17 @@ local function startAssaultLoop()
     end)
 end
 
-
+FunTab:AddToggle({
+    Name = "تجميد اللاعبين جديد ينيك الاعبين حرفيا",
+    Description = "لا تفعله بيعلق و مبيشتغل",
+    Default = false,
+    Callback = function(state)
+        attackEnabled = state
+        if attackEnabled then
+            startAssaultLoop()
+        end
+    end
+})
 
 FunTab:AddSection({ "هالة ابواب" })
 
@@ -4330,7 +4340,6 @@ FunTab:AddToggle({
         end
     end
 })
-
 
 local SkyboxTab = Window:MakeTab({ Title = "SKYBOX FE", Icon = "rbxassetid://114769879906735" })
 
