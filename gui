@@ -2605,7 +2605,8 @@ end
         Size = UDim2.new(1, -14, 0, 120),
         BackgroundColor3 = redzlib.Themes[redzlib.Save.Theme]["PlayerInfo_Back"],
         BackgroundTransparency = 0.5,
-        BorderSizePixel = 0
+        BorderSizePixel = 0,
+        ZIndex = 10
     }, "PlayerInfo_Back")
 
     Make("Corner", infoFrame, UDim.new(0, 15))
@@ -2620,14 +2621,16 @@ end
         Size = UDim2.new(0, 80, 0, 80),
         Position = UDim2.new(0, 10, 0.5, -40),
         BackgroundTransparency = 1,
-        Image = Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+        Image = Players:GetUserThumbnailAsync(Player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150),
+        ZIndex = 11
     })
     Make("Corner", avatarImage, UDim.new(0, 15))
 
     local infoList = Create("Frame", infoFrame, {
         Size = UDim2.new(1, -110, 1, -20),
         Position = UDim2.new(0, 100, 0, 10),
-        BackgroundTransparency = 1
+        BackgroundTransparency = 1,
+        ZIndex = 11
     })
 
     local timeLbl = Create("TextLabel", infoList, {
@@ -2637,7 +2640,8 @@ end
         TextSize = 14,
         TextColor3 = redzlib.Themes[redzlib.Save.Theme]["PlayerInfo_Stroke"],
         TextXAlignment = Enum.TextXAlignment.Left,
-        Text = "Time: 00:00:00"
+        Text = "Time: 00:00:00",
+        ZIndex = 12
     }, "PlayerInfo_Stroke")
 
     local playersLbl = Create("TextLabel", infoList, {
@@ -2648,7 +2652,8 @@ end
         TextSize = 14,
         TextColor3 = redzlib.Themes[redzlib.Save.Theme]["PlayerInfo_Text"],
         TextXAlignment = Enum.TextXAlignment.Left,
-        Text = "Players: 0"
+        Text = "Players: " .. #Players:GetPlayers(),
+        ZIndex = 12
     }, "PlayerInfo_Text")
 
     local userLbl = Create("TextLabel", infoList, {
@@ -2659,7 +2664,8 @@ end
         TextSize = 14,
         TextColor3 = redzlib.Themes[redzlib.Save.Theme]["PlayerInfo_Text"],
         TextXAlignment = Enum.TextXAlignment.Left,
-        Text = "Username: " .. Player.Name
+        Text = "Username: " .. Player.Name,
+        ZIndex = 12
     }, "PlayerInfo_Text")
 
     local statusLbl = Create("TextLabel", infoList, {
@@ -2670,7 +2676,8 @@ end
         TextSize = 14,
         TextColor3 = redzlib.Themes[redzlib.Save.Theme]["Color Dark Text"],
         TextXAlignment = Enum.TextXAlignment.Left,
-        Text = "You Are Using: Nexus Hub"
+        Text = "You Are Using: Nexus Hub",
+        ZIndex = 12
     }, "Color Dark Text")
 
     local startTime = tick()
@@ -2684,7 +2691,6 @@ end
 
     return infoFrame
 end
-
 
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
