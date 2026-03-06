@@ -2600,9 +2600,8 @@ function Tab:AddSideDropdown()
         end
     })
 end
-
-function Tab:AddPlayerInfo()
-    local infoFrame = Create("Frame", FrameHolder, {
+        function Tab:AddPlayerInfo()
+    local infoFrame = Create("Frame", Container, {
         Size = UDim2.new(1, -14, 0, 120),
         BackgroundColor3 = redzlib.Themes[redzlib.Save.Theme]["PlayerInfo_Back"],
         BackgroundTransparency = 0.5,
