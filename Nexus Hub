@@ -22,7 +22,7 @@ local args = {
 }
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eColo1r"):FireServer(unpack(args))
 
-redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowdev003-ai/amendment/refs/heads/main/gui"))()
+redzlib = loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowdev003-ai/amendment/refs/heads/main/Lib"))()
 Window = redzlib:MakeWindow({
   Title = "Nexus Hub",
   SubTitle = "by Shadow",
