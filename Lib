@@ -1,4 +1,3 @@
-
 local success, config = pcall(function() 
     return loadstring(game:HttpGet("https://pastebin.com/raw/4tLkL6KP"))() 
 end)
