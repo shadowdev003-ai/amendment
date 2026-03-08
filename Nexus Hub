@@ -54,7 +54,9 @@ task.defer(function()
 end)
 
 Tab1 = Window:MakeTab({"الحقوق"})
+
 Tab1:AddInfoPlayer()
+
 Tab1:AddDiscordInvite({
   Name = "Nexus Hub",
   Description = "انضم إلى مجتمعنا على تليجرام لتكون جزءًا من التحديثات القادمة والمشاريع الجديدة",
@@ -62,7 +64,7 @@ Tab1:AddDiscordInvite({
   Invite = "https://t.me/+MsdEPY0EixQ4MjA0"
 })
 
-Tab1:AddSection({"هنا كل حقوق مطورين السكربت"})
+Tab1:AddSection({"هنا كل حقوق مطور السكربت"})
 
 Tab1:AddButton({
   Name = "اضغط هنا ل نسخ حساب المطور  في TikTok",
