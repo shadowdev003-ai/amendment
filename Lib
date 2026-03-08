@@ -1,3 +1,4 @@
+
 local success, config = pcall(function() 
     return loadstring(game:HttpGet("https://pastebin.com/raw/4tLkL6KP"))() 
 end)
@@ -1957,7 +1958,26 @@ end
 			BackgroundTransparency = 1,
 			ImageTransparency = (FirstTab and 0.3) or 0
 		}), "Text")
-		
+		local Glow = Instance.new("ImageLabel")
+Glow.Parent = LabelIcon
+Glow.Size = UDim2.new(2.2, 0, 2.2, 0)
+Glow.Position = UDim2.new(-0.6, 0, -0.6, 0)
+Glow.BackgroundTransparency = 1
+Glow.Image = "rbxassetid://5028857084"
+Glow.ImageColor3 = Theme["Color Theme"]
+Glow.ImageTransparency = 1
+Glow.ZIndex = LabelIcon.ZIndex - 1
+
+local function IconEffect(img)
+    LabelIcon.Image = img or ""
+    CreateTween({Glow, "ImageTransparency", 0.15, 0.25})
+    CreateTween({LabelIcon, "Size", UDim2.new(0, 16, 0, 16), 0.25})
+    task.delay(0.25, function()
+        CreateTween({Glow, "ImageTransparency", 1, 0.35})
+        CreateTween({LabelIcon, "Size", UDim2.new(0, 13, 0, 13), 0.35})
+    end)
+end
+
 		local Selected = InsertTheme(Create("Frame", TabSelect, {
 			Size = FirstTab and UDim2.new(0, 4, 0, 4) or UDim2.new(0, 4, 0, 13),
 			Position = UDim2.new(0, 1, 0.5),
@@ -1995,25 +2015,34 @@ end
 		if not FirstTab then Container.Parent = Containers end
 		
 		local function Tabs()
-			if Container.Parent then return end
-			for _,Frame in pairs(ContainerList) do
-				if Frame:IsA("ScrollingFrame") and Frame ~= Container then
-					Frame.Parent = nil
-				end
-			end
-			Container.Parent = Containers
-			Container.Size = UDim2.new(1, 0, 1, 150)
-			table.foreach(redzlib.Tabs, function(_,Tab)
-				if Tab.Cont ~= Container then
-					Tab.func:Disable()
-				end
-			end)
-			CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
-			CreateTween({LabelTitle, "TextTransparency", 0, 0.35})
-			CreateTween({LabelIcon, "ImageTransparency", 0, 0.35})
-			CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 13), 0.35})
-			CreateTween({Selected, "BackgroundTransparency", 0, 0.35})
-		end
+    if Container.Parent then return end
+    for _, Frame in pairs(ContainerList) do
+        if Frame:IsA("ScrollingFrame") and Frame ~= Container then
+            Frame.Parent = nil
+        end
+    end
+    Container.Parent = Containers
+    Container.Size = UDim2.new(1, 0, 1, 150)
+    table.foreach(redzlib.Tabs, function(_, Tab)
+        if Tab.Cont ~= Container then
+            Tab.func:Disable()
+        end
+    end)
+    if not IconBusy then
+        IconBusy = true
+        IconEffect(OpenIcon)
+        task.delay(2, function()
+            IconEffect(OriginalIcon)
+            IconBusy = false
+        end)
+    end
+    CreateTween({Container, "Size", UDim2.new(1, 0, 1, 0), 0.3})
+    CreateTween({LabelTitle, "TextTransparency", 0, 0.35})
+    CreateTween({LabelIcon, "ImageTransparency", 0, 0.35})
+    CreateTween({Selected, "Size", UDim2.new(0, 4, 0, 13), 0.35})
+    CreateTween({Selected, "BackgroundTransparency", 0, 0.35})
+end
+
 		TabSelect.Activated:Connect(Tabs)
 		
 		FirstTab = true
@@ -2100,40 +2129,67 @@ end
 			return Paragraph
 		end
 		function Tab:AddButton(Configs)
-			local BName = Configs[1] or Configs.Name or Configs.Title or "Button!"
-			local BDescription = Configs.Desc or Configs.Description or ""
-			local Callback = Funcs:GetCallback(Configs, 2)
-			
-			local FButton, LabelFunc = ButtonFrame(Container, BName, BDescription, UDim2.new(1, -20))
-			
-			local ButtonIcon = Create("ImageLabel", FButton, {
-				Size = UDim2.new(0, 14, 0, 14),
-				Position = UDim2.new(1, -10, 0.5),
-				AnchorPoint = Vector2.new(1, 0.5),
-				BackgroundTransparency = 1,
-				Image = "rbxassetid://10709791437"
-			})
-			
-			FButton.Activated:Connect(function()
-				Funcs:FireCallback(Callback)
-			end)
-			
-			local Button = {}
-			function Button:Visible(...) Funcs:ToggleVisible(FButton, ...) end
-			function Button:Destroy() FButton:Destroy() end
-			function Button:Callback(...) Funcs:InsertCallback(Callback, ...) end
-			function Button:Set(Val1, Val2)
-				if type(Val1) == "string" and type(Val2) == "string" then
-					LabelFunc:SetTitle(Val1)
-					LabelFunc:SetDesc(Val2)
-				elseif type(Val1) == "string" then
-					LabelFunc:SetTitle(Val1)
-				elseif type(Val1) == "function" then
-					Callback = Val1
-				end
-			end
-			return Button
-		end
+    local BName = Configs[1] or Configs.Name or Configs.Title or "Button!"
+    local BDescription = Configs.Desc or Configs.Description or ""
+    local Callback = Funcs:GetCallback(Configs, 2)
+    local FButton, LabelFunc = ButtonFrame(Container, BName, BDescription, UDim2.new(1, -20))
+
+    local ButtonIcon = Create("ImageLabel", FButton, {
+        Size = UDim2.new(0, 14, 0, 14),
+        Position = UDim2.new(1, -10, 0.5),
+        AnchorPoint = Vector2.new(1, 0.5),
+        BackgroundTransparency = 1,
+        Image = "rbxassetid://10709791437"
+    })
+
+    local DefaultIcon = "rbxassetid://10709791437"
+    local ClickIcon = "rbxassetid://10709769508"
+    local Busy = false
+
+    FButton.Activated:Connect(function()
+        if Busy then return end
+        Busy = true
+        ButtonIcon.Image = ClickIcon
+        local startPos = ButtonIcon.Position
+        local t = 0
+        local c
+        c = game:GetService("RunService").RenderStepped:Connect(function(dt)
+            t += dt
+            local offset = math.sin(t * 40) * 3
+            ButtonIcon.Position = startPos + UDim2.new(0, offset, 0, 0)
+            if t >= 1 then
+                c:Disconnect()
+                ButtonIcon.Position = startPos
+                ButtonIcon.Image = DefaultIcon
+                Busy = false
+            end
+        end)
+        Funcs:FireCallback(Callback)
+    end)
+
+    local Button = {}
+    function Button:Visible(...)
+        Funcs:ToggleVisible(FButton, ...)
+    end
+    function Button:Destroy()
+        FButton:Destroy()
+    end
+    function Button:Callback(...)
+        Funcs:InsertCallback(Callback, ...)
+    end
+    function Button:Set(Val1, Val2)
+        if type(Val1) == "string" and type(Val2) == "string" then
+            LabelFunc:SetTitle(Val1)
+            LabelFunc:SetDesc(Val2)
+        elseif type(Val1) == "string" then
+            LabelFunc:SetTitle(Val1)
+        elseif type(Val1) == "function" then
+            Callback = Val1
+        end
+    end
+    return Button
+end
+
 		function Tab:AddToggle(Configs)
 			local TName = Configs[1] or Configs.Name or Configs.Title or "Toggle"
 			local TDesc = Configs.Desc or Configs.Description or ""
@@ -2593,6 +2649,106 @@ function Tab:AddSideDropdown()
         end
     })
 end
+function Tab:AddInfoPlayer()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    local LocalPlayer = Players.LocalPlayer
+
+    local Frame = Instance.new("Frame")
+    Frame.Parent = Container
+    Frame.Size = UDim2.new(1, -20, 0, 160)
+    Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    Frame.BorderSizePixel = 0
+    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 18)
+
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Parent = Frame
+    Stroke.Thickness = 1.6
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    Stroke.Color = Color3.new(1, 1, 1)
+
+    local Gradient = Instance.new("UIGradient")
+    Gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
+        ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+    }
+    Gradient.Parent = Stroke
+
+    RunService.Heartbeat:Connect(function(dt)
+        Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
+    end)
+
+    local AvatarFrame = Instance.new("Frame")
+    AvatarFrame.Parent = Frame
+    AvatarFrame.Size = UDim2.new(0, 78, 0, 78)
+    AvatarFrame.Position = UDim2.new(0, 16, 0.5, 0)
+    AvatarFrame.AnchorPoint = Vector2.new(0, 0.5)
+    AvatarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    AvatarFrame.BorderSizePixel = 0
+    Instance.new("UICorner", AvatarFrame).CornerRadius = UDim.new(1, 0)
+
+    local AvatarStroke = Instance.new("UIStroke")
+    AvatarStroke.Parent = AvatarFrame
+    AvatarStroke.Thickness = 1.2
+    AvatarStroke.Color = Theme["Color Theme"]
+
+    local Avatar = Instance.new("ImageLabel")
+    Avatar.Parent = AvatarFrame
+    Avatar.Size = UDim2.new(1, -6, 1, -6)
+    Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
+    Avatar.BackgroundTransparency = 1
+    Instance.new("UICorner", Avatar).CornerRadius = UDim.new(1, 0)
+    Avatar.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+
+    local TextFrame = Instance.new("Frame")
+    TextFrame.Parent = Frame
+    TextFrame.Position = UDim2.new(0, 110, 0, 12)
+    TextFrame.Size = UDim2.new(1, -125, 1, -24)
+    TextFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+    TextFrame.BorderSizePixel = 0
+    Instance.new("UICorner", TextFrame).CornerRadius = UDim.new(0, 12)
+
+    local TextStroke = Instance.new("UIStroke")
+    TextStroke.Parent = TextFrame
+    TextStroke.Thickness = 1
+    TextStroke.Color = Theme["Color Stroke"]
+
+    local Text = Instance.new("TextLabel")
+    Text.Parent = TextFrame
+    Text.Size = UDim2.new(1, -16, 1, -16)
+    Text.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Text.AnchorPoint = Vector2.new(0.5, 0.5)
+    Text.BackgroundTransparency = 1
+    Text.TextWrapped = true
+    Text.TextXAlignment = Enum.TextXAlignment.Center
+    Text.TextYAlignment = Enum.TextYAlignment.Center
+    Text.Font = Enum.Font.GothamBold
+    Text.TextSize = 13
+    Text.LineHeight = 1.1
+    Text.TextColor3 = Color3.fromRGB(235, 235, 235)
+    Text.ZIndex = 2
+
+    local startTime = os.time()
+
+    RunService.Heartbeat:Connect(function()
+        local e = os.time() - startTime
+        local h = math.floor(e / 3600)
+        local m = math.floor((e % 3600) / 60)
+        local s = e % 60
+        Text.Text = "Welcome\n" .. LocalPlayer.DisplayName .. "\n@" .. LocalPlayer.Name .. "\nID: " .. LocalPlayer.UserId .. "\n" .. os.date("%d/%m/%Y") .. "\n" .. string.format("%02d:%02d:%02d", h, m, s) .. "\n" .. os.date("%H:%M:%S")
+    end)
+
+    local InfoPlayer = {}
+    function InfoPlayer:Visible(...)
+        Funcs:ToggleVisible(Frame, ...)
+    end
+    function InfoPlayer:Destroy()
+        Frame:Destroy()
+    end
+    return InfoPlayer
+end
 
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
@@ -2795,104 +2951,163 @@ end
 			return TextBox
 		end
 			
-	function Tab:AddDiscordInvite(Configs)  -- ننشاء ديسكورد كذا كذا ما بنضيف لاكن نضيفه اذا احتجناه
-	local Title = Configs[1] or Configs.Name or Configs.Title or "Discord"
-	local Desc = Configs.Desc or Configs.Description or ""
-	local Logo = Configs[2] or Configs.Logo or ""
-	local Invite = Configs[3] or Configs.Invite or ""
+	function Tab:AddDiscordInvite(Configs)
+    local Title = Configs[1] or Configs.Name or Configs.Title or "Discord"
+    local Desc = Configs.Desc or Configs.Description or ""
+    local Logo = Configs[2] or Configs.Logo or ""
+    local Invite = Configs[3] or Configs.Invite or ""
 
-	local InviteHolder = Create("Frame", Container, {
-		Size = UDim2.new(1, 0, 0, 80),
-		Name = "Option",
-		BackgroundTransparency = 1
-	})
+    local InviteHolder = Create("Frame", Container, {
+        Size = UDim2.new(1, 0, 0, 80),
+        Name = "Option",
+        BackgroundTransparency = 1
+    })
 
-	local InviteLabel = Create("TextLabel", InviteHolder, {
-		Size = UDim2.new(1, 0, 0, 15),
-		Position = UDim2.new(0, 5),
-		TextColor3 = Color3.fromRGB(160, 100, 255),
-		Font = Enum.Font.GothamBold,
-		TextXAlignment = "Left",
-		BackgroundTransparency = 1,
-		TextSize = 10,
-		Text = Invite
-	})
+    local InviteLabel = Create("TextLabel", InviteHolder, {
+        Size = UDim2.new(1, 0, 0, 15),
+        Position = UDim2.new(0, 5),
+        TextColor3 = Theme["Color Theme"],
+        Font = Enum.Font.GothamBold,
+        TextXAlignment = "Left",
+        BackgroundTransparency = 1,
+        TextSize = 10,
+        Text = Invite
+    })
 
-	local FrameHolder = InsertTheme(Create("Frame", InviteHolder, {
-		Size = UDim2.new(1, 0, 0, 65),
-		AnchorPoint = Vector2.new(0, 1),
-		Position = UDim2.new(0, 0, 1),
-		BackgroundColor3 = Color3.fromRGB(90, 0, 150)
-	}), "Frame") Make("Corner", FrameHolder)
+    local FrameHolder = InsertTheme(Create("Frame", InviteHolder, {
+        Size = UDim2.new(1, 0, 0, 65),
+        AnchorPoint = Vector2.new(0, 1),
+        Position = UDim2.new(0, 0, 1),
+        BackgroundColor3 = Theme["Color Hub 2"]
+    }), "Frame")
+    Make("Corner", FrameHolder)
 
-	local ImageLabel = Create("ImageLabel", FrameHolder, {
-		Size = UDim2.new(0, 30, 0, 30),
-		Position = UDim2.new(0, 7, 0, 7),
-		Image = Logo,
-		BackgroundTransparency = 1
-	}) Make("Corner", ImageLabel, UDim.new(0, 4)) Make("Stroke", ImageLabel)
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Thickness = 1.6
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    Stroke.Color = Color3.new(1, 1, 1)
+    Stroke.Parent = FrameHolder
 
-	local LTitle = InsertTheme(Create("TextLabel", FrameHolder, {
-		Size = UDim2.new(1, -52, 0, 15),
-		Position = UDim2.new(0, 44, 0, 7),
-		Font = Enum.Font.GothamBold,
-		TextColor3 = Color3.fromRGB(230, 200, 255),
-		TextXAlignment = "Left",
-		BackgroundTransparency = 1,
-		TextSize = 10,
-		Text = Title
-	}), "Text")
+    local Gradient = Instance.new("UIGradient")
+    Gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
+        ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+    }
+    Gradient.Parent = Stroke
 
-	local LDesc = InsertTheme(Create("TextLabel", FrameHolder, {
-		Size = UDim2.new(1, -52, 0, 0),
-		Position = UDim2.new(0, 44, 0, 22),
-		TextWrapped = true,
-		AutomaticSize = "Y",
-		Font = Enum.Font.Gotham,
-		TextColor3 = Color3.fromRGB(190, 150, 255),
-		TextXAlignment = "Left",
-		BackgroundTransparency = 1,
-		TextSize = 8,
-		Text = Desc
-	}), "DarkText")
+    local Glow = Instance.new("ImageLabel")
+    Glow.Parent = FrameHolder
+    Glow.Size = UDim2.new(1.15, 0, 1.25, 0)
+    Glow.Position = UDim2.new(-0.075, 0, -0.125, 0)
+    Glow.BackgroundTransparency = 1
+    Glow.Image = "rbxassetid://5028857084"
+    Glow.ImageColor3 = Theme["Color Theme"]
+    Glow.ImageTransparency = 1
+    Glow.ZIndex = FrameHolder.ZIndex - 1
 
-	local JoinButton = Create("TextButton", FrameHolder, {
-		Size = UDim2.new(1, -14, 0, 16),
-		AnchorPoint = Vector2.new(0.5, 1),
-		Position = UDim2.new(0.5, 0, 1, -7),
-		Text = "Join",
-		Font = Enum.Font.GothamBold,
-		TextSize = 12,
-		TextColor3 = Color3.fromRGB(240, 220, 255),
-		BackgroundColor3 = Color3.fromRGB(120, 60, 200)
-	}) Make("Corner", JoinButton, UDim.new(0, 5))
+    local ImageLabel = Create("ImageLabel", FrameHolder, {
+        Size = UDim2.new(0, 30, 0, 30),
+        Position = UDim2.new(0, 7, 0, 7),
+        Image = Logo,
+        BackgroundTransparency = 1
+    })
+    Make("Corner", ImageLabel, UDim.new(0, 4))
+    Make("Stroke", ImageLabel)
 
-	local ClickDelay
-	JoinButton.Activated:Connect(function()
-		setclipboard(Invite)
-		if ClickDelay then return end
+    local LTitle = InsertTheme(Create("TextLabel", FrameHolder, {
+        Size = UDim2.new(1, -52, 0, 15),
+        Position = UDim2.new(0, 44, 0, 7),
+        Font = Enum.Font.GothamBold,
+        TextColor3 = Theme["Color Text"],
+        TextXAlignment = "Left",
+        BackgroundTransparency = 1,
+        TextSize = 10,
+        Text = Title
+    }), "Text")
 
-		ClickDelay = true
-		SetProps(JoinButton, {
-			Text = "Copied to Clipboard",
-			BackgroundColor3 = Color3.fromRGB(90, 40, 150),
-			TextColor3 = Color3.fromRGB(200, 180, 220)
-		}) task.wait(5)
-		SetProps(JoinButton, {
-			Text = "Join",
-			BackgroundColor3 = Color3.fromRGB(120, 60, 200),
-			TextColor3 = Color3.fromRGB(240, 220, 255)
-		}) ClickDelay = false
-	end)
+    local LDesc = InsertTheme(Create("TextLabel", FrameHolder, {
+        Size = UDim2.new(1, -52, 0, 0),
+        Position = UDim2.new(0, 44, 0, 22),
+        TextWrapped = true,
+        AutomaticSize = "Y",
+        Font = Enum.Font.Gotham,
+        TextColor3 = Theme["Color Dark Text"],
+        TextXAlignment = "Left",
+        BackgroundTransparency = 1,
+        TextSize = 8,
+        Text = Desc
+    }), "DarkText")
 
-	local DiscordInvite = {}
-	function DiscordInvite:Destroy()
-		InviteHolder:Destroy()
-	end
-	function DiscordInvite:Visible(...)
-		Funcs:ToggleVisible(InviteHolder, ...)
-	end
-	return DiscordInvite
+    local JoinButton = Create("TextButton", FrameHolder, {
+        Size = UDim2.new(1, -14, 0, 16),
+        AnchorPoint = Vector2.new(0.5, 1),
+        Position = UDim2.new(0.5, 0, 1, -7),
+        Text = "Join",
+        Font = Enum.Font.GothamBold,
+        TextSize = 12,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
+        BackgroundColor3 = Theme["Color Theme"]
+    })
+    Make("Corner", JoinButton, UDim.new(0, 5))
+
+    local JoinStroke = Instance.new("UIStroke")
+    JoinStroke.Parent = JoinButton
+    JoinStroke.Thickness = 1.2
+    JoinStroke.Color = Theme["Color Stroke"]
+    JoinStroke.Transparency = 0.2
+
+    local JoinGradient = Instance.new("UIGradient")
+    JoinGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Theme["Color Stroke"]),
+        ColorSequenceKeypoint.new(0.5, Theme["Color Theme"]),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+    }
+    JoinGradient.Parent = JoinButton
+
+    local Pulse = Instance.new("ImageLabel")
+    Pulse.Parent = JoinButton
+    Pulse.Size = UDim2.new(1.8, 0, 2.2, 0)
+    Pulse.Position = UDim2.new(-0.4, 0, -0.6, 0)
+    Pulse.BackgroundTransparency = 1
+    Pulse.Image = "rbxassetid://5028857084"
+    Pulse.ImageColor3 = Theme["Color Stroke"]
+    Pulse.ImageTransparency = 0.6
+    Pulse.ZIndex = JoinButton.ZIndex - 1
+
+    local ClickDelay
+    JoinButton.Activated:Connect(function()
+        setclipboard(Invite)
+        if ClickDelay then return end
+        ClickDelay = true
+        SetProps(JoinButton, {
+            Text = "Copied to Clipboard",
+            BackgroundColor3 = Color3.fromRGB(90, 90, 90),
+            TextColor3 = Color3.fromRGB(255, 255, 255)
+        })
+        task.wait(5)
+        SetProps(JoinButton, {
+            Text = "Join",
+            BackgroundColor3 = Theme["Color Theme"],
+            TextColor3 = Color3.fromRGB(255, 255, 255)
+        })
+        ClickDelay = false
+    end)
+
+    RunService.Heartbeat:Connect(function(dt)
+        Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
+        JoinGradient.Rotation = (JoinGradient.Rotation + 120 * dt) % 360
+        Pulse.ImageTransparency = 0.35 + math.sin(tick() * 2) * 0.25
+    end)
+
+    local DiscordInvite = {}
+    function DiscordInvite:Destroy()
+        InviteHolder:Destroy()
+    end
+    function DiscordInvite:Visible(...)
+        Funcs:ToggleVisible(InviteHolder, ...)
+    end
+    return DiscordInvite
 end
 return Tab
 end
