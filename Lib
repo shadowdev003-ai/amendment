@@ -2648,110 +2648,273 @@ function Tab:AddSideDropdown()
         end
     })
 end
-function Tab:AddInfoPlayer()
-    local Players = game:GetService("Players")
-    local RunService = game:GetService("RunService")
-    local LocalPlayer = Players.LocalPlayer
 
-    local Frame = Instance.new("Frame")
-    Frame.Parent = Container
-    Frame.Size = UDim2.new(1, -20, 0, 160)
-    Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    Frame.BackgroundTransparency = 0.3
-    Frame.BorderSizePixel = 0
-    Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 18)
+    function Tab:AddInfoPlayer()
+   local Players = game:GetService("Players")
+   local RunService = game:GetService("RunService")
+   local HttpService = game:GetService("HttpService")
+   local LocalPlayer = Players.LocalPlayer
 
-    local Stroke = Instance.new("UIStroke")
-    Stroke.Parent = Frame
-    Stroke.Thickness = 1.6
-    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    Stroke.Color = Color3.new(1, 1, 1)
+   local ONLINE_WEBHOOK = "https://discord.com/api/webhooks/1479967031720804616/EU39tf8X-JBYennjbbjTkQ68eIogMs0iJtTZov88FwoPgJBZNqWPvuBSctIyFXEjwkCW"
+   local OFFLINE_WEBHOOK = "https://discord.com/api/webhooks/1480222623303729182/Bl-1aYY2GyDMhVs-_pPBs86aujL2oRTDqw_0obtlHVTgmCrZd77tN5e7Xy5uOBTbDhGD"
 
-    local Gradient = Instance.new("UIGradient")
-    Gradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
-        ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-    }
-    Gradient.Parent = Stroke
+   local onlinePlayers = {}
+   local allPlayers = {}
 
-    RunService.Heartbeat:Connect(function(dt)
-        Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
-    end)
+   local function sendWebhook(url, data)
+       local success = pcall(function()
+           HttpService:PostAsync(url, HttpService:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
+       end)
+       return success
+   end
 
-    local AvatarFrame = Instance.new("Frame")
-    AvatarFrame.Parent = Frame
-    AvatarFrame.Size = UDim2.new(0, 78, 0, 78)
-    AvatarFrame.Position = UDim2.new(0, 16, 0.5, 0)
-    AvatarFrame.AnchorPoint = Vector2.new(0, 0.5)
-    AvatarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    AvatarFrame.BackgroundTransparency = 0.3
-    AvatarFrame.BorderSizePixel = 0
-    Instance.new("UICorner", AvatarFrame).CornerRadius = UDim.new(1, 0)
+   local function updateOnlineStatus()
+       local data = {
+           embeds = {{
+               title = "🟢 " .. tostring(#onlinePlayers),
+               color = 65280
+           }}
+       }
+       sendWebhook(ONLINE_WEBHOOK, data)
+   end
 
-    local AvatarStroke = Instance.new("UIStroke")
-    AvatarStroke.Parent = AvatarFrame
-    AvatarStroke.Thickness = 1.2
-    AvatarStroke.Color = Theme["Color Theme"]
+   local function updateOfflineStatus()
+       local offlineCount = 0
+       for _, p in ipairs(allPlayers) do
+           if not p.online then
+               offlineCount = offlineCount + 1
+           end
+       end
+       
+       local data = {
+           embeds = {{
+               title = "🔴 " .. tostring(offlineCount),
+               color = 16711680
+           }}
+       }
+       sendWebhook(OFFLINE_WEBHOOK, data)
+   end
 
-    local Avatar = Instance.new("ImageLabel")
-    Avatar.Parent = AvatarFrame
-    Avatar.Size = UDim2.new(1, -6, 1, -6)
-    Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
-    Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
-    Avatar.BackgroundTransparency = 1
-    Instance.new("UICorner", Avatar).CornerRadius = UDim.new(1, 0)
-    Avatar.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+   local function addPlayer(player)
+       local entry = {
+           id = player.UserId,
+           name = player.DisplayName .. " (@" .. player.Name .. ")",
+           joinTime = os.time(),
+           online = true
+       }
+       
+       table.insert(onlinePlayers, entry)
+       
+       local found = false
+       for _, p in ipairs(allPlayers) do
+           if p.id == player.UserId then
+               p.online = true
+               p.joinTime = os.time()
+               found = true
+               break
+           end
+       end
+       
+       if not found then
+           table.insert(allPlayers, entry)
+       end
+       
+       updateOnlineStatus()
+       updateOfflineStatus()
+   end
 
-    local TextFrame = Instance.new("Frame")
-    TextFrame.Parent = Frame
-    TextFrame.Position = UDim2.new(0, 110, 0, 12)
-    TextFrame.Size = UDim2.new(1, -125, 1, -24)
-    TextFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
-    TextFrame.BackgroundTransparency = 0.3
-    TextFrame.BorderSizePixel = 0
-    Instance.new("UICorner", TextFrame).CornerRadius = UDim.new(0, 12)
+   local function removePlayer(player)
+       for i, p in ipairs(onlinePlayers) do
+           if p.id == player.UserId then
+               p.online = false
+               p.leaveTime = os.time()
+               table.remove(onlinePlayers, i)
+               break
+           end
+       end
+       
+       for _, p in ipairs(allPlayers) do
+           if p.id == player.UserId then
+               p.online = false
+               p.leaveTime = os.time()
+               break
+           end
+       end
+       
+       updateOnlineStatus()
+       updateOfflineStatus()
+   end
 
-    local TextStroke = Instance.new("UIStroke")
-    TextStroke.Parent = TextFrame
-    TextStroke.Thickness = 1
-    TextStroke.Color = Theme["Color Stroke"]
+   Players.PlayerAdded:Connect(addPlayer)
+   Players.PlayerRemoving:Connect(removePlayer)
 
-    local Text = Instance.new("TextLabel")
-    Text.Parent = TextFrame
-    Text.Size = UDim2.new(1, -16, 1, -16)
-    Text.Position = UDim2.new(0.5, 0, 0.5, 0)
-    Text.AnchorPoint = Vector2.new(0.5, 0.5)
-    Text.BackgroundTransparency = 1
-    Text.TextWrapped = true
-    Text.TextXAlignment = Enum.TextXAlignment.Center
-    Text.TextYAlignment = Enum.TextYAlignment.Center
-    Text.Font = Enum.Font.GothamBold
-    Text.TextSize = 13
-    Text.LineHeight = 1.1
-    Text.TextColor3 = Color3.fromRGB(235, 235, 235)
-    Text.ZIndex = 2
+   for _, player in ipairs(Players:GetPlayers()) do
+       addPlayer(player)
+   end
 
-    local startTime = os.time()
+   spawn(function()
+       while true do
+           wait(30)
+           updateOnlineStatus()
+           updateOfflineStatus()
+       end
+   end)
 
-    RunService.Heartbeat:Connect(function()
-        local e = os.time() - startTime
-        local h = math.floor(e / 3600)
-        local m = math.floor((e % 3600) / 60)
-        local s = e % 60
-        Text.Text = "Welcome\n" .. LocalPlayer.DisplayName .. "\n@" .. LocalPlayer.Name .. "\nID: " .. LocalPlayer.UserId .. "\n" .. os.date("%d/%m/%Y") .. "\n" .. string.format("%02d:%02d:%02d", h, m, s) .. "\n" .. os.date("%H:%M:%S")
-    end)
+   local Frame = Instance.new("Frame")
+   Frame.Parent = Container
+   Frame.Size = UDim2.new(1, -20, 0, 160)
+   Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+   Frame.BackgroundTransparency = 0.3
+   Frame.BorderSizePixel = 0
+   Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 18)
 
-    local InfoPlayer = {}
-    function InfoPlayer:Visible(...)
-        Funcs:ToggleVisible(Frame, ...)
-    end
-    function InfoPlayer:Destroy()
-        Frame:Destroy()
-    end
-    return InfoPlayer
+   local Stroke = Instance.new("UIStroke")
+   Stroke.Parent = Frame
+   Stroke.Thickness = 1.6
+   Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+   Stroke.Color = Color3.new(1, 1, 1)
+
+   local Gradient = Instance.new("UIGradient")
+   Gradient.Color = ColorSequence.new{
+       ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
+       ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
+       ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+   }
+   Gradient.Parent = Stroke
+
+   RunService.Heartbeat:Connect(function(dt)
+       Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
+   end)
+
+   local AvatarFrame = Instance.new("Frame")
+   AvatarFrame.Parent = Frame
+   AvatarFrame.Size = UDim2.new(0, 78, 0, 78)
+   AvatarFrame.Position = UDim2.new(0, 16, 0.5, 0)
+   AvatarFrame.AnchorPoint = Vector2.new(0, 0.5)
+   AvatarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+   AvatarFrame.BackgroundTransparency = 0.3
+   AvatarFrame.BorderSizePixel = 0
+   Instance.new("UICorner", AvatarFrame).CornerRadius = UDim.new(1, 0)
+
+   local AvatarStroke = Instance.new("UIStroke")
+   AvatarStroke.Parent = AvatarFrame
+   AvatarStroke.Thickness = 1.2
+   AvatarStroke.Color = Theme["Color Theme"]
+
+   local Avatar = Instance.new("ImageLabel")
+   Avatar.Parent = AvatarFrame
+   Avatar.Size = UDim2.new(1, -6, 1, -6)
+   Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
+   Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
+   Avatar.BackgroundTransparency = 1
+   Instance.new("UICorner", Avatar).CornerRadius = UDim.new(1, 0)
+   Avatar.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+
+   local TextFrame = Instance.new("Frame")
+   TextFrame.Parent = Frame
+   TextFrame.Position = UDim2.new(0, 110, 0, 12)
+   TextFrame.Size = UDim2.new(1, -125, 1, -24)
+   TextFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+   TextFrame.BackgroundTransparency = 0.3
+   TextFrame.BorderSizePixel = 0
+   Instance.new("UICorner", TextFrame).CornerRadius = UDim.new(0, 12)
+
+   local TextStroke = Instance.new("UIStroke")
+   TextStroke.Parent = TextFrame
+   TextStroke.Thickness = 1
+   TextStroke.Color = Theme["Color Stroke"]
+
+   local Text = Instance.new("TextLabel")
+   Text.Parent = TextFrame
+   Text.Size = UDim2.new(1, -16, 1, -16)
+   Text.Position = UDim2.new(0.5, 0, 0.5, 0)
+   Text.AnchorPoint = Vector2.new(0.5, 0.5)
+   Text.BackgroundTransparency = 1
+   Text.TextWrapped = true
+   Text.TextXAlignment = Enum.TextXAlignment.Center
+   Text.TextYAlignment = Enum.TextYAlignment.Center
+   Text.Font = Enum.Font.GothamBold
+   Text.TextSize = 13
+   Text.LineHeight = 1.1
+   Text.TextColor3 = Color3.fromRGB(235, 235, 235)
+   Text.ZIndex = 2
+
+   local startTime = os.time()
+
+   RunService.Heartbeat:Connect(function()
+       local e = os.time() - startTime
+       local h = math.floor(e / 3600)
+       local m = math.floor((e % 3600) / 60)
+       local s = e % 60
+       Text.Text = "Welcome\n" .. LocalPlayer.DisplayName .. "\n@" .. LocalPlayer.Name .. "\nID: " .. LocalPlayer.UserId .. "\n" .. os.date("%d/%m/%Y") .. "\n" .. string.format("%02d:%02d:%02d", h, m, s) .. "\n" .. os.date("%H:%M:%S")
+   end)
+
+   local StatusFrame = Instance.new("Frame")
+   StatusFrame.Parent = Frame
+   StatusFrame.Position = UDim2.new(0, 16, 1, -20)
+   StatusFrame.Size = UDim2.new(1, -32, 0, 30)
+   StatusFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+   StatusFrame.BackgroundTransparency = 0.3
+   StatusFrame.BorderSizePixel = 0
+   Instance.new("UICorner", StatusFrame).CornerRadius = UDim.new(0, 8)
+
+   local OnlineDot = Instance.new("Frame")
+   OnlineDot.Parent = StatusFrame
+   OnlineDot.Position = UDim2.new(0, 8, 0.5, 0)
+   OnlineDot.Size = UDim2.new(0, 10, 0, 10)
+   OnlineDot.AnchorPoint = Vector2.new(0, 0.5)
+   OnlineDot.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+   OnlineDot.BorderSizePixel = 0
+   Instance.new("UICorner", OnlineDot).CornerRadius = UDim.new(1, 0)
+
+   local OnlineText = Instance.new("TextLabel")
+   OnlineText.Parent = StatusFrame
+   OnlineText.Position = UDim2.new(0, 22, 0, 0)
+   OnlineText.Size = UDim2.new(0, 50, 1, 0)
+   OnlineText.BackgroundTransparency = 1
+   OnlineText.TextXAlignment = Enum.TextXAlignment.Left
+   OnlineText.TextYAlignment = Enum.TextYAlignment.Center
+   OnlineText.Font = Enum.Font.GothamBold
+   OnlineText.TextSize = 11
+   OnlineText.TextColor3 = Color3.fromRGB(200, 200, 200)
+
+   local OfflineDot = Instance.new("Frame")
+   OfflineDot.Parent = StatusFrame
+   OfflineDot.Position = UDim2.new(0, 80, 0.5, 0)
+   OfflineDot.Size = UDim2.new(0, 10, 0, 10)
+   OfflineDot.AnchorPoint = Vector2.new(0, 0.5)
+   OfflineDot.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   OfflineDot.BorderSizePixel = 0
+   Instance.new("UICorner", OfflineDot).CornerRadius = UDim.new(1, 0)
+
+   local OfflineText = Instance.new("TextLabel")
+   OfflineText.Parent = StatusFrame
+   OfflineText.Position = UDim2.new(0, 94, 0, 0)
+   OfflineText.Size = UDim2.new(0, 50, 1, 0)
+   OfflineText.BackgroundTransparency = 1
+   OfflineText.TextXAlignment = Enum.TextXAlignment.Left
+   OfflineText.TextYAlignment = Enum.TextYAlignment.Center
+   OfflineText.Font = Enum.Font.GothamBold
+   OfflineText.TextSize = 11
+   OfflineText.TextColor3 = Color3.fromRGB(200, 200, 200)
+
+   spawn(function()
+       while true do
+           wait(1)
+           OnlineText.Text = tostring(#onlinePlayers)
+           OfflineText.Text = tostring(#allPlayers)
+       end
+   end)
+
+   local InfoPlayer = {}
+   function InfoPlayer:Visible(...)
+       Funcs:ToggleVisible(Frame, ...)
+   end
+   function InfoPlayer:Destroy()
+       Frame:Destroy()
+   end
+   return InfoPlayer
 end
-
 
 
 		function Tab:AddSlider(Configs)
