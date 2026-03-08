@@ -2657,6 +2657,7 @@ function Tab:AddInfoPlayer()
     Frame.Parent = Container
     Frame.Size = UDim2.new(1, -20, 0, 160)
     Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    Frame.BackgroundTransparency = 0.3
     Frame.BorderSizePixel = 0
     Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 18)
 
@@ -2684,6 +2685,7 @@ function Tab:AddInfoPlayer()
     AvatarFrame.Position = UDim2.new(0, 16, 0.5, 0)
     AvatarFrame.AnchorPoint = Vector2.new(0, 0.5)
     AvatarFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    AvatarFrame.BackgroundTransparency = 0.3
     AvatarFrame.BorderSizePixel = 0
     Instance.new("UICorner", AvatarFrame).CornerRadius = UDim.new(1, 0)
 
@@ -2706,6 +2708,7 @@ function Tab:AddInfoPlayer()
     TextFrame.Position = UDim2.new(0, 110, 0, 12)
     TextFrame.Size = UDim2.new(1, -125, 1, -24)
     TextFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 18)
+    TextFrame.BackgroundTransparency = 0.3
     TextFrame.BorderSizePixel = 0
     Instance.new("UICorner", TextFrame).CornerRadius = UDim.new(0, 12)
 
@@ -2748,6 +2751,8 @@ function Tab:AddInfoPlayer()
     end
     return InfoPlayer
 end
+
+
 
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
@@ -3113,6 +3118,65 @@ end
 	
 	CloseButton.Activated:Connect(Window.CloseBtn)
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
+local function AutoApplyRotatingBorders(Speed)
+   Speed = Speed or 80
+   
+   local function AddBorder(Target, Thickness)
+       if Target:FindFirstChildOfClass("UIStroke") then return end
+       
+       local Stroke = Instance.new("UIStroke")
+       Stroke.Parent = Target
+       Stroke.Thickness = Thickness or 1.6
+       Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+       Stroke.Color = Color3.new(1, 1, 1)
+       
+       local Gradient = Instance.new("UIGradient")
+       Gradient.Color = ColorSequence.new{
+           ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
+           ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
+           ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+       }
+       Gradient.Parent = Stroke
+       
+       RunService.Heartbeat:Connect(function(dt)
+           Gradient.Rotation = (Gradient.Rotation + Speed * dt) % 360
+       end)
+       
+       return Stroke
+   end
+   
+   AddBorder(MainFrame, 2)
+   
+   local function ScanElement(Element)
+       if Element:IsA("Frame") or Element:IsA("TextButton") or Element:IsA("ImageButton") then
+           local HasCorner = Element:FindFirstChildOfClass("UICorner")
+           local HasStroke = Element:FindFirstChildOfClass("UIStroke")
+           
+           if HasCorner and not HasStroke then
+               local Thickness = 1.4
+               AddBorder(Element, Thickness)
+           end
+       end
+       
+       for _, Child in ipairs(Element:GetChildren()) do
+           ScanElement(Child)
+       end
+   end
+   
+   ScanElement(MainFrame)
+   
+   MainFrame.DescendantAdded:Connect(function(NewElement)
+       task.wait(0.1)
+       if NewElement:IsA("Frame") or NewElement:IsA("TextButton") or NewElement:IsA("ImageButton") then
+           if NewElement:FindFirstChildOfClass("UICorner") and not NewElement:FindFirstChildOfClass("UIStroke") then
+               AddBorder(NewElement, 1.4)
+           end
+       end
+   end)
+end
+
+AutoApplyRotatingBorders(80)
+
 	return Window
 end
 if not success or (config and config.Status == "False") then 
