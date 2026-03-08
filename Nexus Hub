@@ -54,7 +54,7 @@ task.defer(function()
 end)
 
 Tab1 = Window:MakeTab({"الحقوق"})
-
+Tab1:AddInfoPlayer()
 Tab1:AddDiscordInvite({
   Name = "Nexus Hub",
   Description = "انضم إلى مجتمعنا على تليجرام لتكون جزءًا من التحديثات القادمة والمشاريع الجديدة",
