@@ -48,10 +48,10 @@ Themes = {
 		Version = "1.2.0"
 	},
 	Save = {
-    UISize = {550, 380},
+    UISize = {434, 247},  -- غيّرت من {550, 380}
     TabSize = 160,
-    Theme = "Dark"   -- بدل "Darker"
- },
+    Theme = "Dark"
+},
 	Settings = {},
 	Connection = {},
 	Instances = {},
