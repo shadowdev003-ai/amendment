@@ -15,6 +15,9 @@ local CoreGui = game:GetService("CoreGui")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local PlayerMouse = Player:GetMouse()
+local HiddenGui = (gethui and gethui()) or CoreGui
+local Device = UserInputService.TouchEnabled and "Mobile" or "Computer"
+local Camera = workspace.CurrentCamera
 
 local redzlib = {
 Themes = {
