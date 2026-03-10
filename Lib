@@ -2843,17 +2843,19 @@ function Tab:AddButtonFPS(Configs)
     local LastUpdate = tick()
     local FrameCount = 0
     
-    task.spawn(function()
-        while FButton and FButton.Parent do
-            FrameCount = FrameCount + 1
-            local Now = tick()
-            if Now - LastUpdate >= 1 then
-                FPS = FrameCount
-                FrameCount = 0
-                LastUpdate = Now
-                LabelFunc:SetDesc("FPS: " .. FPS)
-            end
-            RunService.Heartbeat:Wait()
+    local Connection
+    Connection = RunService.Heartbeat:Connect(function()
+        if not FButton or not FButton.Parent then
+            Connection:Disconnect()
+            return
+        end
+        FrameCount = FrameCount + 1
+        local Now = tick()
+        if Now - LastUpdate >= 1 then
+            FPS = FrameCount
+            FrameCount = 0
+            LastUpdate = Now
+            LabelFunc:SetDesc("FPS: " .. FPS)
         end
     end)
     
@@ -2890,6 +2892,7 @@ function Tab:AddButtonFPS(Configs)
     end
     return Button
 end
+
 
 
 		function Tab:AddSlider(Configs)
