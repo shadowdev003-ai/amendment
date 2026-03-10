@@ -2759,7 +2759,7 @@ end
 function Tab:AddButtonTime(Configs)
     local BDescription = Configs[1] or Configs.Desc or Configs.Description or ""
     local Callback = Funcs:GetCallback(Configs, 2)
-    local FButton, LabelFunc = ButtonFrame(Container, "00:00:00", BDescription, UDim2.new(1, -20))
+    local FButton, LabelFunc = ButtonFrame(Container, BDescription, "00:00:00", UDim2.new(1, -20))
     
     local ButtonIcon = Create("ImageLabel", FButton, {
         Size = UDim2.new(0, 14, 0, 14),
@@ -2780,7 +2780,7 @@ function Tab:AddButtonTime(Configs)
             local h = math.floor(elapsed / 3600)
             local m = math.floor((elapsed % 3600) / 60)
             local s = math.floor(elapsed % 60)
-            LabelFunc:SetTitle(string.format("%02d:%02d:%02d", h, m, s))
+            LabelFunc:SetDesc(string.format("%02d:%02d:%02d", h, m, s))
             task.wait(1)
         end
     end)
@@ -2821,6 +2821,7 @@ function Tab:AddButtonTime(Configs)
     end
     return Button
 end
+
 
 
 		function Tab:AddSlider(Configs)
