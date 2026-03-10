@@ -2787,207 +2787,214 @@ function Tab:AddInfoPlayer()
     return InfoPlayer
 end
 function Tab:AddPlayerImage(Configs)
-   local PlayerName = Configs[1] or Configs.PlayerName or Configs.Name or "youssef126608"
-   local Position = Configs[2] or Configs.Position or UDim2.new(0, 10, 0, 10)
-   local Size = Configs[3] or Configs.Size or 78
-   
-   local Players = game:GetService("Players")
-   local HttpService = game:GetService("HttpService")
-   
-   local function GetUserIdFromName(username)
-       local player = Players:FindFirstChild(username)
-       if player then
-           return player.UserId
-       end
-       
-       local success, result = pcall(function()
-           local url = "https://users.roblox.com/v1/usernames/users"
-           local data = {
-               usernames = {username},
-               excludeBannedUsers = false
-           }
-           
-           local response = HttpService:JSONDecode(game:HttpGet(url, true, {
-               ["Content-Type"] = "application/json"
-           }, HttpService:JSONEncode(data)))
-           
-           if response and response.data and #response.data > 0 then
-               return response.data[1].id
-           end
-           return nil
-       end)
-       
-       if success then
-           return result
-       end
-       
-       local success2, result2 = pcall(function()
-           local url = "https://api.roblox.com/users/get-by-username?username=" .. HttpService:UrlEncode(username)
-           local response = game:HttpGet(url)
-           local data = HttpService:JSONDecode(response)
-           return data and data.Id
-       end)
-       
-       if success2 then
-           return result2
-       end
-       
-       return nil
-   end
-   
-   local function GetPlayerThumbnail(userId)
-       local success, result = pcall(function()
-           return Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
-       end)
-       
-       if success then
-           return result
-       end
-       return "rbxassetid://0"
-   end
-   
-   local userId = GetUserIdFromName(PlayerName)
-   
-   local Frame = Instance.new("Frame")
-   Frame.Parent = Container
-   Frame.Size = UDim2.new(0, Size, 0, Size)
-   Frame.Position = Position
-   Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-   Frame.BackgroundTransparency = 0.3
-   Frame.BorderSizePixel = 0
-   Frame.Name = "PlayerImage_" .. PlayerName
-   
-   local Corner = Instance.new("UICorner")
-   Corner.CornerRadius = UDim.new(1, 0)
-   Corner.Parent = Frame
-   
-   local Stroke = Instance.new("UIStroke")
-   Stroke.Parent = Frame
-   Stroke.Thickness = 1.6
-   Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-   Stroke.Color = Color3.new(1, 1, 1)
-   
-   local Gradient = Instance.new("UIGradient")
-   Gradient.Color = ColorSequence.new{
-       ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
-       ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
-       ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
-   }
-   Gradient.Parent = Stroke
-   
-   local RunService = game:GetService("RunService")
-   local Connection = RunService.Heartbeat:Connect(function(dt)
-       if Frame and Frame.Parent then
-           Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
-       else
-           Connection:Disconnect()
-       end
-   end)
-   
-   local Avatar = Instance.new("ImageLabel")
-   Avatar.Parent = Frame
-   Avatar.Size = UDim2.new(1, -6, 1, -6)
-   Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
-   Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
-   Avatar.BackgroundTransparency = 1
-   Avatar.Name = "Avatar"
-   
-   local AvatarCorner = Instance.new("UICorner")
-   AvatarCorner.CornerRadius = UDim.new(1, 0)
-   AvatarCorner.Parent = Avatar
-   
-   if userId then
-       spawn(function()
-           Avatar.Image = GetPlayerThumbnail(userId)
-       end)
-   else
-       Avatar.Image = "rbxassetid://7992557352"
-   end
-   
-   local StatusDot = Instance.new("Frame")
-   StatusDot.Parent = Frame
-   StatusDot.Size = UDim2.new(0, Size * 0.15, 0, Size * 0.15)
-   StatusDot.Position = UDim2.new(1, -Size * 0.08, 1, -Size * 0.08)
-   StatusDot.AnchorPoint = Vector2.new(1, 1)
-   StatusDot.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
-   StatusDot.BorderSizePixel = 0
-   StatusDot.ZIndex = 10
-   StatusDot.Name = "StatusDot"
-   
-   local StatusCorner = Instance.new("UICorner")
-   StatusCorner.CornerRadius = UDim.new(1, 0)
-   StatusCorner.Parent = StatusDot
-   
-   spawn(function()
-       while StatusDot and StatusDot.Parent do
-           local isInGame = Players:FindFirstChild(PlayerName) ~= nil
-           if isInGame then
-               StatusDot.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
-           else
-               StatusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-           end
-           wait(3)
-       end
-   end)
-   
-   local Glow = Instance.new("ImageLabel")
-   Glow.Parent = Frame
-   Glow.Size = UDim2.new(1.3, 0, 1.3, 0)
-   Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
-   Glow.AnchorPoint = Vector2.new(0.5, 0.5)
-   Glow.BackgroundTransparency = 1
-   Glow.Image = "rbxassetid://5028857084"
-   Glow.ImageColor3 = Theme["Color Theme"]
-   Glow.ImageTransparency = 0.7
-   Glow.ZIndex = Frame.ZIndex - 1
-   
-   local PlayerImage = {}
-   
-   function PlayerImage:Visible(bool)
-       if bool ~= nil then
-           Frame.Visible = bool
-       else
-           Frame.Visible = not Frame.Visible
-       end
-   end
-   
-   function PlayerImage:Destroy()
-       Connection:Disconnect()
-       Frame:Destroy()
-   end
-   
-   function PlayerImage:SetPlayer(newName)
-       PlayerName = newName
-       userId = GetUserIdFromName(newName)
-       Frame.Name = "PlayerImage_" .. newName
-       
-       if userId then
-           Avatar.Image = GetPlayerThumbnail(userId)
-       else
-           Avatar.Image = "rbxassetid://7992557352"
-       end
-   end
-   
-   function PlayerImage:GetUserId()
-       return userId
-   end
-   
-   function PlayerImage:SetPosition(newPosition)
-       Frame.Position = newPosition
-   end
-   
-   function PlayerImage:SetSize(newSize)
-       Size = newSize
-       Frame.Size = UDim2.new(0, Size, 0, Size)
-       StatusDot.Size = UDim2.new(0, Size * 0.15, 0, Size * 0.15)
-       StatusDot.Position = UDim2.new(1, -Size * 0.08, 1, -Size * 0.08)
-   end
-   
-   function PlayerImage:GetFrame()
-       return Frame
-   end
-   
-   return PlayerImage
+    local PlayerName = Configs[1] or Configs.PlayerName or Configs.Name or "Roblox"
+    local Position = Configs[2] or Configs.Position or UDim2.new(0, 10, 0, 10)
+    local Size = Configs[3] or Configs.Size or 78
+    
+    local Players = game:GetService("Players")
+    local HttpService = game:GetService("HttpService")
+    
+    local function GetUserIdFromName(username)
+        local player = Players:FindFirstChild(username)
+        if player then
+            return player.UserId
+        end
+        
+        local success, result = pcall(function()
+            local body = HttpService:JSONEncode({
+                usernames = {username},
+                excludeBannedUsers = false
+            })
+            
+            local response = request({
+                Url = "https://users.roblox.com/v1/usernames/users",
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = body
+            })
+            
+            if response and response.Body then
+                local data = HttpService:JSONDecode(response.Body)
+                if data and data.data and #data.data > 0 then
+                    return data.data[1].id
+                end
+            end
+            return nil
+        end)
+        
+        if success and result then
+            return result
+        end
+        
+        local success2, result2 = pcall(function()
+            local url = "https://api.roblox.com/users/get-by-username?username=" .. HttpService:UrlEncode(username)
+            local response = game:HttpGet(url)
+            local data = HttpService:JSONDecode(response)
+            return data and data.Id
+        end)
+        
+        if success2 then
+            return result2
+        end
+        
+        return nil
+    end
+    
+    local function GetPlayerThumbnail(userId)
+        local success, result = pcall(function()
+            return Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+        end)
+        
+        if success then
+            return result
+        end
+        return "rbxassetid://0"
+    end
+    
+    local userId = GetUserIdFromName(PlayerName)
+    
+    local Frame = Instance.new("Frame")
+    Frame.Parent = Container
+    Frame.Size = UDim2.new(0, Size, 0, Size)
+    Frame.Position = Position
+    Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Frame.BackgroundTransparency = 0.3
+    Frame.BorderSizePixel = 0
+    Frame.Name = "PlayerImage_" .. PlayerName
+    
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(1, 0)
+    Corner.Parent = Frame
+    
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Parent = Frame
+    Stroke.Thickness = 1.6
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    Stroke.Color = Color3.new(1, 1, 1)
+    
+    local Gradient = Instance.new("UIGradient")
+    Gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Theme["Color Theme"]),
+        ColorSequenceKeypoint.new(0.5, Theme["Color Stroke"]),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+    }
+    Gradient.Parent = Stroke
+    
+    local RunService = game:GetService("RunService")
+    local Connection = RunService.Heartbeat:Connect(function(dt)
+        if Frame and Frame.Parent then
+            Gradient.Rotation = (Gradient.Rotation + 80 * dt) % 360
+        else
+            Connection:Disconnect()
+        end
+    end)
+    
+    local Avatar = Instance.new("ImageLabel")
+    Avatar.Parent = Frame
+    Avatar.Size = UDim2.new(1, -6, 1, -6)
+    Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
+    Avatar.BackgroundTransparency = 1
+    Avatar.Name = "Avatar"
+    
+    local AvatarCorner = Instance.new("UICorner")
+    AvatarCorner.CornerRadius = UDim.new(1, 0)
+    AvatarCorner.Parent = Avatar
+    
+    if userId then
+        spawn(function()
+            Avatar.Image = GetPlayerThumbnail(userId)
+        end)
+    else
+        Avatar.Image = "rbxassetid://7992557352"
+    end
+    
+    local StatusDot = Instance.new("Frame")
+    StatusDot.Parent = Frame
+    StatusDot.Size = UDim2.new(0, Size * 0.15, 0, Size * 0.15)
+    StatusDot.Position = UDim2.new(1, -Size * 0.08, 1, -Size * 0.08)
+    StatusDot.AnchorPoint = Vector2.new(1, 1)
+    StatusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+    StatusDot.BorderSizePixel = 0
+    StatusDot.ZIndex = 10
+    StatusDot.Name = "StatusDot"
+    
+    local StatusCorner = Instance.new("UICorner")
+    StatusCorner.CornerRadius = UDim.new(1, 0)
+    StatusCorner.Parent = StatusDot
+    
+    spawn(function()
+        while StatusDot and StatusDot.Parent do
+            local isInGame = Players:FindFirstChild(PlayerName) ~= nil
+            if isInGame then
+                StatusDot.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
+            else
+                StatusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+            end
+            wait(3)
+        end
+    end)
+    
+    local Glow = Instance.new("ImageLabel")
+    Glow.Parent = Frame
+    Glow.Size = UDim2.new(1.3, 0, 1.3, 0)
+    Glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Glow.AnchorPoint = Vector2.new(0.5, 0.5)
+    Glow.BackgroundTransparency = 1
+    Glow.Image = "rbxassetid://5028857084"
+    Glow.ImageColor3 = Theme["Color Theme"]
+    Glow.ImageTransparency = 0.7
+    Glow.ZIndex = Frame.ZIndex - 1
+    
+    local PlayerImage = {}
+    
+    function PlayerImage:Visible(bool)
+        if bool ~= nil then
+            Frame.Visible = bool
+        else
+            Frame.Visible = not Frame.Visible
+        end
+    end
+    
+    function PlayerImage:Destroy()
+        Connection:Disconnect()
+        Frame:Destroy()
+    end
+    
+    function PlayerImage:SetPlayer(newName)
+        PlayerName = newName
+        userId = GetUserIdFromName(newName)
+        Frame.Name = "PlayerImage_" .. newName
+        
+        if userId then
+            Avatar.Image = GetPlayerThumbnail(userId)
+        else
+            Avatar.Image = "rbxassetid://7992557352"
+        end
+    end
+    
+    function PlayerImage:GetUserId()
+        return userId
+    end
+    
+    function PlayerImage:SetPosition(newPosition)
+        Frame.Position = newPosition
+    end
+    
+    function PlayerImage:SetSize(newSize)
+        Size = newSize
+        Frame.Size = UDim2.new(0, Size, 0, Size)
+        StatusDot.Size = UDim2.new(0, Size * 0.15, 0, Size * 0.15)
+        StatusDot.Position = UDim2.new(1, -Size * 0.08, 1, -Size * 0.08)
+    end
+    
+    function PlayerImage:GetFrame()
+        return Frame
+    end
+    
+    return PlayerImage
 end
 
 function Tab:AddButtonTime(Configs)
