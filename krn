@@ -1,0 +1,416 @@
+--[[
+    SR Library V1
+    Advanced Roblox UI Library
+    Features: Glassmorphism, Smooth Animations, Modern Design
+]]
+
+local SR = {
+    Version = "1.0.0",
+    Theme = {
+        Primary = Color3.fromRGB(147, 112, 219),      -- بنفسجي فاتح
+        Secondary = Color3.fromRGB(138, 43, 226),     -- بنفسجي غامق
+        Background = Color3.fromRGB(25, 25, 35),      -- خلفية داكنة
+        Glass = Color3.fromRGB(35, 35, 50),           -- زجاجي
+        Text = Color3.fromRGB(255, 255, 255),         -- نص أبيض
+        DarkText = Color3.fromRGB(180, 180, 200),     -- نص رمادي
+        Accent = Color3.fromRGB(0, 255, 255),         -- سماوي للتأثيرات
+        Stroke = Color3.fromRGB(100, 100, 150)        -- حدود
+    },
+    Flags = {},
+    Tabs = {},
+    Elements = {}
+}
+
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local CoreGui = game:GetService("CoreGui")
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+-- Utility Functions
+local function Create(instanceType, properties, children)
+    local instance = Instance.new(instanceType)
+    
+    if properties then
+        for prop, value in pairs(properties) do
+            instance[prop] = value
+        end
+    end
+    
+    if children then
+        for _, child in pairs(children) do
+            child.Parent = instance
+        end
+    end
+    
+    return instance
+end
+
+local function Tween(instance, properties, duration, easingStyle, easingDirection, callback)
+    easingStyle = easingStyle or Enum.EasingStyle.Quint
+    easingDirection = easingDirection or Enum.EasingDirection.Out
+    duration = duration or 0.3
+    
+    local tweenInfo = TweenInfo.new(duration, easingStyle, easingDirection)
+    local tween = TweenService:Create(instance, tweenInfo, properties)
+    
+    if callback then
+        tween.Completed:Connect(callback)
+    end
+    
+    tween:Play()
+    return tween
+end
+
+-- Glassmorphism Effect
+local function ApplyGlassmorphism(frame, transparency)
+    transparency = transparency or 0.15
+    
+    frame.BackgroundColor3 = SR.Theme.Glass
+    frame.BackgroundTransparency = transparency
+    frame.BorderSizePixel = 0
+    
+    -- Blur Effect (using ImageLabel with blur asset)
+    local blur = Create("ImageLabel", {
+        Name = "Blur",
+        Size = UDim2.new(1, 40, 1, 40),
+        Position = UDim2.new(0, -20, 0, -20),
+        BackgroundTransparency = 1,
+        Image = "rbxassetid://5554236805", -- Blur asset
+        ImageColor3 = SR.Theme.Glass,
+        ImageTransparency = 0.6,
+        ScaleType = Enum.ScaleType.Slice,
+        SliceCenter = Rect.new(20, 20, 280, 280),
+        ZIndex = frame.ZIndex - 1
+    })
+    blur.Parent = frame
+    
+    -- Gradient Overlay
+    local gradient = Create("UIGradient", {
+        Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, SR.Theme.Primary),
+            ColorSequenceKeypoint.new(0.5, SR.Theme.Secondary),
+            ColorSequenceKeypoint.new(1, SR.Theme.Background)
+        }),
+        Transparency = NumberSequence.new({
+            NumberSequenceKeypoint.new(0, 0.9),
+            NumberSequenceKeypoint.new(0.5, 0.95),
+            NumberSequenceKeypoint.new(1, 1)
+        }),
+        Rotation = 45
+    })
+    gradient.Parent = frame
+    
+    return blur, gradient
+end
+
+-- Make Draggable
+local function MakeDraggable(frame, dragHandle)
+    dragHandle = dragHandle or frame
+    
+    local dragging = false
+    local dragStart = nil
+    local startPos = nil
+    
+    dragHandle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+            
+            -- Smooth scale effect on drag start
+            Tween(frame, {Size = UDim2.new(
+                frame.Size.X.Scale, frame.Size.X.Offset * 0.98,
+                frame.Size.Y.Scale, frame.Size.Y.Offset * 0.98
+            )}, 0.1)
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or 
+                        input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            local newPos = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+            frame.Position = newPos
+        end
+    end)
+    
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+            
+            -- Restore scale
+            Tween(frame, {Size = UDim2.new(
+                frame.Size.X.Scale, frame.Size.X.Offset / 0.98,
+                frame.Size.Y.Scale, frame.Size.Y.Offset / 0.98
+            )}, 0.2)
+        end
+    end)
+end
+
+-- Main Window Creation
+function SR:MakeWindow(config)
+    config = config or {}
+    local title = config.Title or "SR Library"
+    local subtitle = config.SubTitle or "v" .. self.Version
+    local size = config.Size or UDim2.new(0, 550, 0, 350)
+    
+    -- ScreenGui
+    local screenGui = Create("ScreenGui", {
+        Name = "SR_Hub_" .. HttpService:GenerateGUID(false),
+        Parent = CoreGui,
+        ResetOnSpawn = false,
+        ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    })
+    
+    -- Main Frame with Glassmorphism
+    local mainFrame = Create("Frame", {
+        Name = "MainFrame",
+        Size = size,
+        Position = UDim2.new(0.5, -size.X.Offset/2, 0.5, -size.Y.Offset/2),
+        BackgroundColor3 = self.Theme.Glass,
+        BackgroundTransparency = 0.1,
+        BorderSizePixel = 0,
+        ClipsDescendants = true,
+        Active = true
+    })
+    mainFrame.Parent = screenGui
+    
+    -- Corner Radius
+    Create("UICorner", {
+        CornerRadius = UDim.new(0, 12)
+    }).Parent = mainFrame
+    
+    -- Glassmorphism Effects
+    ApplyGlassmorphism(mainFrame, 0.1)
+    
+    -- Stroke with Glow
+    local stroke = Create("UIStroke", {
+        Color = self.Theme.Primary,
+        Thickness = 1.5,
+        Transparency = 0.3
+    })
+    stroke.Parent = mainFrame
+    
+    -- Animated Gradient Stroke
+    local strokeGradient = Create("UIGradient", {
+        Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, self.Theme.Primary),
+            ColorSequenceKeypoint.new(0.5, self.Theme.Accent),
+            ColorSequenceKeypoint.new(1, self.Theme.Secondary)
+        }),
+        Rotation = 0
+    })
+    strokeGradient.Parent = stroke
+    
+    -- Animate stroke gradient
+    spawn(function()
+        while mainFrame and mainFrame.Parent do
+            Tween(strokeGradient, {Rotation = strokeGradient.Rotation + 180}, 2)
+            wait(2)
+        end
+    end)
+    
+    -- Top Bar
+    local topBar = Create("Frame", {
+        Name = "TopBar",
+        Size = UDim2.new(1, 0, 0, 35),
+        BackgroundColor3 = self.Theme.Background,
+        BackgroundTransparency = 0.5,
+        BorderSizePixel = 0
+    })
+    topBar.Parent = mainFrame
+    
+    Create("UICorner", {
+        CornerRadius = UDim.new(0, 12)
+    }).Parent = topBar
+    
+    -- Fix corners for top bar only
+    local topBarFix = Create("Frame", {
+        Size = UDim2.new(1, 0, 0, 10),
+        Position = UDim2.new(0, 0, 1, -10),
+        BackgroundColor3 = self.Theme.Background,
+        BackgroundTransparency = 0.5,
+        BorderSizePixel = 0
+    })
+    topBarFix.Parent = topBar
+    
+    -- Title
+    local titleLabel = Create("TextLabel", {
+        Name = "Title",
+        Size = UDim2.new(0.5, 0, 1, 0),
+        Position = UDim2.new(0, 15, 0, 0),
+        BackgroundTransparency = 1,
+        Text = title,
+        TextColor3 = self.Theme.Text,
+        TextSize = 14,
+        Font = Enum.Font.GothamBold,
+        TextXAlignment = Enum.TextXAlignment.Left
+    })
+    titleLabel.Parent = topBar
+    
+    -- Subtitle
+    local subtitleLabel = Create("TextLabel", {
+        Name = "SubTitle",
+        Size = UDim2.new(0, 100, 0, 12),
+        Position = UDim2.new(0, 15, 0.7, 0),
+        BackgroundTransparency = 1,
+        Text = subtitle,
+        TextColor3 = self.Theme.DarkText,
+        TextSize = 10,
+        Font = Enum.Font.Gotham,
+        TextXAlignment = Enum.TextXAlignment.Left
+    })
+    subtitleLabel.Parent = topBar
+    
+    -- Control Buttons Container
+    local controls = Create("Frame", {
+        Size = UDim2.new(0, 70, 1, 0),
+        Position = UDim2.new(1, -10, 0, 0),
+        AnchorPoint = Vector2.new(1, 0),
+        BackgroundTransparency = 1
+    })
+    controls.Parent = topBar
+    
+    local controlsList = Create("UIListLayout", {
+        FillDirection = Enum.FillDirection.Horizontal,
+        HorizontalAlignment = Enum.HorizontalAlignment.Right,
+        VerticalAlignment = Enum.VerticalAlignment.Center,
+        Padding = UDim.new(0, 8)
+    })
+    controlsList.Parent = controls
+    
+    -- Minimize Button
+    local minimizeBtn = Create("TextButton", {
+        Name = "Minimize",
+        Size = UDim2.new(0, 12, 0, 12),
+        BackgroundColor3 = Color3.fromRGB(255, 193, 7),
+        Text = "",
+        AutoButtonColor = false
+    })
+    minimizeBtn.Parent = controls
+    
+    Create("UICorner", {CornerRadius = UDim.new(1, 0)}).Parent = minimizeBtn
+    
+    -- Close Button
+    local closeBtn = Create("TextButton", {
+        Name = "Close",
+        Size = UDim2.new(0, 12, 0, 12),
+        BackgroundColor3 = Color3.fromRGB(255, 82, 82),
+        Text = "",
+        AutoButtonColor = false
+    })
+    closeBtn.Parent = controls
+    
+    Create("UICorner", {CornerRadius = UDim.new(1, 0)}).Parent = closeBtn
+    
+    -- Button Hover Effects
+    local function AddHoverEffect(button, originalColor)
+        button.MouseEnter:Connect(function()
+            Tween(button, {BackgroundColor3 = originalColor:Lerp(Color3.new(1,1,1), 0.3)}, 0.2)
+        end)
+        button.MouseLeave:Connect(function()
+            Tween(button, {BackgroundColor3 = originalColor}, 0.2)
+        end)
+    end
+    
+    AddHoverEffect(minimizeBtn, Color3.fromRGB(255, 193, 7))
+    AddHoverEffect(closeBtn, Color3.fromRGB(255, 82, 82))
+    
+    -- Make Draggable
+    MakeDraggable(mainFrame, topBar)
+    
+    -- Content Container (for tabs)
+    local contentContainer = Create("Frame", {
+        Name = "Content",
+        Size = UDim2.new(1, 0, 1, -35),
+        Position = UDim2.new(0, 0, 0, 35),
+        BackgroundTransparency = 1,
+        ClipsDescendants = true
+    })
+    contentContainer.Parent = mainFrame
+    
+    -- Window Object
+    local window = {}
+    
+    function window:Close()
+        Tween(mainFrame, {Size = UDim2.new(0, mainFrame.Size.X.Offset, 0, 0)}, 0.3, nil, nil, function()
+            screenGui:Destroy()
+        end)
+    end
+    
+    function window:Minimize()
+        local isMinimized = contentContainer.Visible
+        contentContainer.Visible = not isMinimized
+        
+        if isMinimized then
+            Tween(mainFrame, {Size = UDim2.new(0, mainFrame.Size.X.Offset, 0, 35)}, 0.3)
+        else
+            Tween(mainFrame, {Size = size}, 0.3)
+        end
+    end
+    
+    function window:Notify(config)
+        -- سنعمل الـ Notifications في مرحلة لاحقة
+        print("Notification:", config.Title, config.Text)
+    end
+    
+    -- Button Connections
+    closeBtn.MouseButton1Click:Connect(function()
+        window:Close()
+    end)
+    
+    minimizeBtn.MouseButton1Click:Connect(function()
+        window:Minimize()
+    end)
+    
+    -- Particle System (Background Effect)
+    local particleContainer = Create("Frame", {
+        Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
+        ZIndex = 0
+    })
+    particleContainer.Parent = contentContainer
+    
+    spawn(function()
+        while particleContainer and particleContainer.Parent do
+            local particle = Create("Frame", {
+                Size = UDim2.new(0, math.random(2, 6), 0, math.random(2, 6)),
+                Position = UDim2.new(math.random(), 0, 1, 0),
+                BackgroundColor3 = self.Theme.Accent,
+                BackgroundTransparency = 0.6,
+                BorderSizePixel = 0,
+                ZIndex = 0
+            })
+            particle.Parent = particleContainer
+            
+            Create("UICorner", {CornerRadius = UDim.new(1, 0)}).Parent = particle
+            
+            Tween(particle, {
+                Position = UDim2.new(particle.Position.X.Scale, 0, -0.1, 0),
+                BackgroundTransparency = 1
+            }, math.random(3, 6), nil, nil, function()
+                particle:Destroy()
+            end)
+            
+            wait(math.random(0.5, 1.5))
+        end
+    end)
+    
+    return window
+end
+
+-- Return Library
+return SR
