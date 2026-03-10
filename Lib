@@ -2786,6 +2786,164 @@ function Tab:AddInfoPlayer()
     end
     return InfoPlayer
 end
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+
+local function GetUserIdFromName(username)
+    local player = Players:FindFirstChild(username)
+    if player then
+        return player.UserId
+    end
+    
+    local success, result = pcall(function()
+        local url = "https://users.roblox.com/v1/usernames/users"
+        local data = {
+            usernames = {username},
+            excludeBannedUsers = false
+        }
+        
+        local response = HttpService:JSONDecode(game:HttpGet(url, true, {
+            ["Content-Type"] = "application/json"
+        }, HttpService:JSONEncode(data)))
+        
+        if response and response.data and #response.data > 0 then
+            return response.data[1].id
+        end
+        return nil
+    end)
+    
+    if success then
+        return result
+    end
+    
+    local success2, result2 = pcall(function()
+        local url = "https://api.roblox.com/users/get-by-username?username=" .. HttpService:UrlEncode(username)
+        local response = game:HttpGet(url)
+        local data = HttpService:JSONDecode(response)
+        return data and data.Id
+    end)
+    
+    if success2 then
+        return result2
+    end
+    
+    return nil
+end
+
+local function GetPlayerThumbnail(userId)
+    local success, result = pcall(function()
+        return Players:GetUserThumbnailAsync(userId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size180x180)
+    end)
+    
+    if success then
+        return result
+    end
+    return "rbxassetid://0"
+end
+
+local function CreatePlayerImage(parent, playerName, position)
+    playerName = playerName or "youssef126608"
+    position = position or UDim2.new(0, 0, 0, 0)
+    
+    if not parent then
+        warn("Parent is required for CreatePlayerImage")
+        return nil
+    end
+    
+    local userId = GetUserIdFromName(playerName)
+    
+    local Frame = Instance.new("Frame")
+    Frame.Parent = parent
+    Frame.Size = UDim2.new(0, 78, 0, 78)
+    Frame.Position = position
+    Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    Frame.BackgroundTransparency = 0.3
+    Frame.BorderSizePixel = 0
+    
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(1, 0)
+    Corner.Parent = Frame
+    
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Parent = Frame
+    Stroke.Thickness = 1.2
+    Stroke.Color = Color3.fromRGB(120, 0, 255)
+    
+    local Avatar = Instance.new("ImageLabel")
+    Avatar.Parent = Frame
+    Avatar.Size = UDim2.new(1, -6, 1, -6)
+    Avatar.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Avatar.AnchorPoint = Vector2.new(0.5, 0.5)
+    Avatar.BackgroundTransparency = 1
+    
+    local AvatarCorner = Instance.new("UICorner")
+    AvatarCorner.CornerRadius = UDim.new(1, 0)
+    AvatarCorner.Parent = Avatar
+    
+    if userId then
+        spawn(function()
+            Avatar.Image = GetPlayerThumbnail(userId)
+        end)
+    else
+        Avatar.Image = "rbxassetid://7992557352"
+    end
+    
+    local StatusDot = Instance.new("Frame")
+    StatusDot.Parent = Frame
+    StatusDot.Size = UDim2.new(0, 12, 0, 12)
+    StatusDot.Position = UDim2.new(1, -6, 1, -6)
+    StatusDot.AnchorPoint = Vector2.new(1, 1)
+    StatusDot.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
+    StatusDot.BorderSizePixel = 0
+    StatusDot.ZIndex = 10
+    
+    local StatusCorner = Instance.new("UICorner")
+    StatusCorner.CornerRadius = UDim.new(1, 0)
+    StatusCorner.Parent = StatusDot
+    
+    spawn(function()
+        while StatusDot and StatusDot.Parent do
+            local isInGame = Players:FindFirstChild(playerName) ~= nil
+            if isInGame then
+                StatusDot.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
+            else
+                StatusDot.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+            end
+            wait(3)
+        end
+    end)
+    
+    local PlayerImage = {}
+    
+    function PlayerImage:Visible(bool)
+        Frame.Visible = bool ~= nil and bool or not Frame.Visible
+    end
+    
+    function PlayerImage:Destroy()
+        Frame:Destroy()
+    end
+    
+    function PlayerImage:SetPlayer(newName)
+        playerName = newName
+        userId = GetUserIdFromName(newName)
+        
+        if userId then
+            Avatar.Image = GetPlayerThumbnail(userId)
+        else
+            Avatar.Image = "rbxassetid://7992557352"
+        end
+    end
+    
+    function PlayerImage:GetUserId()
+        return userId
+    end
+    
+    function PlayerImage:SetPosition(newPosition)
+        Frame.Position = newPosition
+    end
+    
+    return PlayerImage
+end
 
 function Tab:AddButtonTime(Configs)
     local BDescription = Configs[1] or Configs.Desc or Configs.Description or ""
