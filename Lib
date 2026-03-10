@@ -2822,6 +2822,74 @@ function Tab:AddButtonTime(Configs)
     return Button
 end
 
+function Tab:AddButtonFPS(Configs)
+    local BDescription = Configs[1] or Configs.Desc or Configs.Description or ""
+    local Callback = Funcs:GetCallback(Configs, 2)
+    local FButton, LabelFunc = ButtonFrame(Container, BDescription, "FPS: 0", UDim2.new(1, -20))
+    
+    local ButtonIcon = Create("ImageLabel", FButton, {
+        Size = UDim2.new(0, 14, 0, 14),
+        Position = UDim2.new(1, -10, 0.5),
+        AnchorPoint = Vector2.new(1, 0.5),
+        BackgroundTransparency = 1,
+        Image = "rbxassetid://10709791437"
+    })
+    
+    local DefaultIcon = "rbxassetid://10709791437"
+    local ClickIcon = "rbxassetid://10709769508"
+    local Busy = false
+    local RunService = game:GetService("RunService")
+    local FPS = 0
+    local LastUpdate = tick()
+    local FrameCount = 0
+    
+    task.spawn(function()
+        while FButton and FButton.Parent do
+            FrameCount = FrameCount + 1
+            local Now = tick()
+            if Now - LastUpdate >= 1 then
+                FPS = FrameCount
+                FrameCount = 0
+                LastUpdate = Now
+                LabelFunc:SetDesc("FPS: " .. FPS)
+            end
+            RunService.Heartbeat:Wait()
+        end
+    end)
+    
+    FButton.Activated:Connect(function()
+        if Busy then return end
+        Busy = true
+        ButtonIcon.Image = ClickIcon
+        local startPos = ButtonIcon.Position
+        local t = 0
+        local c
+        c = game:GetService("RunService").RenderStepped:Connect(function(dt)
+            t += dt
+            local offset = math.sin(t * 40) * 3
+            ButtonIcon.Position = startPos + UDim2.new(0, offset, 0, 0)
+            if t >= 1 then
+                c:Disconnect()
+                ButtonIcon.Position = startPos
+                ButtonIcon.Image = DefaultIcon
+                Busy = false
+            end
+        end)
+        Funcs:FireCallback(Callback)
+    end)
+    
+    local Button = {}
+    function Button:Visible(...)
+        Funcs:ToggleVisible(FButton, ...)
+    end
+    function Button:Destroy()
+        FButton:Destroy()
+    end
+    function Button:Callback(...)
+        Funcs:InsertCallback(Callback, ...)
+    end
+    return Button
+end
 
 
 		function Tab:AddSlider(Configs)
