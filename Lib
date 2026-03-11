@@ -2661,135 +2661,101 @@ end
 			})
 		end
 function Tab:AddAiResolver(Configs)
-    local Title = Configs.Name or "AI Assistant"
     local Idea = Configs.Idea or ""
     local Servers = Configs.Servers or {}
 
-    local MainFrame = Instance.new("Frame", Container)
-    MainFrame.Size = UDim2.new(1, -20, 0, 280)
-    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    MainFrame.BorderSizePixel = 0
-    
-    local MainCorner = Instance.new("UICorner", MainFrame)
-    MainCorner.CornerRadius = UDim.new(0, 12)
-    
-    local MainStroke = Instance.new("UIStroke", MainFrame)
-    MainStroke.Color = Color3.fromRGB(120, 0, 255)
-    MainStroke.Thickness = 1.5
+    local Main = Instance.new("Frame", Container)
+    Main.Size = UDim2.new(1, -10, 0, 220)
+    Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Main.BackgroundTransparency = 0.8
+    Main.BorderSizePixel = 0
+    Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
 
-    local TitleLabel = Instance.new("TextLabel", MainFrame)
-    TitleLabel.Size = UDim2.new(1, 0, 0, 30)
-    TitleLabel.Text = Title
-    TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Font = Enum.Font.GothamBold
-    TitleLabel.TextSize = 14
-
-    local ChatScroll = Instance.new("ScrollingFrame", MainFrame)
-    ChatScroll.Size = UDim2.new(1, -16, 0, 180)
-    ChatScroll.Position = UDim2.new(0, 8, 0, 35)
+    local ChatScroll = Instance.new("ScrollingFrame", Main)
+    ChatScroll.Size = UDim2.new(1, -10, 1, -50)
+    ChatScroll.Position = UDim2.new(0, 5, 0, 5)
     ChatScroll.BackgroundTransparency = 1
-    ChatScroll.ScrollBarThickness = 0
-    ChatScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    ChatScroll.ScrollBarThickness = 2
+    ChatScroll.AutomaticCanvasSize = "Y"
     ChatScroll.CanvasSize = UDim2.new()
 
-    local Layout = Instance.new("UIListLayout", ChatScroll)
-    Layout.Padding = UDim.new(0, 8)
-    Layout.SortOrder = Enum.SortOrder.LayoutOrder
+    local List = Instance.new("UIListLayout", ChatScroll)
+    List.Padding = UDim.new(0, 5)
+    List.SortOrder = "LayoutOrder"
 
-    local function CreateBubble(text, isUser)
-        local BubbleFrame = Instance.new("Frame", ChatScroll)
-        BubbleFrame.Size = UDim2.new(1, 0, 0, 0)
-        BubbleFrame.BackgroundTransparency = 1
-        BubbleFrame.AutomaticSize = Enum.AutomaticSize.Y
+    local function AddMsg(txt, isUser)
+        local bFrame = Instance.new("Frame", ChatScroll)
+        bFrame.Size = UDim2.new(1, 0, 0, 0)
+        bFrame.BackgroundTransparency = 1
+        bFrame.AutomaticSize = "Y"
 
-        local Bubble = Instance.new("Frame", BubbleFrame)
-        Bubble.AutomaticSize = Enum.AutomaticSize.XY
-        Bubble.BackgroundColor3 = isUser and Color3.fromRGB(120, 0, 255) or Color3.fromRGB(45, 45, 45)
-        Bubble.Position = isUser and UDim2.new(1, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
-        Bubble.AnchorPoint = isUser and Vector2.new(1, 0) or Vector2.new(0, 0)
-        
-        local Corner = Instance.new("UICorner", Bubble)
-        Corner.CornerRadius = UDim.new(0, 10)
+        local b = Instance.new("Frame", bFrame)
+        b.AutomaticSize = "XY"
+        b.BackgroundColor3 = isUser and Color3.fromRGB(80, 0, 200) or Color3.fromRGB(40, 40, 40)
+        b.BackgroundTransparency = 0.3
+        b.Position = isUser and UDim2.new(1, -5, 0, 0) or UDim2.new(0, 5, 0, 0)
+        b.AnchorPoint = isUser and Vector2.new(1, 0) or Vector2.new(0, 0)
+        Instance.new("UICorner", b).CornerRadius = UDim.new(0, 8)
 
-        local Label = Instance.new("TextLabel", Bubble)
-        Label.AutomaticSize = Enum.AutomaticSize.XY
-        Label.MaximumSize = Vector2.new(180, 999)
-        Label.Text = text
-        Label.TextColor3 = Color3.new(1, 1, 1)
-        Label.BackgroundTransparency = 1
-        Label.Font = Enum.Font.Gotham
-        Label.TextSize = 12
-        Label.TextWrapped = true
-        
-        local Padding = Instance.new("UIPadding", Label)
-        Padding.PaddingTop = UDim.new(0, 8)
-        Padding.PaddingBottom = UDim.new(0, 8)
-        Padding.PaddingLeft = UDim.new(0, 12)
-        Padding.PaddingRight = UDim.new(0, 12)
+        local l = Instance.new("TextLabel", b)
+        l.Size = UDim2.new(0, 0, 0, 0)
+        l.MaximumSize = Vector2.new(150, 999)
+        l.AutomaticSize = "XY"
+        l.Text = txt
+        l.TextColor3 = Color3.new(1, 1, 1)
+        l.BackgroundTransparency = 1
+        l.Font = "Gotham"
+        l.TextSize = 11
+        l.TextWrapped = true
+        Instance.new("UIPadding", l).PaddingTop = UDim.new(0, 5)
+        Instance.new("UIPadding", l).PaddingBottom = UDim.new(0, 5)
+        Instance.new("UIPadding", l).PaddingLeft = UDim.new(0, 8)
+        Instance.new("UIPadding", l).PaddingRight = UDim.new(0, 8)
 
-        task.delay(0.1, function()
-            ChatScroll.CanvasPosition = Vector2.new(0, ChatScroll.AbsoluteCanvasSize.Y)
-        end)
+        ChatScroll.CanvasPosition = Vector2.new(0, 9999)
     end
 
-    local InputBox = Instance.new("TextBox", MainFrame)
-    InputBox.Size = UDim2.new(1, -75, 0, 35)
-    InputBox.Position = UDim2.new(0, 8, 1, -43)
-    InputBox.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    InputBox.TextColor3 = Color3.new(1, 1, 1)
-    InputBox.PlaceholderText = "I am here to serve you "
-    InputBox.Text = ""
-    InputBox.Font = Enum.Font.Gotham
-    InputBox.TextSize = 12
-    InputBox.ClearTextOnFocus = false
-    
-    local InputCorner = Instance.new("UICorner", InputBox)
-    InputCorner.CornerRadius = UDim.new(0, 8)
+    local Inp = Instance.new("TextBox", Main)
+    Inp.Size = UDim2.new(1, -60, 0, 30)
+    Inp.Position = UDim2.new(0, 5, 1, -35)
+    Inp.BackgroundColor3 = Color3.fromRGB(30,30,30)
+    Inp.BackgroundTransparency = 0.5
+    Inp.Text = ""
+    Inp.PlaceholderText = "Ask AI..."
+    Inp.TextColor3 = Color3.new(1,1,1)
+    Inp.TextSize = 12
+    Inp.Font = "Gotham"
+    Instance.new("UICorner", Inp).CornerRadius = UDim.new(0, 5)
 
-    local SendBtn = Instance.new("TextButton", MainFrame)
-    SendBtn.Size = UDim2.new(0, 60, 0, 35)
-    SendBtn.Position = UDim2.new(1, -68, 1, -43)
-    SendBtn.BackgroundColor3 = Color3.fromRGB(120, 0, 255)
-    SendBtn.Text = "send"
-    SendBtn.TextColor3 = Color3.new(1, 1, 1)
-    SendBtn.Font = Enum.Font.GothamBold
-    SendBtn.TextSize = 12
-    
-    local BtnCorner = Instance.new("UICorner", SendBtn)
-    BtnCorner.CornerRadius = UDim.new(0, 8)
+    local btn = Instance.new("TextButton", Main)
+    btn.Size = UDim2.new(0, 45, 0, 30)
+    btn.Position = UDim2.new(1, -50, 1, -35)
+    btn.BackgroundColor3 = Color3.fromRGB(80, 0, 200)
+    btn.Text = "Send"
+    btn.TextColor3 = Color3.new(1,1,1)
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 5)
 
-    SendBtn.MouseButton1Click:Connect(function()
-        local msg = InputBox.Text
-        if msg == "" then return end
-        InputBox.Text = ""
-        CreateBubble(msg, true)
-
+    btn.MouseButton1Click:Connect(function()
+        local t = Inp.Text
+        if t == "" then return end
+        Inp.Text = ""
+        AddMsg(t, true)
         task.spawn(function()
-            local responseFound = false
             for _, url in ipairs(Servers) do
-                local success, result = pcall(function()
+                local s, r = pcall(function()
                     return request({
                         Url = url,
                         Method = "POST",
                         Headers = {["Content-Type"] = "application/json"},
-                        Body = game:GetService("HttpService"):JSONEncode({
-                            message = msg,
-                            idea = Idea
-                        })
+                        Body = game:GetService("HttpService"):JSONEncode({message = t, idea = Idea})
                     })
                 end)
-                
-                if success and result.Success then
-                    local data = game:GetService("HttpService"):JSONDecode(result.Body)
-                    CreateBubble(data.response, false)
-                    responseFound = true
-                    break
+                if s and r.Success then
+                    AddMsg(game:GetService("HttpService"):JSONDecode(r.Body).response, false)
+                    return
                 end
             end
-            if not responseFound then
-                CreateBubble("I am not on duty ", false)
-            end
+            AddMsg("Error connecting.", false)
         end)
     end)
 end
