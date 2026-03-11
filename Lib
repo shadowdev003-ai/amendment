@@ -45,163 +45,7 @@ Themes = {
         ["Color Text"] = Color3.fromRGB(255, 255, 255),  
         ["Color Dark Text"] = Color3.fromRGB(190, 160, 255)  
     },
-    Red = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 60)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(200, 0, 40)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(150, 0, 30))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 0, 60),
-        ["Color Stroke"] = Color3.fromRGB(255, 100, 130),
-        ["Color Theme"] = Color3.fromRGB(20, 10, 10),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 150, 170)
-    },
-    Blue = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 100, 255)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 80, 200)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 60, 150))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(0, 100, 255),
-        ["Color Stroke"] = Color3.fromRGB(100, 170, 255),
-        ["Color Theme"] = Color3.fromRGB(10, 15, 25),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(150, 200, 255)
-    },
-    Green = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 255, 100)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 200, 80)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 150, 60))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(0, 255, 100),
-        ["Color Stroke"] = Color3.fromRGB(100, 255, 150),
-        ["Color Theme"] = Color3.fromRGB(10, 20, 15),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(150, 255, 180)
-    },
-    Orange = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 140, 0)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 110, 0)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 80, 0))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 140, 0),
-        ["Color Stroke"] = Color3.fromRGB(255, 180, 80),
-        ["Color Theme"] = Color3.fromRGB(25, 15, 10),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 200, 150)
-    },
-    Pink = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 200)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 0, 170)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 0, 140))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 0, 200),
-        ["Color Stroke"] = Color3.fromRGB(255, 100, 220),
-        ["Color Theme"] = Color3.fromRGB(25, 10, 20),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 150, 230)
-    },
-    Cyan = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 255, 255)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 220, 220)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 180, 180))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(0, 255, 255),
-        ["Color Stroke"] = Color3.fromRGB(100, 255, 255),
-        ["Color Theme"] = Color3.fromRGB(10, 25, 25),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(150, 255, 255)
-    },
-    Yellow = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 0)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 220, 0)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 180, 0))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 255, 0),
-        ["Color Stroke"] = Color3.fromRGB(255, 255, 100),
-        ["Color Theme"] = Color3.fromRGB(25, 25, 10),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 255, 150)
-    },
-    Lime = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(180, 255, 0)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(150, 220, 0)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(120, 180, 0))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(180, 255, 0),
-        ["Color Stroke"] = Color3.fromRGB(210, 255, 100),
-        ["Color Theme"] = Color3.fromRGB(20, 25, 10),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(220, 255, 150)
-    },
-    Teal = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 180, 180)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 150, 150)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(0, 120, 120))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(0, 180, 180),
-        ["Color Stroke"] = Color3.fromRGB(100, 220, 220),
-        ["Color Theme"] = Color3.fromRGB(10, 20, 20),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(150, 220, 220)
-    },
-    Indigo = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(75, 0, 130)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(60, 0, 100)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(45, 0, 80))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(75, 0, 130),
-        ["Color Stroke"] = Color3.fromRGB(130, 80, 200),
-        ["Color Theme"] = Color3.fromRGB(15, 10, 20),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(180, 150, 220)
-    },
-    Coral = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 127, 80)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 100, 60)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 80, 40))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 127, 80),
-        ["Color Stroke"] = Color3.fromRGB(255, 180, 140),
-        ["Color Theme"] = Color3.fromRGB(25, 15, 12),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 200, 170)
-    },
-    Magenta = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 255)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 0, 220)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 0, 180))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 0, 255),
-        ["Color Stroke"] = Color3.fromRGB(255, 100, 255),
-        ["Color Theme"] = Color3.fromRGB(25, 10, 25),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(255, 150, 255)
-    },
-    White = {
-        ["Color Hub 1"] = ColorSequence.new({
-            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)),
-            ColorSequenceKeypoint.new(0.50, Color3.fromRGB(220, 220, 220)),
-            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(180, 180, 180))
-        }),
-        ["Color Hub 2"] = Color3.fromRGB(255, 255, 255),
-        ["Color Stroke"] = Color3.fromRGB(255, 255, 255),
-        ["Color Theme"] = Color3.fromRGB(30, 30, 30),
-        ["Color Text"] = Color3.fromRGB(255, 255, 255),
-        ["Color Dark Text"] = Color3.fromRGB(200, 200, 200)
-    }, 
-}, 
+},
 
 	Info = {
 		Version = "1.2.0"
@@ -2816,6 +2660,139 @@ end
 				end
 			})
 		end
+function Tab:AddAiResolver(Configs)
+    local Title = Configs.Name or "AI Assistant"
+    local Idea = Configs.Idea or ""
+    local Servers = Configs.Servers or {}
+
+    local MainFrame = Instance.new("Frame", Container)
+    MainFrame.Size = UDim2.new(1, -20, 0, 280)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    MainFrame.BorderSizePixel = 0
+    
+    local MainCorner = Instance.new("UICorner", MainFrame)
+    MainCorner.CornerRadius = UDim.new(0, 12)
+    
+    local MainStroke = Instance.new("UIStroke", MainFrame)
+    MainStroke.Color = Color3.fromRGB(120, 0, 255)
+    MainStroke.Thickness = 1.5
+
+    local TitleLabel = Instance.new("TextLabel", MainFrame)
+    TitleLabel.Size = UDim2.new(1, 0, 0, 30)
+    TitleLabel.Text = Title
+    TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleLabel.BackgroundTransparency = 1
+    TitleLabel.Font = Enum.Font.GothamBold
+    TitleLabel.TextSize = 14
+
+    local ChatScroll = Instance.new("ScrollingFrame", MainFrame)
+    ChatScroll.Size = UDim2.new(1, -16, 0, 180)
+    ChatScroll.Position = UDim2.new(0, 8, 0, 35)
+    ChatScroll.BackgroundTransparency = 1
+    ChatScroll.ScrollBarThickness = 0
+    ChatScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    ChatScroll.CanvasSize = UDim2.new()
+
+    local Layout = Instance.new("UIListLayout", ChatScroll)
+    Layout.Padding = UDim.new(0, 8)
+    Layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+    local function CreateBubble(text, isUser)
+        local BubbleFrame = Instance.new("Frame", ChatScroll)
+        BubbleFrame.Size = UDim2.new(1, 0, 0, 0)
+        BubbleFrame.BackgroundTransparency = 1
+        BubbleFrame.AutomaticSize = Enum.AutomaticSize.Y
+
+        local Bubble = Instance.new("Frame", BubbleFrame)
+        Bubble.AutomaticSize = Enum.AutomaticSize.XY
+        Bubble.BackgroundColor3 = isUser and Color3.fromRGB(120, 0, 255) or Color3.fromRGB(45, 45, 45)
+        Bubble.Position = isUser and UDim2.new(1, 0, 0, 0) or UDim2.new(0, 0, 0, 0)
+        Bubble.AnchorPoint = isUser and Vector2.new(1, 0) or Vector2.new(0, 0)
+        
+        local Corner = Instance.new("UICorner", Bubble)
+        Corner.CornerRadius = UDim.new(0, 10)
+
+        local Label = Instance.new("TextLabel", Bubble)
+        Label.AutomaticSize = Enum.AutomaticSize.XY
+        Label.MaximumSize = Vector2.new(180, 999)
+        Label.Text = text
+        Label.TextColor3 = Color3.new(1, 1, 1)
+        Label.BackgroundTransparency = 1
+        Label.Font = Enum.Font.Gotham
+        Label.TextSize = 12
+        Label.TextWrapped = true
+        
+        local Padding = Instance.new("UIPadding", Label)
+        Padding.PaddingTop = UDim.new(0, 8)
+        Padding.PaddingBottom = UDim.new(0, 8)
+        Padding.PaddingLeft = UDim.new(0, 12)
+        Padding.PaddingRight = UDim.new(0, 12)
+
+        task.delay(0.1, function()
+            ChatScroll.CanvasPosition = Vector2.new(0, ChatScroll.AbsoluteCanvasSize.Y)
+        end)
+    end
+
+    local InputBox = Instance.new("TextBox", MainFrame)
+    InputBox.Size = UDim2.new(1, -75, 0, 35)
+    InputBox.Position = UDim2.new(0, 8, 1, -43)
+    InputBox.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    InputBox.TextColor3 = Color3.new(1, 1, 1)
+    InputBox.PlaceholderText = "I am here to serve you "
+    InputBox.Text = ""
+    InputBox.Font = Enum.Font.Gotham
+    InputBox.TextSize = 12
+    InputBox.ClearTextOnFocus = false
+    
+    local InputCorner = Instance.new("UICorner", InputBox)
+    InputCorner.CornerRadius = UDim.new(0, 8)
+
+    local SendBtn = Instance.new("TextButton", MainFrame)
+    SendBtn.Size = UDim2.new(0, 60, 0, 35)
+    SendBtn.Position = UDim2.new(1, -68, 1, -43)
+    SendBtn.BackgroundColor3 = Color3.fromRGB(120, 0, 255)
+    SendBtn.Text = "send"
+    SendBtn.TextColor3 = Color3.new(1, 1, 1)
+    SendBtn.Font = Enum.Font.GothamBold
+    SendBtn.TextSize = 12
+    
+    local BtnCorner = Instance.new("UICorner", SendBtn)
+    BtnCorner.CornerRadius = UDim.new(0, 8)
+
+    SendBtn.MouseButton1Click:Connect(function()
+        local msg = InputBox.Text
+        if msg == "" then return end
+        InputBox.Text = ""
+        CreateBubble(msg, true)
+
+        task.spawn(function()
+            local responseFound = false
+            for _, url in ipairs(Servers) do
+                local success, result = pcall(function()
+                    return request({
+                        Url = url,
+                        Method = "POST",
+                        Headers = {["Content-Type"] = "application/json"},
+                        Body = game:GetService("HttpService"):JSONEncode({
+                            message = msg,
+                            idea = Idea
+                        })
+                    })
+                end)
+                
+                if success and result.Success then
+                    local data = game:GetService("HttpService"):JSONDecode(result.Body)
+                    CreateBubble(data.response, false)
+                    responseFound = true
+                    break
+                end
+            end
+            if not responseFound then
+                CreateBubble("I am not on duty ", false)
+            end
+        end)
+    end)
+end
 
 function Tab:AddSideDropdown()
     return Tab:AddDropdown({
@@ -3080,21 +3057,6 @@ function Tab:AddButtonFPS(Configs)
     return Button
 end
 
-function Tab:AddThemeDropdown()
-    local ThemeNames = {}
-    for name, _ in pairs(redzlib.Themes) do
-        table.insert(ThemeNames, name)
-    end
-    
-    return Tab:AddDropdown({
-        Name = "Select Theme",
-        Options = ThemeNames,
-        Default = redzlib.Save.Theme or "Darker",
-        Callback = function(Value)
-            redzlib:SetTheme(Value)
-        end
-    })
-end
 
 
 		function Tab:AddSlider(Configs)
