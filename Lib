@@ -1668,7 +1668,7 @@ task.spawn(function()
         local m = math.floor((e % 3600) / 60)
         local s = math.floor(e % 60)
         TimerLabel.Text = string.format("%02d:%02d:%02d", h, m, s)
-        TimerLabel.Position = UDim2.new(1, SubTitle.AbsoluteSize.X + 5, 0.9)
+        TimerLabel.Position = UDim2.new(1, SubTitle.AbsoluteSize.X + 12, 0.9)
         task.wait(1)
     end
 end)
