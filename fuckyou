@@ -1,0 +1,504 @@
+local unpack_fn_5 = unpack or table.unpack;
+local unpack_fn, newproxy_fn, setmetatable_fn, getmetatable_fn, vararg_pack, F, runtime_fn_4, runtime_fn_2, runtime_table_2, runtime_fn_3, runtime_fn_5, runtime_fn_6, runtime_fn_7, runtime_fn, runtime_table, runtime_fn_9, run_vm, runtime_fn_11, runtime_fn_10, runtime_fn_8 = unpack_fn_5, newproxy, setmetatable, getmetatable, { ... };
+runtime_fn, runtime_fn_2, runtime_table, runtime_table_2, runtime_fn_3, runtime_fn_4, runtime_fn_5, runtime_fn_6, F, make_vararg_closure, runtime_fn_7, runtime_fn_8, runtime_fn_9, runtime_fn_10, run_vm, runtime_fn_11 = function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M, J, c, U, i, P)
+				return run_vm(v, {
+					M,
+					J,
+					c,
+					U,
+					i,
+					P,
+				}, O, T);
+			end;
+		return M;
+	end, function(v)
+		local O, R = 1, v[1];
+		while v[1] do
+			runtime_table_2[R], O = runtime_table_2[R] - 1, O + 1;
+			if runtime_table_2[R] == 0 then
+				runtime_table_2[R], runtime_table[R] = nil, nil;
+			end;
+		end;
+	end, {}, {}, function()
+		F = 1 + F;
+		runtime_table_2[1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + F)))))))))))] = 1;
+		return 1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + (1 + F)))))))))));
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M, J, c, U)
+				return run_vm(v, {
+					M,
+					J,
+					c,
+					U,
+				}, O, T);
+			end;
+		return M;
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M, J, c)
+				return run_vm(v, { M, J, c }, O, T);
+			end;
+		return M;
+	end, function(v)
+		runtime_table_2[v] = runtime_table_2[v] - 1;
+		if 0 == runtime_table_2[v] then
+			runtime_table_2[v], runtime_table[v] = nil, nil;
+		end;
+	end, 0, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(...)
+				return run_vm(v, { ... }, O, T);
+			end;
+		return M;
+	end, function(v)
+		for O = 1, #v, 1 do
+			runtime_table_2[v[O]] = 1 + runtime_table_2[v[O]];
+		end;
+		if newproxy_fn then
+			local R = newproxy_fn(true);
+			local T = getmetatable_fn(R);
+			T.__index, T.__gc, T.__len = v, runtime_fn_2, function()
+					return 599224;
+				end;
+			return R;
+		else
+			return setmetatable_fn({}, { __gc = runtime_fn_2, __index = v, __len = function()
+					return 599224;
+				end });
+		end;
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M)
+				return run_vm(v, { M }, O, T);
+			end;
+		return M;
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function()
+				return run_vm(v, {}, O, T);
+			end;
+		return M;
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M, J, c, U, i)
+				return run_vm(v, {
+					M,
+					J,
+					c,
+					U,
+					i,
+				}, O, T);
+			end;
+		return M;
+	end, function(arg1, argv, captured_upvalues, gc_guard)
+		local r1, items, r3, r4, r5, r6, r7, r8, r9, r10, flag, r12, items_2, r15, r16, r17, r18, r19, items_3, r21, items_4, r23, r25, r26, r27, r28, r29, ret_reg, r31, r34, r35, r37;
+		if arg1 == 15431823 then
+			r35 = runtime_fn_3();
+			r5 = runtime_fn_3();
+			runtime_table[r35] = true;
+			r21 = runtime_fn_3();
+			r34 = runtime_fn_3();
+			r15 = runtime_fn_8(7000976, { r21 });
+			runtime_table[r34] = string.gmatch;
+			arg1 = runtime_fn_9(1576806, {});
+			runtime_table[r5] = arg1;
+			runtime_table[r21] = false;
+			r37 = pcall(r15);
+			r8 = r37;
+			r37 = runtime_fn_3();
+			runtime_table[r37] = math.random;
+			r15 = table.concat;
+			r4 = runtime_fn_3();
+			r31 = runtime_fn_9(13373439, {});
+			runtime_table[r4] = table;
+			ret_reg = runtime_table[r37](3, 65);
+			r12 = runtime_fn_3();
+			r10 = 0;
+			r26 = 0;
+			runtime_table[r12] = ret_reg;
+			items = { pcall(r31) };
+			arg1 = { unpack_fn(items) };
+			items = arg1;
+			arg1 = arg1[2];
+			r31 = arg1[2][2][2][2][2][2][2][2][2][2][2][2];
+			arg1 = tonumber;
+			r16 = tostring(r31);
+			r29 = runtime_table[r34](r16, ":(%d*):");
+			items_3 = { r29() };
+			ret_reg = tonumber(unpack_fn(items_3));
+			items_3 = runtime_fn_3();
+			runtime_table[items_3] = ret_reg;
+			ret_reg = 1;
+			flag = false;
+			for i = 1, runtime_table[r12], 1 do
+				r27 = runtime_fn_3();
+				runtime_table[r27] = i;
+				ret_reg = math.random(1, 100);
+				r7 = runtime_fn_3();
+				runtime_table[r7] = ret_reg;
+				ret_reg = runtime_table[r37](0, 255);
+				r6 = runtime_fn_3();
+				runtime_table[r6] = ret_reg;
+				ret_reg = runtime_table[r37](1, runtime_table[r7]);
+				r9 = runtime_fn_3();
+				runtime_table[r9] = ret_reg;
+				r23 = runtime_table[r37](1, 2);
+				arg1 = r23 == 1;
+				r23 = runtime_fn_3();
+				runtime_table[r23] = arg1;
+				items_4 = { runtime_table[r37](0, 10000) };
+				r1 = tostring(unpack_fn(items_4));
+				arg1 = r31:gsub(":(%d*):", ":" .. (r1  .. ":"));
+				r17 = runtime_fn_3();
+				runtime_table[r17] = arg1;
+				r18 = runtime_fn_4(290048, {
+						r37,
+						r27,
+						r12,
+						r34,
+						r35,
+						items_3,
+						r23,
+						r17,
+						r7,
+						r9,
+						r6,
+						r4,
+					});
+				items_2 = { pcall(r18) };
+				arg1 = { unpack_fn(items_2) };
+				if runtime_table[r23] then
+					runtime_table[r35] = runtime_table[r35];
+				else
+					runtime_table[r35] = runtime_table[r35];
+				end;
+				runtime_fn_6(r27);
+				runtime_fn_6(r6);
+				runtime_fn_6(r23);
+				runtime_fn_6(r7);
+				runtime_fn_6(r17);
+				runtime_fn_6(r9);
+			end;
+			r25 = runtime_table[r35];
+			runtime_table[r35] = runtime_table[r35];
+			arg1 = runtime_table[r35];
+			if runtime_table[r35] then
+				runtime_fn_6(items_3);
+				runtime_fn_6(r37);
+				runtime_fn_6(r12);
+				runtime_fn_6(r4);
+				runtime_fn_6(r5);
+				runtime_fn_6(r35);
+				r5 = runtime_fn_3();
+				r26 = runtime_fn_3();
+				runtime_fn_6(r21);
+				runtime_fn_6(r34);
+				runtime_table[r5] = nil;
+				r35 = runtime_fn_3();
+				items = {};
+				runtime_table[r35] = nil;
+				r21 = runtime_fn_3();
+				r10 = {};
+				runtime_table[r21] = math.floor;
+				r34 = math.random;
+				r8 = table.remove;
+				r37 = string.char;
+				r4 = runtime_fn_3();
+				runtime_table[r4] = 0;
+				r12 = runtime_fn_3();
+				runtime_table[r12] = 2;
+				runtime_table[r26] = r10;
+				r27 = 1;
+				for items_3 = 1, 256, 1 do
+					items[items_3] = items_3;
+				end;
+				items_3 = #items;
+				r31 = #items == 0;
+				repeat
+					r31 = r34(1, #items);
+					items_3 = r8(items, r31);
+					r27 = r37(items_3 - 1);
+					runtime_table[r26][items_3] = r27;
+				until __vm_cond_12;
+				r1 = nil;
+				r31 = {};
+				items_3 = runtime_fn_3();
+				runtime_table[items_3] = r31;
+				flag = runtime_fn_11(15127845, {
+						items_3,
+						r4,
+						r12,
+						r21,
+					});
+				r31 = runtime_fn_3();
+				r23 = "__index";
+				items_2 = "__metatable";
+				runtime_table[r31] = flag;
+				r6 = {};
+				r27 = runtime_fn_3();
+				flag = {};
+				runtime_table[r27] = flag;
+				runtime_fn_6(r21);
+				r17 = runtime_table[r27];
+				r9 = { __index = runtime_table[r27], __metatable = nil };
+				r7 = setmetatable(r6, r9);
+				flag = runtime_fn_4(16679571, {
+						r27,
+						items_3,
+						r26,
+						r4,
+						r12,
+						r31,
+					});
+				runtime_table[r5] = r7;
+				runtime_table[r35] = flag;
+				runtime_fn_6(r26);
+				runtime_fn_6(r12);
+				runtime_fn_6(items_3);
+				runtime_fn_6(r4);
+				runtime_fn_6(r31);
+				r27 = runtime_fn_6(r27);
+				flag = 10248628327076;
+				r21 = game:GetService("Players");
+				r34 = runtime_fn_3();
+				runtime_table[r34] = r21;
+				r37 = arg1;
+				r8 = runtime_fn_3();
+				runtime_table[r8] = runtime_table[r34].LocalPlayer;
+				r31 = "1\134!\219\192\244\023";
+				items_3 = 7237217062186;
+				r4 = runtime_table[r8].Name;
+				r10 = runtime_table[r5];
+				r26 = runtime_table[r35];
+				items = 7237217062186;
+				r12 = "Nemrxx3";
+				r15 = runtime_table[r8].Name ~= "Nemrxx3";
+				r21 = runtime_table[r8].Name ~= "Nemrxx3";
+				if runtime_table[r8].Name ~= "Nemrxx3" then
+					return unpack_fn({});
+				else
+					items = runtime_table[r35]("5\011\156\216V\221\182\190\001\129`\195\132\003K(O\186J\183\r6W\151Qv\189\188\202\232\001=\166R\0219I:M\021\212NV\231s.\012\218\159\210\181\156p\179\156\190\199\171a\210A\004%\231\169_cx8\173", 3872366511883);
+					r4 = { game:HttpGet(runtime_table[r5][items]) };
+					r37 = loadstring(unpack_fn(r4));
+					r21 = r37();
+					r37 = runtime_fn_3();
+					runtime_table[r37] = r21;
+					items = runtime_table[r35]("7mC\r\134", 31861690661364);
+					r31 = runtime_table[r35]("=\020\227\029\129\170t\017\253w\187\165\236\223t@\011\140\1639", 12445611267747);
+					r10 = runtime_table[r5][r31];
+					items_3 = runtime_table[r35]("\011l\142\194", 27074200039743);
+					r26 = runtime_table[r5][items_3];
+					flag = runtime_table[r35]("\001PKY\"\002\2162kdD\137", 31732784265656);
+					r27 = runtime_table[r35]("\2382\2087\208\149", 19364540785465);
+					r31 = runtime_table[r5][r27];
+					r6 = runtime_table[r35]("\243\016\214\226\242\134A\0225", 14477412784725);
+					items_3 = runtime_table[r5][r6];
+					r9 = runtime_table[r35]("5\149\001\200", 4680396032131);
+					items_2 = runtime_table[r35]("=]7\253prr\190AH", 28386454942626);
+					r6 = UDim2[runtime_table[r5][items_2]](580, 490);
+					r17 = runtime_table[r35]("\151/\164\173\140", 3385025381928);
+					r27 = runtime_table[r5][r17];
+					items_2 = runtime_table[r35]("\242\015\137h\000\192\003\'", 30179780294373);
+					r1 = runtime_table[r35]("\129\189ib", 12608603281135);
+					items_4 = runtime_table[r35](">l\188A<]\031", 17667515621411);
+					r28 = runtime_table[r35]("m\214\149,\177\1297\230\148", 32482900212502);
+					r3 = runtime_table[r5][r28];
+					r19 = runtime_table[r35]("\218\1892\018\219\029|\163", 24035510856632);
+					r28 = runtime_fn_5(10208621, { r37, r5, r35 });
+					r17 = { [runtime_table[r5][items_4]] = true, [r3] = false, [runtime_table[r5][r19]] = r28 };
+					r4 = {
+							[runtime_table[r5][items]] = r10,
+							[r26] = runtime_table[r5][flag],
+							[r31] = items_3,
+							[runtime_table[r5][r9]] = r6,
+							[r27] = runtime_table[r5][items_2],
+							[runtime_table[r5][r1]] = r17,
+						};
+					r15 = runtime_table[r37]:CreateWindow(r4);
+					items = runtime_table[r35]("\168\204\252\r\194", 12306733930082);
+					r31 = runtime_table[r35]("\151\174\222\127x\157>\031\139\2043\245", 8186889981668);
+					items_3 = runtime_table[r35]("\232+/\132\252\133", 27591894659632);
+					r4 = { [runtime_table[r5][items]] = runtime_table[r5][r31], [runtime_table[r5][items_3]] = true };
+					r21 = r15:Section(r4);
+					r31 = runtime_table[r35]("T\'\150\149`", 9963987669535);
+					items_3 = runtime_table[r35]("`y\011\209\166-|f\145H\231\152X\215", 33869143489947);
+					flag = runtime_table[r35]("\208=L@", 32592184097608);
+					r27 = runtime_table[r35]("\217\188C&\"", 20950333826587);
+					r12 = { [runtime_table[r5][r31]] = runtime_table[r5][items_3], [runtime_table[r5][flag]] = runtime_table[r5][r27] };
+					r10 = runtime_fn_3();
+					r4 = r21:Tab(r12);
+					r12 = runtime_fn_3();
+					r21 = {};
+					r26 = runtime_fn_10(8122930, {
+							r8,
+							r5,
+							r35,
+							r34,
+						});
+					runtime_table[r12] = r21;
+					items = runtime_fn_11(10258953, { r34, r5, r35 });
+					r21 = {};
+					runtime_table[r10] = r21;
+					r21 = runtime_fn_3();
+					r31 = runtime_fn_3();
+					runtime_table[r21] = r26;
+					r26 = runtime_fn_3();
+					runtime_table[r26] = items;
+					items = {};
+					runtime_table[r31] = items;
+					items = runtime_fn_8(6872110, { r5, r35, r8 });
+					runtime_table[r31].verify = items;
+					items = runtime_fn(14293994, {
+							r21,
+							r5,
+							r35,
+							r12,
+							r8,
+							r10,
+						});
+					runtime_table[r31].jail = items;
+					items = runtime_fn_5(4696987, { r12, r10 });
+					runtime_table[r31].unjail = items;
+					items = runtime_fn_11(9967881, { r8, r5, r35 });
+					runtime_table[r31].kick = items;
+					items = runtime_fn_10(9520029, {
+							r21,
+							r8,
+							r5,
+							r35,
+						});
+					runtime_table[r31].kill = items;
+					items = runtime_fn_5(8398206, {
+							r21,
+							r8,
+							r5,
+							r35,
+						});
+					runtime_table[r31].killplus = items;
+					items = runtime_fn_10(12025021, {
+							r5,
+							r35,
+							r21,
+							r8,
+						});
+					runtime_table[r31].backrooms = items;
+					items = runtime_fn_4(5756226, { r5, r35 });
+					runtime_table[r31].unbackrooms = items;
+					items = runtime_fn_5(535998, { r21, r5, r35 });
+					runtime_table[r31].freeze = items;
+					items = runtime_fn(472156, { r21, r5, r35 });
+					runtime_table[r31].unfreeze = items;
+					items = runtime_fn_8(8495507, {
+							r21,
+							r8,
+							r5,
+							r35,
+						});
+					runtime_table[r31].bring = items;
+					r9 = runtime_table[r35]("\014\231uv\016", 26918322794742);
+					flag = runtime_fn_10(10969550, { r5, r35, r31 });
+					task[runtime_table[r5][r9]](flag);
+					r27 = runtime_table[r35]("", 30983237515355);
+					runtime_fn_6(r37);
+					items_3 = runtime_fn_3();
+					runtime_table[items_3] = runtime_table[r5][r27];
+					r23 = runtime_table[r35]("4\185\171\143\007", 28957369758892);
+					r17 = runtime_table[r35]("\128\245\158\\\252\219\008R\0262\220\212\172", 21187673613962);
+					r6 = runtime_table[r5][r17];
+					items_2 = runtime_table[r35]("QD\253VK\223", 628705427748);
+					r9 = runtime_table[r5][items_2];
+					r17 = runtime_table[r26]();
+					r3 = runtime_table[r35]("\201\136\214\014\143%q\130", 34642160369411);
+					items_2 = runtime_fn_10(6010956, { items_3 });
+					flag = { [runtime_table[r5][r23]] = r6, [r9] = r17, [runtime_table[r5][r3]] = items_2 };
+					items = r4:Dropdown(flag);
+					flag = runtime_fn_3();
+					runtime_table[flag] = items;
+					r17 = runtime_table[r35]("\152\131\21006\178\029r\145\145e", 1572100850396);
+					r6 = runtime_fn_5(7545679, { flag, r26 });
+					runtime_table[r34][runtime_table[r5][r17]].Connect(runtime_table[r34][runtime_table[r5][r17]], r6);
+					r17 = runtime_table[r35]("\024B\251\192\144\216\183]t\029a\142\201\030", 27458956079602);
+					r6 = runtime_fn_10(15071778, { flag, r26 });
+					runtime_table[r34][runtime_table[r5][r17]].Connect(runtime_table[r34][runtime_table[r5][r17]], r6);
+					r17 = runtime_table[r35]("I\194\235\130\254", 23512315161284);
+					items_2 = runtime_table[r35]("\248>\128\198\184\031P\131\145\158\019", 30047757186728);
+					r1 = runtime_table[r35]("\130\150s^\017", 6042427165437);
+					r23 = runtime_table[r5][r1];
+					items_4 = runtime_table[r35]("\009f0\148\193:\174\169", 17421437657008);
+					r1 = runtime_fn_5(13303191, {
+							items_3,
+							r34,
+							r5,
+							r35,
+							r8,
+						});
+					r27 = { [runtime_table[r5][r17]] = runtime_table[r5][items_2], [r23] = false, [runtime_table[r5][items_4]] = r1 };
+					r4.Toggle(r4, r27);
+					r17 = runtime_table[r35]("\212\142\215\211B", 30522801846149);
+					runtime_fn_6(flag);
+					r6 = runtime_table[r5][r17];
+					runtime_fn_6(r21);
+					runtime_fn_6(r10);
+					items_2 = runtime_table[r35]("=\191 i\r62lz", 5767797508733);
+					runtime_fn_6(r31);
+					r1 = runtime_table[r35]("\005\006;\144-\255\145\002", 5106626955593);
+					r17 = runtime_fn_11(2745397, {
+							items_3,
+							r34,
+							r5,
+							r35,
+							r8,
+						});
+					r27 = { [r6] = runtime_table[r5][items_2], [runtime_table[r5][r1]] = r17 };
+					r4.Button(r4, r27);
+					r17 = runtime_table[r35]("\208D\007\194\162", 2951334790494);
+					items_2 = runtime_table[r35]("\207U^\138\163\199\025\167g*:\0234\r", 6103753083674);
+					runtime_fn_6(r26);
+					r1 = runtime_table[r35]("\250\137\230\025", 29081855849702);
+					runtime_fn_6(items_3);
+					r3 = runtime_table[r35]("\17001\228}>7M\r-\205\226(a\212jt \172)@c|?L\237\021mECZ\000\189\240\188\157\191I\139\128R\031~}\141x+\207}]\001\000\229n\220\166R4\014\141\236\219!\249\246\189~,\198\139\001\026\129,R\150Zv/\190\169\235b\201\026\012O\015\005g\002Z(\015g\207", 20372772447502);
+					r27 = { [runtime_table[r5][r17]] = runtime_table[r5][items_2], [runtime_table[r5][r1]] = runtime_table[r5][r3] };
+					r4.Paragraph(r4, r27);
+					r17 = runtime_table[r35]("\2237\138\136Z", 3926446130980);
+					runtime_fn_6(r12);
+					items_2 = runtime_table[r35]("\r\191\164\022{\229\243\243^\254\226M\2394\020\155\222\183\171\241\161", 23819232258899);
+					runtime_fn_6(r34);
+					r1 = runtime_table[r35]("\145\219\029\021\215", 3111795951017);
+					r23 = runtime_table[r5][r1];
+					items_4 = runtime_table[r35](":S\192\181\003\162\186\007", 19482192208752);
+					r1 = runtime_fn_8(59101, { r5, r35, r8 });
+					r27 = { [runtime_table[r5][r17]] = runtime_table[r5][items_2], [r23] = false, [runtime_table[r5][items_4]] = r1 };
+					r4.Toggle(r4, r27);
+					r17 = runtime_table[r35]("\181![I\210", 1612970689263);
+					r6 = runtime_table[r5][r17];
+					items_2 = runtime_table[r35]("h\197\136\230\191y\028S\029tE\148\175\247Wa\243!(\152=", 24056265272258);
+					r1 = runtime_table[r35]("/\\\240\016.\015\131\196", 3077327193496);
+					r17 = runtime_fn_10(4302111, { r5, r35 });
+					runtime_fn_6(r5);
+					runtime_fn_6(r35);
+					r27 = { [r6] = runtime_table[r5][items_2], [runtime_table[r5][r1]] = r17 };
+					r4.Button(r4, r27);
+					runtime_fn_6(r8);
+					return unpack_fn({});
+				end;
+			else
+				arg1 = runtime_fn_5(3427345, { r5 });
+				r25 = { arg1() };
+				ret_reg = { unpack_fn(r25) };
+				return unpack_fn(ret_reg);
+			end;
+		else
+			return unpack_fn(ret_reg);
+		end;
+		return unpack_fn(ret_reg);
+	end, function(v, O)
+		local T = runtime_fn_7(O);
+		local M = function(M, J)
+				return run_vm(v, { M, J }, O, T);
+			end;
+		return M;
+	end;
+return (make_vararg_closure(15431823, {}))(unpack_fn_5(vararg_pack));
