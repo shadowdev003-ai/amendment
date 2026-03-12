@@ -1646,8 +1646,8 @@ local Title = InsertTheme(Create("TextLabel", TopBar, {
     
     Create("TextLabel", {
         Size = UDim2.fromOffset(50, 12),
-        Position = UDim2.new(1, 5, 1.5),
-        AnchorPoint = Vector2.new(0, 0),
+        Position = UDim2.new(1, 0, 0.5, 0),
+        AnchorPoint = Vector2.new(0, 0.5),
         BackgroundTransparency = 1,
         TextColor3 = Theme["Color Theme"],
         Font = Enum.Font.GothamBold,
@@ -1657,6 +1657,18 @@ local Title = InsertTheme(Create("TextLabel", TopBar, {
         Name = "Timer"
     })
 }), "Text")
+
+task.spawn(function()
+    local TimerLabel = Title:FindFirstChild("Timer")
+    while TimerLabel and TimerLabel.Parent do
+        local e = tick() - StartTime
+        local h = math.floor(e / 3600)
+        local m = math.floor((e % 3600) / 60)
+        local s = math.floor(e % 60)
+        TimerLabel.Text = string.format("%02d:%02d:%02d", h, m, s)
+        task.wait(1)
+    end
+end)
 
 task.spawn(function()
     local TimerLabel = Title:FindFirstChild("Timer")
