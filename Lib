@@ -1615,7 +1615,7 @@ end)
 		Name = "Top Bar"
 	})
 	
-local StartTime = tick()
+ local StartTime = tick()
 
 local SubTitle = InsertTheme(Create("TextLabel", {
     Size = UDim2.fromScale(0, 1),
