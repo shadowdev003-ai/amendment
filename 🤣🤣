@@ -1,0 +1,1252 @@
+-- ts file was generated at discord.gg/25ms
+
+local fenv = getfenv()
+
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t'):FireServer('RolePlayName', 'LOC4T HUB V0.2')
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPNameColor', Color3.fromRGB(100, 200, 255))
+
+local _call30 = game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t')
+
+_call30:FireServer('RolePlayBio', 'Welcome ' .. game:GetService('Players').LocalPlayer.DisplayName)
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPBioColor', Color3.fromRGB(20, 20, 20))
+
+local _call48 = loadstring(game:HttpGet('https://raw.githubusercontent.com/sukunalua/Jajjajajajajajajaj/refs/heads/main/novalib.lua'))():MakeWindow({
+    SaveFolder = 'bruton_data',
+    SubTitle = 'BY BRUTON AND SUKSH',
+    Title = 'LOC4T HUB | BROOKHAVEN',
+})
+
+_call48:AddMinimizeButton({
+    AnimateGradient = true,
+    GradientColor2 = Color3.fromRGB(40, 110, 220),
+    GradientColor3 = Color3.fromRGB(0, 0, 0),
+    Position = UDim2.new(0.5, 0, 0.95, 0),
+    GradientSpeed = 80,
+    Text = '\u{627}\u{644}\u{632} \u{647}\u{646}\u{627} \u{62a}\u{642}\u{62f}\u{631} \u{62a}\u{633}\u{62d}\u{628}\u{647}',
+    Icon = 'rbxassetid://86342558293723',
+    GradientColor1 = Color3.fromRGB(60, 140, 255),
+})
+
+local _call60 = _call48:MakeTab({
+    Title = ' \u{627}\u{644}\u{62d}\u{642}\u{648}\u{642}',
+    Icon = 'rbxassetid://10723415903',
+})
+
+_call60:AddParagraph({
+    [1] = '\u{627}\u{62d}\u{628} \u{627}\u{642}\u{644}\u{643} \u{627}\u{630}\u{627} \u{627}\u{646}\u{62a} \u{645}\u{637}\u{648}\u{631} \u{648}\u{62c}\u{627}\u{64a} \u{62a}\u{628}\u{648}\u{643} \u{627}\u{641}\u{643}\u{627}\u{631} \u{627}\u{631}\u{64a}\u{62f} \u{627}\u{642}\u{644}\u{643} \u{645}\u{639} \u{643}\u{644} \u{627}\u{62d}\u{62a}\u{631}\u{627}\u{645}\u{627}\u{62a}\u{64a} \u{643}\u{633}\u{645}\u{643}\u{643}\u{643}\u{643}',
+})
+_call60:AddParagraph({
+    [1] = '\u{62d}\u{642}\u{648}\u{642}',
+    [2] = 'BRUTON\nSUKSH',
+})
+_call60:AddButton({
+    Name = '\u{627}\u{646}\u{633}\u{62e} \u{62d}\u{633}\u{627}\u{628}\u{64a} \u{62a}\u{64a}\u{643}',
+    Callback = function(...) end,
+})
+
+local _call68 = _call48:MakeTab({
+    Title = '\u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Icon = 'rbxassetid://17132521951',
+})
+
+_call68:AddSection({
+    Name = '\u{627}\u{644}\u{62a}\u{62d}\u{643}\u{645}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('UserInputService')
+
+local _LocalPlayer77 = game:GetService('Players').LocalPlayer
+local _Character78 = _LocalPlayer77.Character
+local _call81 = _Character78:WaitForChild('Humanoid')
+
+_Character78:WaitForChild('HumanoidRootPart')
+_LocalPlayer77.CharacterAdded:Connect(function(...) end)
+_call68:AddSlider({
+    Min = 16,
+    Name = '\u{627}\u{644}\u{633}\u{631}\u{639}\u{629}',
+    Max = 500,
+    Callback = function(...) end,
+    Default = _call81.WalkSpeed,
+})
+_call68:AddSlider({
+    Min = 50,
+    Name = '\u{627}\u{644}\u{642}\u{641}\u{632}',
+    Max = 500,
+    Callback = function(...) end,
+    Default = _call81.JumpPower,
+})
+_call68:AddSlider({
+    Min = 10,
+    Name = '\u{627}\u{644}\u{62c}\u{627}\u{630}\u{628}\u{64a}\u{629}',
+    Max = 500,
+    Callback = function(...) end,
+    Default = game:GetService('Workspace').Gravity,
+})
+_call68:AddButton({
+    Name = '\u{627}\u{639}\u{627}\u{62f}\u{629} \u{627}\u{644}\u{648}\u{636}\u{639} \u{627}\u{644}\u{637}\u{628}\u{64a}\u{639}\u{64a}',
+    Callback = function(...) end,
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _ = workspace.Gravity
+
+_call68:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{627}\u{633}\u{628}\u{62d}',
+    Default = false,
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call68:AddToggle({
+    Callback = function(...) end,
+    Name = 'FLOAT',
+    Default = false,
+})
+
+local _call114 = _call48:MakeTab({
+    [1] = '\u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a}',
+    [2] = 'rbxassetid://10734951847',
+})
+local _LocalPlayer119 = game:GetService('Players').LocalPlayer
+
+_LocalPlayer119.CharacterAdded:Connect(function(...) end)
+
+local _ = _LocalPlayer119.Character and 15093699
+local _Character125 = _LocalPlayer119.Character
+
+_Character125:WaitForChild('Humanoid')
+_Character125:WaitForChild('HumanoidRootPart')
+
+for _132, _132_2 in ipairs(_Character125:GetDescendants())do
+    local _ = _132_2:IsA('BasePart') and 6602355
+    local _ = _132_2.Transparency < 1
+end
+
+_132_2.Transparency = 0
+
+game:GetService('RunService').Heartbeat:Connect(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{628}\u{627}\u{646}\u{62c}',
+    Default = false,
+})
+game:GetService('TweenService')
+
+local _call149 = game:GetService('ReplicatedStorage')
+local _ = game:GetService('Players').LocalPlayer
+
+_call149:WaitForChild('Remotes'):WaitForChild('ResetCharacterAppearance')
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Default = false,
+})
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{632}\u{639}\u{627}\u{62c} \u{627}\u{644}\u{635}\u{648}\u{62a}',
+    Description = '',
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+Vector3.new(-26.09, 2.79, 6.11)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{648}\u{64a}\u{62f}',
+    Description = '',
+})
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('Workspace')
+game:GetService('RunService')
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} ',
+    Description = '',
+})
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Description = '',
+})
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{637}\u{627}\u{626}\u{631}\u{629}',
+    Description = '',
+})
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{647}\u{64a}\u{644}\u{64a}\u{643}\u{648}\u{628}\u{62a}\u{631}',
+    Description = '',
+})
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
+    Description = '',
+})
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633}',
+    Description = '',
+})
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{644}\u{627}\u{642} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{648}\u{642}\u{641}\u{644} \u{627}\u{644}\u{633}\u{64a}\u{631}\u{641}\u{631}',
+    Description = '',
+})
+_call114:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{627}\u{628}\u{648}\u{627}\u{628}',
+    Description = '',
+})
+game:GetService('TweenService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('RunService').Heartbeat:Connect(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{623}\u{637}\u{641}\u{627}\u{644} ',
+    Default = false,
+})
+
+local _settings213 = fenv.settings
+local _Physics215 = _settings213().Physics
+
+_Physics215.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
+
+local _Rendering219 = _settings213().Rendering
+
+_Rendering219.QualityLevel = 1
+
+setfpscap(999)
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+task.spawn(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{633}\u{643}\u{64a} \u{628}\u{648}\u{643}\u{633}',
+    Default = false,
+})
+game:GetService('VirtualUser')
+game:GetService('Players').LocalPlayer.Idled:Connect(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{641}\u{643}',
+    Default = true,
+})
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('RunService').Heartbeat:Connect(function(...) end)
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{633}\u{644}\u{629}',
+    Default = false,
+})
+workspace.DescendantAdded:Connect(function(...) end)
+
+local _call256 = game:GetService('Players')
+
+game:GetService('RunService')
+
+local _ = _call256.LocalPlayer
+
+_call114:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642} ',
+    Default = false,
+})
+workspace.DescendantAdded:Connect(function(...) end)
+_call256.PlayerAdded:Connect(function(...) end)
+
+local _call269 = _call48:MakeTab({
+    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{627}\u{644}\u{645}\u{627}\u{628}',
+    [2] = 'rbxassetid://6862780932',
+})
+
+_call269:AddSection({
+    Name = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{64a}\u{643}',
+    Icon = 'rbxassetid://10734950309',
+})
+_call269:AddButton({
+    Name = '\u{627}\u{636}\u{63a}\u{637} \u{644}\u{62a}\u{627}\u{62e}\u{630} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642}',
+    Callback = function(...) end,
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{628}\u{639}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 15,
+    Increase = 0.5,
+    Callback = function(...) end,
+    Default = 6,
+})
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 20,
+    Increase = 1,
+    Callback = function(...) end,
+    Default = 4,
+})
+_call269:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{641}\u{639}\u{644} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629} \u{639}\u{644}\u{64a}\u{643}',
+    Default = false,
+})
+task.spawn(function(...) end)
+_call269:AddSection({
+    Name = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{649} \u{644}\u{627}\u{639}\u{628}',
+    Icon = 'rbxassetid://10734950309',
+})
+_call269:AddButton({
+    Name = '\u{627}\u{636}\u{63a}\u{637} \u{644}\u{62a}\u{627}\u{62e}\u{630} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642}',
+    Callback = function(...) end,
+})
+
+local _call292 = game:GetService('Players')
+
+game:GetService('RunService')
+
+local _LocalPlayer295 = _call292.LocalPlayer
+
+for _299, _299_2 in ipairs(_call292:GetPlayers())do
+    local _ = _299_2 ~= _LocalPlayer295
+    local _ = _299_2 == _LocalPlayer295
+end
+
+local _call304 = _call269:AddDropdown({
+    Default = '',
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Options = {
+        [1] = _299_2.Name,
+    },
+    Flag = 'player list',
+    Multi = false,
+    Callback = function(...) end,
+    Description = '',
+})
+
+_call269:AddButton({
+    Name = '\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{642}\u{627}\u{626}\u{645}\u{629} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
+    Callback = function(...) end,
+})
+
+for _309, _309_2 in ipairs(_call292:GetPlayers())do
+    local _ = _309_2 ~= _LocalPlayer295
+    local _ = _309_2 == _LocalPlayer295
+end
+
+_call304:Set({
+    [1] = _309_2.Name,
+})
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{628}\u{639}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 20,
+    Increase = 0.5,
+    Callback = function(...) end,
+    Default = 6,
+})
+_call269:AddSlider({
+    Min = 0,
+    Name = '\u{639}\u{634}\u{648}\u{627}\u{626}\u{64a}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 5,
+    Increase = 0.1,
+    Callback = function(...) end,
+    Default = 0,
+})
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 30,
+    Increase = 1,
+    Callback = function(...) end,
+    Default = 6,
+})
+_call269:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{647}\u{627}\u{644}\u{629} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Default = false,
+})
+task.spawn(function(...) end)
+_call269:AddSection({
+    [1] = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{628}\u{648}\u{627}\u{628}',
+})
+game:GetService('RunService')
+
+local _LocalPlayer334 = game:GetService('Players').LocalPlayer
+local _Character335 = _LocalPlayer334.Character
+
+_Character335:WaitForChild('HumanoidRootPart')
+
+local _call342 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
+
+Instance.new('Attachment', _call342)
+
+_call342.Anchored = true
+_call342.CanCollide = false
+_call342.Transparency = 1
+
+local _ = not genv.Network
+
+_LocalPlayer334.CharacterAdded:Connect(function(...) end)
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{627}\u{628}\u{639}\u{627}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 100,
+    Callback = function(...) end,
+    Default = 10,
+})
+_call269:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 20,
+    Callback = function(...) end,
+    Default = 2,
+})
+_call269:AddSlider({
+    Min = 0,
+    Name = '\u{639}\u{634}\u{648}\u{627}\u{626}\u{64a}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Max = 20,
+    Callback = function(...) end,
+    Default = 0,
+})
+_call269:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Default = false,
+})
+_call269:AddSection({
+    [1] = '\u{633}\u{62d}\u{628} \u{627}\u{628}\u{648}\u{627}\u{628} \u{639}\u{644}\u{649} \u{644}\u{627}\u{639}\u{628}',
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _call370 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
+
+Instance.new('Attachment', _call370)
+
+_call370.Anchored = true
+_call370.CanCollide = false
+_call370.Transparency = 1
+
+local _ = not genv.Network
+
+_call269:AddTextBox({
+    Placeholder = '\u{627}\u{643}\u{62a}\u{628} \u{627}\u{648}\u{644} \u{62d}\u{631}\u{648}\u{641} \u{627}\u{644}\u{627}\u{633}\u{645}',
+    Name = '\u{627}\u{633}\u{645} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    ClearText = false,
+    Callback = function(...) end,
+    Default = '',
+})
+_call269:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{633}\u{62d}\u{628}',
+    Default = false,
+})
+_call269:AddSection({
+    [1] = '\u{627}\u{639}\u{635}\u{627}\u{631} \u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629}',
+})
+_call269:AddButton({
+    Callback = function(...) end,
+    Name = '\u{641}\u{639}\u{644} \u{627}\u{639}\u{635}\u{627}\u{631} \u{628}\u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629} \u{641}\u{64a} \u{637}\u{631}\u{64a}\u{642} \u{627}\u{644}\u{628}\u{62f}\u{627}\u{64a}\u{629}',
+    Description = '\u{644}\u{627} \u{62a}\u{646}\u{632}\u{644} \u{62d}\u{62a}\u{649} \u{64a}\u{646}\u{632}\u{644}\u{643} \u{647}\u{648}',
+})
+_call269:AddButton({
+    Callback = function(...) end,
+    Name = '\u{627}\u{64a}\u{642}\u{627}\u{641} \u{627}\u{639}\u{635}\u{627}\u{631} \u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629}',
+    Description = '',
+})
+
+local _call386 = _call48:MakeTab({
+    Title = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
+    Icon = 'rbxassetid://10734962068',
+})
+local _call388 = game:GetService('Players')
+local _LocalPlayer389 = _call388.LocalPlayer
+
+for _392, _392_2 in ipairs(_call388:GetPlayers())do
+    local _ = _392_2 ~= _LocalPlayer389
+    local _ = _392_2 == _LocalPlayer389
+
+    _392_2.Name:lower()
+end
+
+_call386:AddDropdown({
+    Default = '',
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Options = {
+        [1] = _392_2.Name,
+    },
+    Flag = 'player list',
+    Multi = false,
+    Callback = function(...) end,
+    Description = '',
+})
+_call386:AddButton({
+    Name = '\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{642}\u{627}\u{626}\u{645}\u{629} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
+    Callback = function(...) end,
+})
+_call386:AddToggle({
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{62a}\u{646}\u{642}\u{644} \u{644}\u{644}\u{627}\u{639}\u{628}',
+    Callback = function(...) end,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{62a}\u{62c}\u{633}\u{633} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Description = '',
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Title = '\u{627}\u{644}\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{644}\u{644}\u{627}\u{639}\u{628}',
+    Desc = '',
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Title = '\u{646}\u{633}\u{62e} \u{64a}\u{648}\u{632}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Desc = '',
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Title = '\u{646}\u{633}\u{62e} \u{627}\u{644}\u{627}\u{633}\u{645} \u{627}\u{644}\u{627}\u{633}\u{64a} \u{644}\u{644}\u{627}\u{639}\u{628}',
+    Desc = '',
+})
+_call386:AddSection({
+    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642} \u{627}\u{62d}\u{633}\u{643} \u{63a}\u{628}\u{64a} \u{644}\u{648} \u{62a}\u{633}\u{62a}\u{62e}\u{62f}\u{645} \u{643}\u{646}\u{628}\u{629} \u{648}\u{628}\u{627}\u{635} \u{648}\u{645}\u{627}\u{62a}\u{633}\u{62a}\u{62e}\u{62f}\u{645}\u{647}',
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+game:GetService('VirtualUser')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddDropdown({
+    Callback = function(...) end,
+    Default = '\u{641}\u{644}\u{646}\u{642}',
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{637}\u{631}\u{64a}\u{642}\u{629}',
+    Options = {
+        [1] = '\u{641}\u{644}\u{646}\u{642}',
+        [2] = '\u{633}\u{62d}\u{628}',
+        [3] = '\u{642}\u{62a}\u{644}',
+        [4] = '\u{62d}\u{628}\u{633}',
+        [5] = '\u{628}\u{627}\u{646}\u{62f} \u{627}\u{644}\u{628}\u{64a}\u{62a}',
+    },
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641}\n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Default = false,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+game:GetService('VirtualUser')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddDropdown({
+    Callback = function(...) end,
+    Default = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644}',
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{637}\u{631}\u{64a}\u{642}\u{629}',
+    Options = {
+        [1] = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644}',
+        [2] = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644}',
+        [3] = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644}',
+        [4] = '\u{62d}\u{628}\u{633} \u{627}\u{644}\u{643}\u{644}',
+        [5] = '\u{628}\u{627}\u{646}\u{62f} \u{627}\u{644}\u{628}\u{64a}\u{62a} \u{644}\u{644}\u{643}\u{644}',
+    },
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641}\n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Default = false,
+})
+_call386:AddSection({
+    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{628}\u{627}\u{635}',
+})
+_call386:AddButton({
+    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
+    Callback = function(...) end,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+local _call458 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
+
+Instance.new('Attachment', _call458)
+
+_call458.Anchored = true
+_call458.CanCollide = false
+_call458.Transparency = 1
+
+local _ = not genv.Network
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62b}\u{642}\u{628} \u{627}\u{633}\u{648}\u{62f} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
+    Default = false,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
+    Default = false,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{628}\u{627}\u{635}',
+    Default = false,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644} \u{628}\u{627}\u{635}',
+    Default = false,
+})
+_call386:AddSection({
+    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+})
+
+local _ = workspace.CurrentCamera
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddSlider({
+    Min = 0.1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{642}\u{62a}\u{644}',
+    Max = 7,
+    Increment = 0.1,
+    Callback = function(...) end,
+    Default = 1,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = 'V1 \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = 'V2 \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+
+local _ = workspace.CurrentCamera
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = 'V1 \u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = 'V2 \u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+game:GetService('ReplicatedStorage')
+game:GetService('VirtualInputManager')
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _ = workspace.CurrentCamera
+
+_call386:AddDropdown({
+    Callback = function(...) end,
+    Default = '\u{642}\u{62a}\u{644}',
+    Name = '\u{627}\u{62e}\u{62a}\u{631} \u{637}\u{631}\u{64a}\u{642}\u{629} \u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Options = {
+        [1] = '\u{642}\u{62a}\u{644}',
+        [2] = '\u{642}\u{62a}\u{644} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{627}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
+        [3] = '\u{62d}\u{628}\u{633}',
+        [4] = '\u{62d}\u{628}\u{633} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{627}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
+        [5] = '\u{633}\u{62d}\u{628}',
+        [6] = '\u{633}\u{62d}\u{628} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
+    },
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641} \n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Default = false,
+})
+_call386:AddSection({
+    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{627}\u{644}\u{643}\u{631}\u{629}',
+    Icon = 'rbxassetid://',
+})
+_call386:AddButton({
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
+    Callback = function(...) end,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+game:GetService('VirtualUser')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{643}\u{631}\u{629} \u{644}\u{627} \u{62a}\u{645}\u{633} \u{634}\u{64a}',
+    Default = false,
+})
+_call386:AddSection({
+    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{627}\u{644}\u{634}\u{627}\u{62d}\u{646}\u{629}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+game:GetService('Workspace')
+
+local _ = game:GetService('Players').LocalPlayer
+
+Vector3.new(-26.09, 2.79, 6.11)
+_call386:AddButton({
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{634}\u{627}\u{62d}\u{646}\u{629}',
+    Callback = function(...) end,
+})
+_call386:AddSection({
+    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddButton({
+    Name = '\u{642}\u{62a}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Callback = function(...) end,
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Description = '',
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{62d}\u{628} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Default = false,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} ',
+    Default = false,
+})
+game:GetService('RunService')
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} ',
+    Default = false,
+})
+
+local _ = game:GetService('Players').LocalPlayer
+
+Vector3.new(260.29, 4.37, 209.32)
+Vector3.new(234.49, 4.37, 228)
+Vector3.new(262.79, 21.37, 210.84)
+Vector3.new(229.6, 21.37, 225.4)
+Vector3.new(173.44, 21.37, 228.11)
+Vector3.new(-43, 21, -137)
+Vector3.new(-40, 36, -137)
+Vector3.new(-21, 40, 436)
+Vector3.new(155, 37, 433)
+Vector3.new(255, 35, 431)
+Vector3.new(254, 38, 394)
+Vector3.new(148, 39, 387)
+Vector3.new(-17, 42, 395)
+Vector3.new(-189, 37, -247)
+Vector3.new(-354, 37, -244)
+Vector3.new(-456, 36, -245)
+Vector3.new(-453, 38, -295)
+Vector3.new(-356, 38, -294)
+Vector3.new(-187, 37, -295)
+Vector3.new(-410, 68, -447)
+Vector3.new(-348, 69, -496)
+Vector3.new(-103, 12, 1087)
+Vector3.new(-730, 6, 808)
+Vector3.new(-245, 7, 822)
+Vector3.new(639, 76, -361)
+Vector3.new(-908, 6, -361)
+Vector3.new(-111, 70, -417)
+Vector3.new(230, 38, 569)
+Vector3.new(-30, 13, 2209)
+Vector3.new(-26.786, 4.549, -16.025)
+Vector3.new(149.82, 5.549, 60.242)
+Vector3.new(170.196, 5.549, 266.061)
+Vector3.new(-119.9, 4.641, 8.176)
+Vector3.new(-130.075, 4.649, -127.652)
+Vector3.new(-168.064, 4.649, -112.339)
+Vector3.new(-72.252, 4.649, -122.569)
+Vector3.new(10.353, 4.649, -115.098)
+Vector3.new(198.996, -33.061, -179.751)
+Vector3.new(295.139, 5.549, 40.569)
+Vector3.new(1.074, 4.549, 237.577)
+Vector3.new(-41.549, 4.549, 238.717)
+Vector3.new(-96.891, 4.549, 236.663)
+Vector3.new(-129.832, 4.549, 242.131)
+Vector3.new(-183.435, 4.549, 240.83)
+Vector3.new(-301.655, 4.749, 212.338)
+Vector3.new(-304.652, 4.636, 14.17)
+Vector3.new(-354.4, 8.555, -101.754)
+Vector3.new(-430.852, 4.549, -103.408)
+Vector3.new(-765.745, 4.149, -60.722)
+Vector3.new(-842.876, 4.149, -395.368)
+Vector3.new(-661.048, 251.373, 753.847)
+Vector3.new(-236.487, 1.136, 760.252)
+_call386:AddDropdown({
+    Callback = function(...) end,
+    Default = '',
+    Name = '\u{627}\u{62e}\u{64a}\u{627}\u{631} \u{631}\u{642}\u{645} \u{627}\u{644}\u{628}\u{64a}\u{62a}',
+    Options = {
+        [1] = '\u{628}\u{64a}\u{62a} 1',
+        [2] = '\u{628}\u{64a}\u{62a} 11',
+        [3] = '\u{628}\u{64a}\u{62a} 12',
+        [4] = '\u{628}\u{64a}\u{62a} 13',
+        [5] = '\u{628}\u{64a}\u{62a} 14',
+        [6] = '\u{628}\u{64a}\u{62a} 15',
+        [7] = '\u{628}\u{64a}\u{62a} 16',
+        [8] = '\u{628}\u{64a}\u{62a} 17',
+        [9] = '\u{628}\u{64a}\u{62a} 18',
+        [10] = '\u{628}\u{64a}\u{62a} 19',
+        [11] = '\u{628}\u{64a}\u{62a} 2',
+        [12] = '\u{628}\u{64a}\u{62a} 20',
+        [13] = '\u{628}\u{64a}\u{62a} 21',
+        [14] = '\u{628}\u{64a}\u{62a} 22',
+        [15] = '\u{628}\u{64a}\u{62a} 23',
+        [16] = '\u{628}\u{64a}\u{62a} 24',
+        [17] = '\u{628}\u{64a}\u{62a} 28',
+        [18] = '\u{628}\u{64a}\u{62a} 29',
+        [19] = '\u{628}\u{64a}\u{62a} 3',
+        [20] = '\u{628}\u{64a}\u{62a} 30',
+        [21] = '\u{628}\u{64a}\u{62a} 31',
+        [22] = '\u{628}\u{64a}\u{62a} 32',
+        [23] = '\u{628}\u{64a}\u{62a} 33',
+        [24] = '\u{628}\u{64a}\u{62a} 34',
+        [25] = '\u{628}\u{64a}\u{62a} 35',
+        [26] = '\u{628}\u{64a}\u{62a} 4',
+        [27] = '\u{628}\u{64a}\u{62a} 5',
+        [28] = '\u{628}\u{64a}\u{62a} 6',
+        [29] = '\u{628}\u{64a}\u{62a} 7',
+    },
+})
+_call386:AddDropdown({
+    Callback = function(...) end,
+    Default = '',
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
+    Options = {
+        [1] = '\u{627}\u{644}\u{628}\u{62d}\u{631}',
+        [2] = '\u{627}\u{644}\u{628}\u{62f}\u{627}\u{64a}\u{629}',
+        [3] = '\u{627}\u{644}\u{628}\u{644}\u{62f}\u{64a}\u{629}',
+        [4] = '\u{627}\u{644}\u{628}\u{646}\u{643}',
+        [5] = '\u{627}\u{644}\u{633}\u{648}\u{628}\u{631}\u{645}\u{627}\u{631}\u{643}\u{62a}',
+        [6] = '\u{627}\u{644}\u{633}\u{64a}\u{646}\u{64a}\u{645}\u{627}',
+        [7] = '\u{627}\u{644}\u{641}\u{646}\u{62f}\u{642}',
+        [8] = '\u{627}\u{644}\u{645}\u{62f}\u{631}\u{633}\u{629}',
+        [9] = '\u{627}\u{644}\u{645}\u{632}\u{631}\u{639}\u{629}',
+        [10] = '\u{627}\u{644}\u{645}\u{633}\u{62a}\u{634}\u{641}\u{649} ',
+        [11] = '\u{627}\u{644}\u{645}\u{637}\u{627}\u{631}',
+        [12] = '\u{627}\u{644}\u{645}\u{637}\u{639}\u{645}',
+        [13] = '\u{627}\u{644}\u{645}\u{642}\u{647}\u{649}',
+        [14] = '\u{627}\u{644}\u{645}\u{643}\u{62a}\u{628}\u{629}',
+        [15] = '\u{62c}\u{628}\u{644} \u{62f}\u{631}\u{648}\u{646}',
+        [16] = '\u{635}\u{627}\u{644}\u{648}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
+        [17] = '\u{645}\u{62a}\u{62c}\u{631} \u{627}\u{644}\u{627}\u{644}\u{639}\u{627}\u{628}',
+        [18] = '\u{645}\u{62d}\u{637}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{621}',
+        [19] = '\u{645}\u{62d}\u{644} \u{627}\u{644}\u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{644}\u{627} \u{62e}\u{644}\u{635} \u{62d}\u{645}\u{636}\u{62a}',
+        [20] = '\u{645}\u{62d}\u{644} \u{627}\u{644}\u{645}\u{644}\u{627}\u{628}\u{633}',
+        [21] = '\u{645}\u{631}\u{643}\u{632} \u{627}\u{644}\u{634}\u{631}\u{637}\u{629}',
+        [22] = '\u{645}\u{632}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62e}\u{64a}\u{648}\u{644}',
+        [23] = '\u{645}\u{643}\u{62a}\u{628} \u{627}\u{644}\u{628}\u{631}\u{64a}\u{62f}',
+    },
+})
+_call386:AddButton({
+    Name = '\u{627}\u{639}\u{627}\u{62f}\u{629} \u{62a}\u{639}\u{64a}\u{64a}\u{646} \u{644}\u{627}\u{632}\u{645}\u{643} \u{645}\u{646} \u{62a}\u{631}\u{64a}\u{62f} \u{62a}\u{63a}\u{64a}\u{631} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
+    Callback = function(...) end,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{642}\u{648}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} \u{641}\u{64a} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
+    Default = false,
+})
+_call386:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{642}\u{648}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Default = false,
+})
+_call386:AddSection({
+    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{633}\u{641}\u{646} \u{627}\u{644}\u{643}\u{628}\u{64a}\u{631}\u{629}',
+    Icon = 'rbxassetid://',
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{633}\u{641}\u{64a}\u{646}\u{629} \u{627}\u{644}\u{642}\u{631}\u{627}\u{635}\u{646}\u{629} ',
+    Description = '',
+})
+_call386:AddButton({
+    Callback = function(...) end,
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{633}\u{641}\u{64a}\u{646}\u{629} \u{627}\u{644}\u{642}\u{631}\u{627}\u{635}\u{646}\u{629}',
+    Description = '',
+})
+_call386:AddButton({
+    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{642}\u{627}\u{631}\u{628} ',
+    Callback = function(...) end,
+})
+_call386:AddSection({
+    Name = '\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Icon = 'rbxassetid://10723405360',
+})
+_call386:AddButton({
+    Name = '\u{627}\u{62f}\u{627}\u{629} \u{641}\u{644}\u{646}\u{642} \u{643}\u{646}\u{628}\u{629}',
+    Callback = function(...) end,
+})
+_call386:AddButton({
+    Name = '\u{627}\u{62f}\u{627}\u{629} \u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
+    Callback = function(...) end,
+})
+_call386:AddButton({
+    Name = '\u{627}\u{62f}\u{627}\u{629} \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629} ',
+    Callback = function(...) end,
+})
+
+local _call723 = _call48:MakeTab({
+    Title = '\u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734952036',
+})
+
+_call723:AddSection({
+    Name = 'v1 \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734952036',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call723:AddTextBox({
+    Callback = function(...) end,
+    Name = '\u{627}\u{633}\u{645} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Default = '',
+})
+_call723:AddDropdown({
+    Callback = function(...) end,
+    Name = '\u{637}\u{631}\u{64a}\u{642}\u{629} \u{627}\u{644}\u{646}\u{633}\u{62e}',
+    Options = {
+        [1] = '\u{628}\u{631}\u{648}\u{643}\u{647}\u{627}\u{641}\u{646}',
+        [2] = '\u{633}\u{643}\u{646} \u{644}\u{627}\u{633}\u{627}\u{633}\u{64a}',
+    },
+})
+_call723:AddButton({
+    Name = '\u{646}\u{633}\u{62e}',
+    Callback = function(...) end,
+})
+_call723:AddSection({
+    Name = 'v2 \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734952036',
+})
+
+local _call740 = game:GetService('Players')
+
+game:GetService('ReplicatedStorage'):WaitForChild('Remotes')
+
+for _747, _747_2 in ipairs(_call740:GetPlayers()) do end
+
+_call723:AddDropdown({
+    Callback = function(...) end,
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{644}\u{627}\u{639}\u{628}',
+    Options = {
+        [1] = _747_2.Name,
+    },
+})
+_call740.PlayerAdded:Connect(function(...) end)
+_call740.PlayerRemoving:Connect(function(...) end)
+_call723:AddButton({
+    Name = '\u{646}\u{633}\u{62e}',
+    Callback = function(...) end,
+})
+
+local _call761 = _call48:MakeTab({
+    Title = '\u{627}\u{644}\u{62a}\u{644}\u{648}\u{64a}\u{646}',
+    Icon = 'rbxassetid://10734910187',
+})
+
+_call761:AddSection({
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a}',
+    Icon = 'rbxassetid://',
+})
+
+local _call767 = game:GetService('ReplicatedStorage')
+
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call767:WaitForChild('RE')
+_call761:AddDropdown({
+    Callback = function(...) end,
+    Options = {
+        [1] = '\u{62d}\u{642} \u{627}\u{644}\u{637}\u{644}\u{627}\u{621}',
+        [2] = '\u{62d}\u{645}\u{631}\u{629}',
+        [3] = '\u{642}\u{648}\u{633} \u{62d}\u{642} \u{627}\u{644}\u{627}\u{633}\u{647}\u{645}',
+        [4] = '\u{631}\u{627}\u{62f}\u{64a}\u{648} \u{627}\u{644}\u{627}\u{63a}\u{627}\u{646}\u{64a}',
+        [5] = '\u{62a}\u{627}\u{631}\u{645}\u{648}\u{633}',
+        [6] = '\u{62f}\u{648}\u{646}\u{627}\u{62a}',
+        [7] = '\u{645}\u{634}\u{637} \u{62d}\u{642} \u{627}\u{644}\u{627}\u{62d}\u{635}\u{646}\u{629}',
+        [8] = '\u{639}\u{635}\u{64a}',
+        [9] = '\u{645}\u{643}\u{628}\u{631} \u{635}\u{648}\u{62a}',
+        [10] = '\u{634}\u{645}\u{639}\u{629}',
+        [11] = '\u{645}\u{634}\u{639}\u{644}',
+        [12] = '\u{644}\u{639}\u{628}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{644}',
+    },
+    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{627}\u{62f}\u{627}\u{629}',
+    Default = '\u{644}\u{639}\u{628}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{644}',
+})
+_call761:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{62f}\u{627}\u{629}',
+    Default = false,
+})
+_call761:AddSection({
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
+    Icon = 'rbxassetid://10734939942',
+})
+Color3.new(1, 1, 0)
+Color3.new(0, 0, 1)
+Color3.new(1, 0, 1)
+Color3.new(1, 1, 1)
+Color3.new(0, 1, 0)
+Color3.new(0.5, 0, 1)
+Color3.new(1, 0.647, 0)
+Color3.new(0, 1, 1)
+_call761:AddToggle({
+    Callback = function(...) end,
+    Default = false,
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
+    Description = '',
+})
+_call761:AddSection({
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{62c}\u{633}\u{645}',
+    Icon = 'rbxassetid://10709782758',
+})
+
+local _call800 = game:GetService('ReplicatedStorage')
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('RunService')
+_call800:WaitForChild('Remotes'):WaitForChild('ChangeBodyColor')
+_call761:AddToggle({
+    Callback = function(...) end,
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{62c}\u{633}\u{645} ',
+    Default = false,
+})
+_call761:AddSection({
+    [1] = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{633}\u{643}\u{648}\u{62a}\u{631}',
+})
+_call761:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62a}\u{644}\u{648}\u{64a}\u{646}',
+    Max = 100,
+    Default = 3,
+    Callback = function(...) end,
+    Increase = 1,
+})
+
+local _call817 = _call761:AddToggle({
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644}',
+    Default = false,
+})
+
+_call817:Callback(function(...) end)
+
+local _call821 = _call48:MakeTab({
+    Title = '\u{627}\u{62c}\u{633}\u{627}\u{645}',
+    Icon = 'rbxassetid://10734883598',
+})
+
+_call821:AddSection({
+    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{627}\u{648}\u{644}\u{627}\u{62f} \u{643}\u{627}\u{645}\u{644}\u{629}',
+    Icon = 'rbxassetid://',
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644}\u{64a}\u{646}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{645}\u{646}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{633}\u{631}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{642}\u{637}\u{648}\u{639}\u{629}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627} \u{64a}\u{645}\u{646}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627}  \u{64a}\u{633}\u{631}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627}  \u{64a}\u{633}\u{631}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{627}\u{646}\u{645}\u{64a}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{645}\u{648}\u{646}\u{633}\u{62a}\u{631} \u{645}\u{637}\u{644}\u{648}\u{628}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{645}\u{648}\u{646}\u{633}\u{62a}\u{631} \u{62a}\u{631}\u{643}\u{64a}\u{628} \u{645}\u{648}\u{631}\u{641}\u{646}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{62a}\u{631}\u{646}\u{62f}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{643}\u{64a}\u{648}\u{62a}',
+    Callback = function(...) end,
+})
+_call821:AddSection({
+    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{628}\u{646}\u{627}\u{62a} \u{643}\u{627}\u{645}\u{644}\u{629}',
+    Icon = 'rbxassetid://',
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644}\u{64a}\u{646}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{645}\u{646}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{633}\u{631}\u{649}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{642}\u{637}\u{648}\u{639}\u{629}',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{631}\u{64a}\u{644}',
+    Callback = function(...) end,
+})
+_call821:AddSection({
+    Name = 'R6 \u{627}\u{62c}\u{633}\u{627}\u{645}',
+    Icon = 'rbxassetid://',
+})
+_call821:AddButton({
+    Name = 'R6_1',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_2',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_3',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_4',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_5',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_1X1X1X',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_GIRL1',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_GIRL2',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = 'R6_\u{645}\u{642}\u{644}\u{648}\u{628}',
+    Callback = function(...) end,
+})
+_call821:AddSection({
+    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{627}\u{642}\u{632}\u{627}\u{645}',
+    Icon = 'rbxassetid://',
+})
+_call821:AddButton({
+    Name = '\u{642}\u{632}\u{645} 1',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{642}\u{632}\u{645} 2',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{642}\u{632}\u{645} 3',
+    Callback = function(...) end,
+})
+_call821:AddButton({
+    Name = '\u{642}\u{632}\u{645} 4',
+    Callback = function(...) end,
+})
+error('internal 557: <25ms: infinitelooperror>')
