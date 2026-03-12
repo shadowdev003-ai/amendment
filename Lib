@@ -1617,6 +1617,34 @@ end)
 	
 local StartTime = tick()
 
+local SubTitle = InsertTheme(Create("TextLabel", {
+    Size = UDim2.fromScale(0, 1),
+    AutomaticSize = "X",
+    AnchorPoint = Vector2.new(0, 1),
+    Position = UDim2.new(1, 5, 0.9),
+    Text = '<font family="12187370000">'..WMiniText..'</font>',
+    RichText = true,
+    TextColor3 = Theme["Color Dark Text"],
+    BackgroundTransparency = 1,
+    TextXAlignment = "Left",
+    TextYAlignment = "Bottom",
+    TextSize = 8,
+    Name = "SubTitle"
+}), "DarkText")
+
+local TimerLabel = Create("TextLabel", {
+    Size = UDim2.fromOffset(50, 12),
+    Position = UDim2.new(1, 5, 0.9),
+    AnchorPoint = Vector2.new(0, 1),
+    BackgroundTransparency = 1,
+    TextColor3 = Theme["Color Theme"],
+    Font = Enum.Font.GothamBold,
+    TextSize = 8,
+    TextXAlignment = "Left",
+    Text = "00:00:00",
+    Name = "Timer"
+})
+
 local Title = InsertTheme(Create("TextLabel", TopBar, {
     Position = UDim2.new(0, 30, 0.5),
     AnchorPoint = Vector2.new(0, 0.5),
@@ -1629,58 +1657,22 @@ local Title = InsertTheme(Create("TextLabel", TopBar, {
     BackgroundTransparency = 1,
     Name = "Title"
 }, {
-    InsertTheme(Create("TextLabel", {
-        Size = UDim2.fromScale(0, 1),
-        AutomaticSize = "X",
-        AnchorPoint = Vector2.new(0, 1),
-        Position = UDim2.new(1, 5, 0.9),
-        Text = '<font family="12187370000">'..WMiniText..'</font>',
-        RichText = true,
-        TextColor3 = Theme["Color Dark Text"],
-        BackgroundTransparency = 1,
-        TextXAlignment = "Left",
-        TextYAlignment = "Bottom",
-        TextSize = 8,
-        Name = "SubTitle"
-    }), "DarkText"),
-    
-    Create("TextLabel", {
-        Size = UDim2.fromOffset(50, 12),
-        Position = UDim2.new(1, 0, 0.5, 0),
-        AnchorPoint = Vector2.new(0, 0.5),
-        BackgroundTransparency = 1,
-        TextColor3 = Theme["Color Theme"],
-        Font = Enum.Font.GothamBold,
-        TextSize = 8,
-        TextXAlignment = "Left",
-        Text = "00:00:00",
-        Name = "Timer"
-    })
+    SubTitle,
+    TimerLabel
 }), "Text")
 
 task.spawn(function()
-    local TimerLabel = Title:FindFirstChild("Timer")
     while TimerLabel and TimerLabel.Parent do
         local e = tick() - StartTime
         local h = math.floor(e / 3600)
         local m = math.floor((e % 3600) / 60)
         local s = math.floor(e % 60)
         TimerLabel.Text = string.format("%02d:%02d:%02d", h, m, s)
+        TimerLabel.Position = UDim2.new(1, SubTitle.AbsoluteSize.X + 5, 0.9)
         task.wait(1)
     end
 end)
 
-task.spawn(function()
-    local TimerLabel = Title:FindFirstChild("Timer")
-    while TimerLabel and TimerLabel.Parent do
-        local e = tick() - StartTime
-        local h = math.floor(e / 3600)
-        local m = math.floor((e % 3600) / 60)
-        local s = math.floor(e % 60)
-        TimerLabel.Text = string.format("%02d:%02d:%02d", h, m, s)
-        task.wait(1)
-    end
-end)
 
 
 
