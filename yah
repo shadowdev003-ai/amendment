@@ -1,0 +1,957 @@
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t'):FireServer('RolePlayName', 'LOC4T HUB V0.3')
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPNameColor', Color3.fromRGB(100, 200, 255))
+
+local _call30 = game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t')
+
+_call30:FireServer('RolePlayBio', 'Welcome ' .. game:GetService('Players').LocalPlayer.DisplayName)
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPBioColor', Color3.fromRGB(20, 20, 20))
+
+local _46 = loadstring(game:HttpGet('https://raw.githubusercontent.com/bruton-lua-sources/library/refs/heads/main/Tista.txt'))()
+
+_46.SoundSettings = {
+    Enabled = true,
+    SoundId = 'rbxassetid://74904686799214',
+    Volume = 2,
+}
+_46.BackgroundSettings = {
+    Enabled = true,
+    Transparency = 0.2,
+    ImageId = 'rbxassetid://121170831338800',
+}
+_46.IntroSettings = {Enabled = true}
+
+local _ = _46.IntroSettings.Enabled
+local _call50 = game:GetService('TweenService')
+
+task.spawn(function(_60)
+    writefile('intro_audio_v4.mp3', game:HttpGet('https://github.com/bruton-lua-sources/Suksh/raw/refs/heads/main/ssstik.io_1773269200626%20(1).mp3'))
+
+    local _call64 = Instance.new('Sound', game:GetService('SoundService'))
+
+    _call64.SoundId = getcustomasset('intro_audio_v4.mp3')
+    _call64.Volume = 3
+
+    _call64:Play()
+    task.wait(15)
+
+    local _call71 = _call50:Create(_call64, TweenInfo.new(2), {Volume = 0})
+
+    _call71:Play()
+    task.wait(2)
+    _call64:Stop()
+    _call64:Destroy()
+end)
+
+local _call79 = Instance.new('ScreenGui', game:GetService('CoreGui'))
+
+_call79.Name = 'LOC4T_Intro'
+
+local _call81 = Instance.new('Frame', _call79)
+
+_call81.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+_call81.BorderSizePixel = 0
+_call81.Position = UDim2.new(0.5, 0, 0.5, 0)
+_call81.Size = UDim2.new(0, 0, 0, 25)
+_call81.AnchorPoint = Vector2.new(0.5, 0.5)
+_call81.ClipsDescendants = true
+
+local _call91 = Instance.new('UICorner', _call81)
+
+_call91.CornerRadius = UDim.new(0, 5)
+
+local _call95 = Instance.new('TextLabel', _call81)
+
+_call95.Size = UDim2.new(1, 0, 1, 0)
+_call95.BackgroundTransparency = 1
+_call95.TextColor3 = Color3.fromRGB(255, 255, 255)
+_call95.Font = Enum.Font.GothamBold
+_call95.TextSize = 12
+_call95.TextTransparency = 1
+
+local _call109 = _call50:Create(_call81, TweenInfo.new(0.7, Enum.EasingStyle.Quart), {
+    Size = UDim2.new(0, 180, 0, 25),
+})
+
+_call109:Play()
+task.wait(0.5)
+
+local _call117 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call117:Play()
+task.wait(0.3)
+
+_call95.Text = 'Light ' .. game:GetService('Players').LocalPlayer.DisplayName
+
+local _call123 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call123:Play()
+task.wait(2.3)
+
+local _call129 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call129:Play()
+task.wait(0.3)
+
+_call95.Text = 'Loading Interface'
+
+local _call135 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call135:Play()
+task.wait(2.3)
+
+local _call141 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call141:Play()
+task.wait(0.3)
+
+_call95.Text = 'Loading Tabs'
+
+local _call147 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call147:Play()
+task.wait(2.3)
+
+local _call153 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call153:Play()
+task.wait(0.3)
+
+_call95.Text = 'Loading Images'
+
+local _call159 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call159:Play()
+task.wait(2.3)
+
+local _call165 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call165:Play()
+task.wait(0.3)
+
+_call95.Text = 'Loading Commands'
+
+local _call171 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call171:Play()
+task.wait(2.3)
+
+local _call177 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 1})
+
+_call177:Play()
+task.wait(0.3)
+
+_call95.Text = 'Best Arabic Script Loaded Successfully'
+
+local _call183 = _call50:Create(_call95, TweenInfo.new(0.3), {TextTransparency = 0})
+
+_call183:Play()
+task.wait(2.8)
+
+local _call189 = _call50:Create(_call95, TweenInfo.new(0.4), {TextTransparency = 1})
+
+_call189:Play()
+task.wait(0.2)
+
+local _call199 = _call50:Create(_call81, TweenInfo.new(0.7, Enum.EasingStyle.Quart), {
+    Size = UDim2.new(0, 0, 0, 25),
+})
+
+_call199:Play()
+task.wait(0.7)
+_call79:Destroy()
+
+workspace.FallenPartsDestroyHeight = -1 / 0
+
+local _call205 = _46:MakeWindow({
+    LoadText = 'LOC4T ',
+    SubTitle = '             BY BRUTON              ',
+    Title = 'LOC4T HUB                       ',
+    Flags = 'LOC4T_Broookhaven',
+})
+
+task.spawn(function(_208, _208_2, _208_3)
+    local _call212 = game:GetService('CoreGui'):WaitForChild('bruton hub with bruton library', 10)
+    local _ = _46.BackgroundSettings.Enabled
+    local _call218 = Instance.new('ImageLabel')
+
+    _call218.Size = UDim2.new(1, 0, 1, 0)
+    _call218.BackgroundTransparency = 1
+    _call218.Image = _46.BackgroundSettings.ImageId
+    _call218.ImageTransparency = _46.BackgroundSettings.Transparency
+    _call218.ScaleType = Enum.ScaleType.Crop
+    _call218.ZIndex = 0
+    _call218.Parent = _call212:FindFirstChild('Hub')
+
+    local _call228 = Instance.new('UICorner', _call218)
+
+    _call228.CornerRadius = UDim.new(0, 15)
+
+    for _233, _233_2 in pairs(_call212:GetDescendants())do
+        _233_2:IsA('TextButton')
+        _233_2.Activated:Connect(function(_239)
+            local _ = _46.SoundSettings.Enabled
+            local _call245 = Instance.new('Sound', game:GetService('SoundService'))
+
+            _call245.SoundId = _46.SoundSettings.SoundId
+            _call245.Volume = _46.SoundSettings.Volume
+
+            _call245:Play()
+            _call245.Ended:Connect(function(_255)
+                _call245:Destroy()
+            end)
+        end)
+    end
+
+    _call212.DescendantAdded:Connect(function(_261, _261_2, _261_3, _261_4)
+        _261:IsA('TextButton')
+        _261.Activated:Connect(function(_267)
+            local _ = _46.SoundSettings.Enabled
+
+            Instance.new('Sound', game:GetService('SoundService'))
+            error('internal 557: <25ms: infinitelooperror')
+        end)
+    end)
+end)
+_call205:AddMinimizeButton({
+    Button = {
+        BackgroundTransparency = 0,
+        Image = 'rbxassetid://109054965864541',
+    },
+    Corner = {
+        CornerRadius = UDim.new(35, 1),
+    },
+})
+
+local _call280 = _call205:MakeTab({
+    Title = 'الحقوق',
+    Icon = 'rbxassetid://10723415903',
+})
+
+_call280:AddParagraph({
+    [1] = 'احب اقلك اذا انت مطور وجاي تبوك افكار اريد اقلك مع كل احتراماتي كسمكككك',
+})
+_call280:AddParagraph({
+    [1] = 'حقوق',
+    [2] = 'BRUTON',
+})
+_call280:AddButton({
+    Name = 'انسخ حسابي تيك',
+    Callback = function()
+        setclipboard('lu4sic')
+    end,
+})
+_call280:AddButton({
+    Name = 'انسخ حسابي روب',
+    Callback = function(_291, _291_2, _291_3, _291_4)
+        setclipboard('SUKUNA_333857')
+    end,
+})
+
+local _call294 = _call205:MakeTab({
+    Title = 'اللاعب',
+    Icon = 'rbxassetid://17132521951',
+})
+
+_call294:AddSection({
+    Name = 'التحكم',
+    Icon = 'rbxassetid://',
+})
+
+local _call302 = game:GetService('Workspace')
+local _LocalPlayer303 = game:GetService('Players').LocalPlayer
+local _Character304 = _LocalPlayer303.Character
+
+_Character304:WaitForChild('Humanoid')
+_Character304:WaitForChild('HumanoidRootPart')
+_LocalPlayer303.CharacterAdded:Connect(function(_312, _312_2, _312_3)
+    _312:WaitForChild('Humanoid')
+    _312:WaitForChild('HumanoidRootPart')
+end)
+
+local _call314 = _Character304:WaitForChild('Humanoid')
+
+_call294:AddSlider({
+    Min = 16,
+    Name = 'السرعة',
+    Max = 500,
+    Callback = function(_320, _320_2, _320_3)
+        _call314.WalkSpeed = _320
+    end,
+    Default = _call314.WalkSpeed,
+})
+_call294:AddSlider({
+    Min = 50,
+    Name = 'القفز',
+    Max = 500,
+    Callback = function(_324, _324_2)
+        _call314.JumpPower = _324
+    end,
+    Default = _call314.JumpPower,
+})
+_call294:AddSlider({
+    Min = 10,
+    Name = 'الجاذبية',
+    Max = 500,
+    Callback = function(_328, _328_2, _328_3)
+        _call302.Gravity = _328
+    end,
+    Default = _call302.Gravity,
+})
+_call294:AddButton({
+    Name = 'اعادة الوضع الطبيعي',
+    Callback = function(_331, _331_2)
+        _call314.WalkSpeed = 16
+        _call314.JumpPower = 50
+        _call302.Gravity = 196.2
+    end,
+})
+
+local _ = workspace.Gravity
+
+_call294:AddToggle({
+    Callback = function(_340, _340_2)
+        local _Character341 = game:GetService('Players').LocalPlayer.Character
+        local _call343 = _Character341:FindFirstChildOfClass('Humanoid')
+        local _call345 = _Character341:FindFirstChild('HumanoidRootPart')
+
+        workspace.Gravity = 0
+
+        game:GetService('RunService').Heartbeat:Connect(function(_349, _349_2, _349_3, _349_4, _349_5)
+            _call343:SetStateEnabled(Enum.HumanoidStateType.Running, false)
+            _call343:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)
+            _call343:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
+            _call343:SetStateEnabled(Enum.HumanoidStateType.GettingUp, false)
+
+            local _ = _call343:GetState() == Enum.HumanoidStateType.Swimming
+
+            _call343:ChangeState(Enum.HumanoidStateType.Swimming)
+            _call345:FindFirstChild('SwimBodyVelocity')
+        end)
+    end,
+    Name = 'اسبح',
+    Default = false,
+})
+
+local _call380 = game:GetService('RunService')
+
+_call294:AddToggle({
+    Callback = function(_384, _384_2, _384_3, _384_4, _384_5, _384_6)
+        local _Character385 = game:GetService('Players').LocalPlayer.Character
+
+        _Character385:FindFirstChildOfClass('Humanoid')
+
+        local _call391 = Instance.new('Part')
+
+        _call391.Name = 'AirWalkPlatform'
+        _call391.Size = Vector3.new(7, 1, 7)
+        _call391.Transparency = 1
+        _call391.Anchored = true
+        _call391.CanCollide = true
+        _call391.Parent = workspace
+
+        _call380.Heartbeat:Connect(function(_397, _397_2, _397_3, _397_4)
+            local _ = CFrame.new
+            local _ = _Character385:FindFirstChild('HumanoidRootPart').Position.X
+
+            error('internal 557: <25ms: infinitelooperror')
+        end)
+    end,
+    Name = 'FLOAT',
+    Default = false,
+})
+_call294:AddToggle({
+    Callback = function(_404, _404_2) end,
+    Name = 'تفعيل/ايقاف\nالدوران',
+    Default = false,
+})
+_call294:AddSlider({
+    Min = 1,
+    Name = 'سرعة الدوران',
+    Max = 1000,
+    Callback = function(_407, _407_2) end,
+    Default = 50,
+})
+_call380.RenderStepped:Connect(function(_411, _411_2, _411_3, _411_4, _411_5) end)
+_call294:AddToggle({
+    Callback = function(_414, _414_2, _414_3, _414_4) end,
+    Name = 'اختراق الجدران',
+    Default = false,
+})
+_call380.Stepped:Connect(function(_418) end)
+_call294:AddToggle({
+    Callback = function(_421, _421_2, _421_3, _421_4, _421_5, _421_6) end,
+    Name = 'قفز لا نهائي',
+    Default = false,
+})
+game:GetService('UserInputService').JumpRequest:Connect(function(_425, _425_2, _425_3, _425_4) end)
+
+local _call427 = _call205:MakeTab({
+    Title = 'الاسماء',
+    Icon = 'rbxassetid://10723425539',
+})
+
+_call427:AddSection({
+    Name = 'تلوين الاسم والبابو',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r')
+game:GetService('RunService').RenderStepped:Connect(function(_441, _441_2, _441_3, _441_4, _441_5, _441_6) end)
+_call427:AddSlider({
+    Min = 0.1,
+    Name = 'سرعة التلوين',
+    Max = 1000,
+    Increment = 0.1,
+    Callback = function(_444, _444_2, _444_3, _444_4) end,
+    Default = 2,
+})
+_call427:AddToggle({
+    Callback = function(_447, _447_2, _447_3, _447_4, _447_5) end,
+    Name = 'تلوين الاسم',
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_450) end,
+    Name = 'تلوين البايو',
+    Default = false,
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r')
+game:GetService('RunService').RenderStepped:Connect(function(_462, _462_2, _462_3, _462_4, _462_5, _462_6) end)
+_call427:AddToggle({
+    Callback = function(_465, _465_2) end,
+    Name = "[._.]  <font color='#FFFFFF'>ابيض</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_468) end,
+    Name = "[._.]  <font color='#FF0000'>احمر</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_471, _471_2, _471_3, _471_4, _471_5) end,
+    Name = "[._.]  <font color='#0000FF'>ازرق</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_474) end,
+    Name = "[._.]  <font color='#00FF00'>اخضر</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_477, _477_2, _477_3, _477_4, _477_5) end,
+    Name = "[._.]  <font color='#FFFF00'>اصفر</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_480, _480_2, _480_3, _480_4, _480_5, _480_6) end,
+    Name = "[._.]  <font color='#00FFFF'>ازرق بارد</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_483, _483_2, _483_3, _483_4, _483_5) end,
+    Name = "[._.]  <font color='#FF00FF'>وردي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_486) end,
+    Name = "[._.]  <font color='#808080'>رمادي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_489) end,
+    Name = "[._.]  <font color='#FF8C00'>برتقالي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_492, _492_2, _492_3) end,
+    Name = "[._.]  <font color='#800080'>بنفسجي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_495, _495_2, _495_3, _495_4, _495_5) end,
+    Name = "[._.]  <font color='#32CD32'>ليموني</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_498, _498_2, _498_3, _498_4, _498_5) end,
+    Name = "[._.]  <font color='#8B4513'>بني</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_501, _501_2, _501_3) end,
+    Name = "[._.]  <font color='#FFD700'>ذهبي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_504, _504_2, _504_3, _504_4) end,
+    Name = "[._.]  <font color='#C0C0C0'>فضي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_507, _507_2, _507_3) end,
+    Name = "[._.]  <font color='#98FF98'>نعناعي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_510, _510_2, _510_3, _510_4) end,
+    Name = "[._.]  <font color='#87CEEB'>سماوي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_513, _513_2, _513_3, _513_4) end,
+    Name = "[._.]  <font color='#DC143C'>قرمزي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_516, _516_2, _516_3, _516_4) end,
+    Name = "[._.]  <font color='#000080'>كحلي</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_519) end,
+    Name = "[._.]  <font color='#F5F5DC'>بيج</font>  اسود ",
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_522) end,
+    Name = "[._.]  <font color='#EE82EE'>بنفسجي فاتح</font>  اسود ",
+    Default = false,
+})
+_call427:AddSection({
+    Name = 'زخرفة الاسم والبابو',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t')
+_call427:AddTextBox({
+    Callback = function(_533) end,
+    PlaceholderText = '',
+    Name = 'اكتب شتريد في البايو هنا',
+    Description = '',
+})
+_call427:AddTextBox({
+    Callback = function(_536, _536_2, _536_3, _536_4, _536_5, _536_6) end,
+    PlaceholderText = 'LOC4T',
+    Name = 'اكتب شتريد في الاسم هنا',
+    Description = '',
+})
+_call427:AddToggle({
+    Callback = function(_539) end,
+    Name = 'زخرفة البايو عادي',
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_542) end,
+    Name = 'زخرفة البايو سريع',
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_545, _545_2, _545_3, _545_4, _545_5) end,
+    Name = 'زخرفة الاسم عادي',
+    Default = false,
+})
+_call427:AddToggle({
+    Callback = function(_548) end,
+    Name = 'زخرفة الاسم سريع',
+    Default = false,
+})
+_call427:AddSection({
+    Name = 'سبام اسماء',
+    Icon = 'rbxassetid://10734933966',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call427:AddTextBox({
+    Callback = function(_558, _558_2, _558_3, _558_4) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_561, _561_2, _561_3, _561_4) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_564, _564_2) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_567, _567_2, _567_3, _567_4, _567_5, _567_6) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_570, _570_2, _570_3, _570_4) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_573, _573_2, _573_3, _573_4) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_576, _576_2, _576_3) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_579, _579_2, _579_3, _579_4) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_582, _582_2, _582_3, _582_4, _582_5, _582_6) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_585, _585_2, _585_3, _585_4, _585_5) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call427:AddSlider({
+    Min = 1,
+    Name = 'سرعة سبام الاسماء',
+    Max = 150,
+    Increment = 1,
+    Callback = function(_588) end,
+    Default = 5,
+})
+_call427:AddToggle({
+    Callback = function(_591, _591_2) end,
+    Name = 'تفعيل سبام الاسماء',
+    Default = false,
+})
+_call427:AddSection({
+    Name = 'سبام بايو',
+    Icon = 'rbxassetid://10734933966',
+})
+_call427:AddTextBox({
+    Callback = function(_596, _596_2, _596_3) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_599, _599_2, _599_3, _599_4) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_602, _602_2, _602_3, _602_4) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_605, _605_2, _605_3, _605_4, _605_5) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_608, _608_2, _608_3, _608_4, _608_5) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_611, _611_2) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_614, _614_2, _614_3, _614_4, _614_5, _614_6) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_617, _617_2) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_620, _620_2, _620_3, _620_4, _620_5, _620_6) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_623) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call427:AddSlider({
+    Min = 1,
+    Name = 'سرعة سبام البايو',
+    Max = 150,
+    Increment = 1,
+    Callback = function(_626, _626_2, _626_3, _626_4) end,
+    Default = 5,
+})
+_call427:AddToggle({
+    Callback = function(_629, _629_2, _629_3, _629_4, _629_5, _629_6) end,
+    Name = 'تفعيل سبام البايو',
+    Default = false,
+})
+_call427:AddSection({
+    Name = 'سبام كتابة على لوحة',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call427:AddTextBox({
+    Callback = function(_639, _639_2) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_642, _642_2) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_645) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_648, _648_2, _648_3) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_651, _651_2) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_654, _654_2, _654_3, _654_4) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_657, _657_2) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_660, _660_2) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_663, _663_2, _663_3) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call427:AddTextBox({
+    Callback = function(_666, _666_2, _666_3, _666_4) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call427:AddSlider({
+    Min = 1,
+    Name = 'سرعة سبام اللوحة',
+    Max = 100,
+    Increment = 1,
+    Callback = function(_669, _669_2) end,
+    Default = 5,
+})
+_call427:AddToggle({
+    Callback = function(_672, _672_2, _672_3, _672_4) end,
+    Name = 'تفعيل سبام اللوحة',
+    Default = false,
+})
+
+local _call674 = _call205:MakeTab({
+    Title = 'الجودة',
+    Icon = 'rbxassetid://108609244803977',
+})
+
+_call674:AddToggle({
+    Callback = function(_677) end,
+    Name = 'V1 جودة ',
+    Default = false,
+})
+_call674:AddToggle({
+    Callback = function(_680, _680_2, _680_3) end,
+    Name = 'V2 جودة ',
+    Default = false,
+})
+game:GetService('Lighting')
+game:GetService('StarterGui')
+game:GetService('MaterialService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _ = _G.Ignore
+
+_G.Ignore = {}
+
+local _ = _G.Settings
+
+_G.Settings = {
+    Players = {
+        ['Ignore Me'] = true,
+        ['Ignore Tools'] = true,
+        ['Ignore Others'] = true,
+    },
+    Meshes = {
+        NoTexture = false,
+        NoMesh = false,
+        Destroy = false,
+    },
+    Other = {
+        ['Low Water Graphics'] = true,
+        ['FPS Cap'] = true,
+        ['No Camera Effects'] = true,
+        ['No Shadows'] = true,
+        ['No Clothes'] = true,
+        ClearNilInstances = false,
+        ['Low Quality Models'] = true,
+        ['Low Quality Parts'] = true,
+        ['Low Rendering'] = true,
+        ['Reset Materials'] = true,
+        ['Lower Quality MeshParts'] = true,
+    },
+    Images = {
+        Destroy = false,
+        Invisible = true,
+    },
+    MeshParts = {
+        Destroy = false,
+        LowerQuality = true,
+        NoTexture = false,
+        NoMesh = false,
+        Invisible = false,
+    },
+    TextLabels = {
+        Destroy = false,
+        LowerQuality = false,
+        Invisible = false,
+    },
+    Particles = {
+        Destroy = false,
+        Invisible = true,
+    },
+    Explosions = {
+        Destroy = false,
+        Invisible = false,
+        Smaller = true,
+    },
+}
+
+_call674:AddToggle({
+    Callback = function(_692) end,
+    Name = '120 FPS',
+    Default = false,
+})
+
+local _call694 = _call205:MakeTab({
+    Title = 'نسخ سكنات',
+    Icon = 'rbxassetid://10734952036',
+})
+
+_call694:AddSection({
+    Name = 'v1 نسخ سكنات',
+    Icon = 'rbxassetid://10734952036',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call694:AddTextBox({
+    Callback = function(_704, _704_2, _704_3, _704_4, _704_5, _704_6) end,
+    Name = 'اسم اللاعب',
+    Default = '',
+})
+_call694:AddDropdown({
+    Callback = function(_707, _707_2, _707_3) end,
+    Name = 'طريقة النسخ',
+    Options = {
+        [1] = 'بروكهافن',
+        [2] = 'سكن كلاسي',
+    },
+})
+_call694:AddButton({
+    Name = 'نسخ',
+    Callback = function(_710, _710_2, _710_3, _710_4, _710_5) end,
+})
+_call694:AddSection({
+    Name = 'v2 نسخ سكنات',
+    Icon = 'rbxassetid://10734952036',
+})
+
+local _call714 = game:GetService('Players')
+
+game:GetService('ReplicatedStorage'):WaitForChild('Remotes')
+
+for _721, _721_2 in ipairs(_call714:GetPlayers()) do end
+
+_call694:AddDropdown({
+    Callback = function(_725, _725_2, _725_3, _725_4, _725_5) end,
+    Name = 'اختيار لاعب',
+    Options = {
+        [1] = _721_2.Name,
+    },
+})
+_call714.PlayerAdded:Connect(function(_729) end)
+_call714.PlayerRemoving:Connect(function(_733) end)
+_call694:AddButton({
+    Name = 'نسخ',
+    Callback = function(_736) end,
+})
+
+local _callAnimations = _call205:MakeTab({
+    Title = 'المضادات',
+    Icon = 'rbxassetid://10734951847',
+})
+
+game:GetService('RunService')
+
+local _LocalPlayer743 = game:GetService('Players').LocalPlayer
+
+_LocalPlayer743.CharacterAdded:Connect(function(_747, _747_2, _747_3, _747_4, _747_5) end)
+
+local _ = _LocalPlayer743.Character
+local _Character749 = _LocalPlayer743.Character
+
+_Character749:WaitForChild('Humanoid')
+_Character749:WaitForChild('HumanoidRootPart')
+
+for _756, _756_2 in ipairs(_Character749:GetDescendants())do
+    _756_2:IsA('BasePart')
+
+    local _ = _756_2.Transparency
+
+    error('line 1: attempt to compare table < number')
+end
