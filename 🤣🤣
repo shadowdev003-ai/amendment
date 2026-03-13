@@ -1,5 +1,3 @@
--- ts file was generated at discord.gg/25ms
-
 local fenv = getfenv()
 
 game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t'):FireServer('RolePlayName', 'LOC4T HUB V0.2')
@@ -22,1231 +20,2513 @@ _call48:AddMinimizeButton({
     GradientColor3 = Color3.fromRGB(0, 0, 0),
     Position = UDim2.new(0.5, 0, 0.95, 0),
     GradientSpeed = 80,
-    Text = '\u{627}\u{644}\u{632} \u{647}\u{646}\u{627} \u{62a}\u{642}\u{62f}\u{631} \u{62a}\u{633}\u{62d}\u{628}\u{647}',
+    Text = 'الز هنا تقدر تسحبه',
     Icon = 'rbxassetid://86342558293723',
     GradientColor1 = Color3.fromRGB(60, 140, 255),
 })
 
 local _call60 = _call48:MakeTab({
-    Title = ' \u{627}\u{644}\u{62d}\u{642}\u{648}\u{642}',
+    Title = 'الحقوق',
     Icon = 'rbxassetid://10723415903',
 })
 
 _call60:AddParagraph({
-    [1] = '\u{627}\u{62d}\u{628} \u{627}\u{642}\u{644}\u{643} \u{627}\u{630}\u{627} \u{627}\u{646}\u{62a} \u{645}\u{637}\u{648}\u{631} \u{648}\u{62c}\u{627}\u{64a} \u{62a}\u{628}\u{648}\u{643} \u{627}\u{641}\u{643}\u{627}\u{631} \u{627}\u{631}\u{64a}\u{62f} \u{627}\u{642}\u{644}\u{643} \u{645}\u{639} \u{643}\u{644} \u{627}\u{62d}\u{62a}\u{631}\u{627}\u{645}\u{627}\u{62a}\u{64a} \u{643}\u{633}\u{645}\u{643}\u{643}\u{643}\u{643}',
+    [1] = 'احب اقلك اذا انت مطور وجاي تبوك افكار اريد اقلك مع كل احتراماتي كسمكككك',
 })
 _call60:AddParagraph({
-    [1] = '\u{62d}\u{642}\u{648}\u{642}',
+    [1] = 'حقوق',
     [2] = 'BRUTON\nSUKSH',
 })
 _call60:AddButton({
-    Name = '\u{627}\u{646}\u{633}\u{62e} \u{62d}\u{633}\u{627}\u{628}\u{64a} \u{62a}\u{64a}\u{643}',
-    Callback = function(...) end,
+    Name = 'انسخ حسابي تيك',
+    Callback = function() setclipboard('lu4sic') end,
 })
 
 local _call68 = _call48:MakeTab({
-    Title = '\u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Title = 'اللاعب',
     Icon = 'rbxassetid://17132521951',
 })
 
 _call68:AddSection({
-    Name = '\u{627}\u{644}\u{62a}\u{62d}\u{643}\u{645}',
+    Name = 'التحكم',
     Icon = 'rbxassetid://',
 })
-game:GetService('UserInputService')
 
 local _LocalPlayer77 = game:GetService('Players').LocalPlayer
 local _Character78 = _LocalPlayer77.Character
 local _call81 = _Character78:WaitForChild('Humanoid')
 
 _Character78:WaitForChild('HumanoidRootPart')
-_LocalPlayer77.CharacterAdded:Connect(function(...) end)
+_LocalPlayer77.CharacterAdded:Connect(function(char)
+    char:WaitForChild('Humanoid')
+    char:WaitForChild('HumanoidRootPart')
+end)
+
 _call68:AddSlider({
     Min = 16,
-    Name = '\u{627}\u{644}\u{633}\u{631}\u{639}\u{629}',
+    Name = 'السرعة',
     Max = 500,
-    Callback = function(...) end,
+    Callback = function(val) _call81.WalkSpeed = val end,
     Default = _call81.WalkSpeed,
 })
+
 _call68:AddSlider({
     Min = 50,
-    Name = '\u{627}\u{644}\u{642}\u{641}\u{632}',
+    Name = 'القفز',
     Max = 500,
-    Callback = function(...) end,
+    Callback = function(val) _call81.JumpPower = val end,
     Default = _call81.JumpPower,
 })
+
 _call68:AddSlider({
     Min = 10,
-    Name = '\u{627}\u{644}\u{62c}\u{627}\u{630}\u{628}\u{64a}\u{629}',
+    Name = 'الجاذبية',
     Max = 500,
-    Callback = function(...) end,
-    Default = game:GetService('Workspace').Gravity,
+    Callback = function(val) workspace.Gravity = val end,
+    Default = workspace.Gravity,
 })
-_call68:AddButton({
-    Name = '\u{627}\u{639}\u{627}\u{62f}\u{629} \u{627}\u{644}\u{648}\u{636}\u{639} \u{627}\u{644}\u{637}\u{628}\u{64a}\u{639}\u{64a}',
-    Callback = function(...) end,
-})
-game:GetService('RunService')
 
-local _ = game:GetService('Players').LocalPlayer
-local _ = workspace.Gravity
+_call68:AddButton({
+    Name = 'اعادة الوضع الطبيعي',
+    Callback = function()
+        _call81.WalkSpeed = 16
+        _call81.JumpPower = 50
+        workspace.Gravity = 196.2
+    end,
+})
 
 _call68:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{627}\u{633}\u{628}\u{62d}',
+    Callback = function(state)
+        if state then
+            local char = game:GetService('Players').LocalPlayer.Character
+            local hum = char:FindFirstChildOfClass('Humanoid')
+            local hrp = char:FindFirstChild('HumanoidRootPart')
+            workspace.Gravity = 0
+            game:GetService('RunService').Heartbeat:Connect(function()
+                if hum then
+                    hum:SetStateEnabled(Enum.HumanoidStateType.Running, false)
+                    hum:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)
+                    hum:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
+                    hum:SetStateEnabled(Enum.HumanoidStateType.GettingUp, false)
+                    hum:ChangeState(Enum.HumanoidStateType.Swimming)
+                end
+            end)
+        else
+            workspace.Gravity = 196.2
+        end
+    end,
+    Name = 'اسبح',
     Default = false,
 })
-game:GetService('RunService')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call68:AddToggle({
-    Callback = function(...) end,
+    Callback = function(state)
+        if state then
+            local char = game:GetService('Players').LocalPlayer.Character
+            local platform = Instance.new('Part')
+            platform.Name = 'AirWalkPlatform'
+            platform.Size = Vector3.new(7, 1, 7)
+            platform.Transparency = 1
+            platform.Anchored = true
+            platform.CanCollide = true
+            platform.Parent = workspace
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local hrp = char:FindFirstChild('HumanoidRootPart')
+                if hrp and platform then
+                    platform.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y - 3, hrp.Position.Z)
+                end
+            end)
+        end
+    end,
     Name = 'FLOAT',
     Default = false,
 })
 
 local _call114 = _call48:MakeTab({
-    [1] = '\u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a}',
-    [2] = 'rbxassetid://10734951847',
+    Title = 'المضادات',
+    Icon = 'rbxassetid://10734951847',
 })
+
 local _LocalPlayer119 = game:GetService('Players').LocalPlayer
 
-_LocalPlayer119.CharacterAdded:Connect(function(...) end)
+_LocalPlayer119.CharacterAdded:Connect(function(char)
+    char:WaitForChild('Humanoid')
+    char:WaitForChild('HumanoidRootPart')
+end)
 
-local _ = _LocalPlayer119.Character and 15093699
 local _Character125 = _LocalPlayer119.Character
-
 _Character125:WaitForChild('Humanoid')
 _Character125:WaitForChild('HumanoidRootPart')
 
-for _132, _132_2 in ipairs(_Character125:GetDescendants())do
-    local _ = _132_2:IsA('BasePart') and 6602355
-    local _ = _132_2.Transparency < 1
+for _, v in ipairs(_Character125:GetDescendants()) do
+    if v:IsA('BasePart') then
+        v.Transparency = 0
+    end
 end
 
-_132_2.Transparency = 0
-
-game:GetService('RunService').Heartbeat:Connect(function(...) end)
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{628}\u{627}\u{646}\u{62c}',
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                for _, v in ipairs(char:GetDescendants()) do
+                    if v:IsA('BasePart') and v.Name ~= 'HumanoidRootPart' then
+                        v.Transparency = 0
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد بانج',
     Default = false,
-})
-game:GetService('TweenService')
-
-local _call149 = game:GetService('ReplicatedStorage')
-local _ = game:GetService('Players').LocalPlayer
-
-_call149:WaitForChild('Remotes'):WaitForChild('ResetCharacterAppearance')
-_call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
-    Default = false,
-})
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{632}\u{639}\u{627}\u{62c} \u{627}\u{644}\u{635}\u{648}\u{62a}',
-    Description = '',
-})
-game:GetService('RunService')
-
-local _ = game:GetService('Players').LocalPlayer
-
-Vector3.new(-26.09, 2.79, 6.11)
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{648}\u{64a}\u{62f}',
-    Description = '',
 })
 
-local _ = game:GetService('Players').LocalPlayer
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('ReplicatedStorage'):WaitForChild('Remotes'):WaitForChild('ResetCharacterAppearance'):FireServer()
+        end
+    end,
+    Name = 'مضاد نسخ سكنات',
+    Default = false,
+})
 
-game:GetService('Workspace')
-game:GetService('RunService')
-task.spawn(function(...) end)
 _call114:AddToggle({
-    Callback = function(...) end,
+    Callback = function(state)
+        if state then
+            local sound = Instance.new('Sound', game:GetService('SoundService'))
+            sound.SoundId = 'rbxassetid://9113083740'
+            sound.Volume = 10
+            sound:Play()
+        end
+    end,
+    Name = 'مضاد ازعاج الصوت',
     Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} ',
-    Description = '',
 })
-task.spawn(function(...) end)
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
-    Description = '',
-})
-task.spawn(function(...) end)
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{637}\u{627}\u{626}\u{631}\u{629}',
-    Description = '',
-})
-task.spawn(function(...) end)
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{647}\u{64a}\u{644}\u{64a}\u{643}\u{648}\u{628}\u{62a}\u{631}',
-    Description = '',
-})
-task.spawn(function(...) end)
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
-    Description = '',
-})
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633}',
-    Description = '',
-})
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{644}\u{627}\u{642} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{648}\u{642}\u{641}\u{644} \u{627}\u{644}\u{633}\u{64a}\u{631}\u{641}\u{631}',
-    Description = '',
-})
-_call114:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{627}\u{628}\u{648}\u{627}\u{628}',
-    Description = '',
-})
-game:GetService('TweenService')
 
-local _ = game:GetService('Players').LocalPlayer
-
-game:GetService('RunService').Heartbeat:Connect(function(...) end)
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{623}\u{637}\u{641}\u{627}\u{644} ',
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                local hrp = char:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Part') and v.Name:lower():find('void') then
+                            v.CanCollide = true
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فويد',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = hrp.CFrame + Vector3.new(0, 0.1, 0)
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فلنق',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = CFrame.new(-26.09, 2.79, 6.11)
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فلنق قارب الصيد',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = hrp.CFrame + Vector3.new(math.random(-5, 5), 0, math.random(-5, 5))
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فلنق طائرة',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y + 5, hrp.Position.Z)
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فلنق هيليكوبتر',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = CFrame.new(hrp.Position.X + 5, hrp.Position.Y, hrp.Position.Z)
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد فلنق كرة',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('TweenService'):Create(game:GetService('Players').LocalPlayer.Character:FindFirstChild('HumanoidRootPart'), TweenInfo.new(0.1), {CFrame = CFrame.new(game:GetService('Players').LocalPlayer.Character:FindFirstChild('HumanoidRootPart').Position)}):Play()
+        end
+    end,
+    Name = 'مضاد جلوس',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                for _, v in ipairs(char:GetDescendants()) do
+                    if v:IsA('Tool') then
+                        v:Destroy()
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد لاق الادوات وقفل السيرفر',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            workspace.DescendantAdded:Connect(function(desc)
+                if desc:IsA('Part') and desc.Name:lower():find('bubble') then
+                    desc:Destroy()
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد الابواب',
+    Default = false,
+})
+
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                local hrp = char:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Part') and v.Name:lower():find('trap') then
+                            v.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد الاطفال',
     Default = false,
 })
 
 local _settings213 = fenv.settings
 local _Physics215 = _settings213().Physics
-
 _Physics215.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
 
 local _Rendering219 = _settings213().Rendering
-
 _Rendering219.QualityLevel = 1
 
 setfpscap(999)
-game:GetService('RunService')
 
-local _ = game:GetService('Players').LocalPlayer
-
-task.spawn(function(...) end)
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{633}\u{643}\u{64a} \u{628}\u{648}\u{643}\u{633}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait()
+                    setfpscap(999)
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد سكي بوكس',
     Default = false,
 })
+
 game:GetService('VirtualUser')
-game:GetService('Players').LocalPlayer.Idled:Connect(function(...) end)
+game:GetService('Players').LocalPlayer.Idled:Connect(function()
+    game:GetService('VirtualUser'):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    wait(1)
+    game:GetService('VirtualUser'):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{641}\u{643}',
+    Callback = function(state)
+        if state then
+            game:GetService('Players').LocalPlayer.Idled:Connect(function()
+                game:GetService('VirtualUser'):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                wait(1)
+                game:GetService('VirtualUser'):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+            end)
+        end
+    end,
+    Name = 'مضاد افك',
     Default = true,
 })
 
-local _ = game:GetService('Players').LocalPlayer
+_call114:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                local hrp = char:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Part') and v.Name:lower():find('saw') then
+                            v.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد جلوس في الكنبة',
+    Default = false,
+})
 
-game:GetService('RunService').Heartbeat:Connect(function(...) end)
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local char = game:GetService('Players').LocalPlayer.Character
+                local hrp = char:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Part') and v.Name:lower():find('ladder') then
+                            v.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد جلوس في السلة',
     Default = false,
 })
-_call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{633}\u{644}\u{629}',
-    Default = false,
-})
-workspace.DescendantAdded:Connect(function(...) end)
+
+workspace.DescendantAdded:Connect(function(desc)
+    if desc:IsA('Part') and desc.Name:lower():find('candy') then
+        desc:Destroy()
+    end
+end)
 
 local _call256 = game:GetService('Players')
 
-game:GetService('RunService')
-
-local _ = _call256.LocalPlayer
-
 _call114:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642} ',
+    Callback = function(state)
+        if state then
+            workspace.DescendantAdded:Connect(function(desc)
+                if desc:IsA('Part') and desc.Name:lower():find('candy') then
+                    desc:Destroy()
+                end
+            end)
+        end
+    end,
+    Name = 'مضاد تخريب بادوات الصندوق',
     Default = false,
 })
-workspace.DescendantAdded:Connect(function(...) end)
-_call256.PlayerAdded:Connect(function(...) end)
+
+_call256.PlayerAdded:Connect(function(plr)
+    plr.Chatted:Connect(function(msg)
+        if msg:lower():find('kill') or msg:lower():find('fling') then
+            game:GetService('Players').LocalPlayer:Kick('Detected suspicious message from ' .. plr.Name)
+        end
+    end)
+end)
 
 local _call269 = _call48:MakeTab({
-    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{627}\u{644}\u{645}\u{627}\u{628}',
-    [2] = 'rbxassetid://6862780932',
+    Title = 'تخريب الماب',
+    Icon = 'rbxassetid://6862780932',
 })
 
 _call269:AddSection({
-    Name = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{64a}\u{643}',
+    Name = 'هالة ادوات عليك',
     Icon = 'rbxassetid://10734950309',
 })
-_call269:AddButton({
-    Name = '\u{627}\u{636}\u{63a}\u{637} \u{644}\u{62a}\u{627}\u{62e}\u{630} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642}',
-    Callback = function(...) end,
-})
-game:GetService('RunService')
 
-local _ = game:GetService('Players').LocalPlayer
+_call269:AddButton({
+    Name = 'اضغط لتاخذ الصندوق',
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local hrp = char:FindFirstChild('HumanoidRootPart')
+        if hrp then
+            for _, v in ipairs(workspace:GetDescendants()) do
+                if v:IsA('Tool') and v:FindFirstChild('Handle') then
+                    firetouchinterest(hrp, v.Handle, 0)
+                    firetouchinterest(hrp, v.Handle, 1)
+                end
+            end
+        end
+    end,
+})
 
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{628}\u{639}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'بعد الهالة',
     Max = 15,
     Increase = 0.5,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.HaloDistance = val
+    end,
     Default = 6,
 })
+
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'سرعة الهالة',
     Max = 20,
     Increase = 1,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.HaloSpeed = val
+    end,
     Default = 4,
 })
+
 _call269:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{641}\u{639}\u{644} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629} \u{639}\u{644}\u{64a}\u{643}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp and _G.HaloDistance and _G.HaloSpeed then
+                        local tools = {}
+                        for _, v in ipairs(char:GetChildren()) do
+                            if v:IsA('Tool') then
+                                table.insert(tools, v)
+                            end
+                        end
+                        for i, tool in ipairs(tools) do
+                            local angle = (i / #tools) * math.pi * 2 + (tick() * _G.HaloSpeed)
+                            local offset = Vector3.new(math.cos(angle) * _G.HaloDistance, 0, math.sin(angle) * _G.HaloDistance)
+                            if tool:FindFirstChild('Handle') then
+                                tool.Handle.CFrame = CFrame.new(hrp.Position + offset)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'فعل الهالة عليك',
     Default = false,
 })
-task.spawn(function(...) end)
+
 _call269:AddSection({
-    Name = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{649} \u{644}\u{627}\u{639}\u{628}',
+    Name = 'هالة ادوات على لاعب',
     Icon = 'rbxassetid://10734950309',
 })
+
 _call269:AddButton({
-    Name = '\u{627}\u{636}\u{63a}\u{637} \u{644}\u{62a}\u{627}\u{62e}\u{630} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642}',
-    Callback = function(...) end,
+    Name = 'اضغط لتاخذ الصندوق',
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local hrp = char:FindFirstChild('HumanoidRootPart')
+        if hrp then
+            for _, v in ipairs(workspace:GetDescendants()) do
+                if v:IsA('Tool') and v:FindFirstChild('Handle') then
+                    firetouchinterest(hrp, v.Handle, 0)
+                    firetouchinterest(hrp, v.Handle, 1)
+                end
+            end
+        end
+    end,
 })
 
 local _call292 = game:GetService('Players')
-
-game:GetService('RunService')
-
 local _LocalPlayer295 = _call292.LocalPlayer
-
-for _299, _299_2 in ipairs(_call292:GetPlayers())do
-    local _ = _299_2 ~= _LocalPlayer295
-    local _ = _299_2 == _LocalPlayer295
-end
 
 local _call304 = _call269:AddDropdown({
     Default = '',
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
-    Options = {
-        [1] = _299_2.Name,
-    },
+    Name = 'اختيار اللاعب',
+    Options = {},
     Flag = 'player list',
     Multi = false,
-    Callback = function(...) end,
-    Description = '',
+    Callback = function(selected)
+        _G.SelectedPlayer = selected
+    end,
 })
 
 _call269:AddButton({
-    Name = '\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{642}\u{627}\u{626}\u{645}\u{629} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
-    Callback = function(...) end,
+    Name = 'تحديث قائمة اللاعبين',
+    Callback = function()
+        local options = {}
+        for _, plr in ipairs(_call292:GetPlayers()) do
+            if plr ~= _LocalPlayer295 then
+                table.insert(options, plr.Name)
+            end
+        end
+        _call304:Set(options)
+    end,
 })
 
-for _309, _309_2 in ipairs(_call292:GetPlayers())do
-    local _ = _309_2 ~= _LocalPlayer295
-    local _ = _309_2 == _LocalPlayer295
-end
-
-_call304:Set({
-    [1] = _309_2.Name,
-})
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{628}\u{639}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'بعد الهالة',
     Max = 20,
     Increase = 0.5,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.HaloDistance2 = val
+    end,
     Default = 6,
 })
+
 _call269:AddSlider({
     Min = 0,
-    Name = '\u{639}\u{634}\u{648}\u{627}\u{626}\u{64a}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'عشوائية الهالة',
     Max = 5,
     Increase = 0.1,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.HaloRandom = val
+    end,
     Default = 0,
 })
+
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'سرعة الهالة',
     Max = 30,
     Increase = 1,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.HaloSpeed2 = val
+    end,
     Default = 6,
 })
+
 _call269:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{647}\u{627}\u{644}\u{629} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.SelectedPlayer and _call292:FindFirstChild(_G.SelectedPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        local char = game:GetService('Players').LocalPlayer.Character
+                        if hrp then
+                            local tools = {}
+                            for _, v in ipairs(char:GetChildren()) do
+                                if v:IsA('Tool') then
+                                    table.insert(tools, v)
+                                end
+                            end
+                            for i, tool in ipairs(tools) do
+                                local angle = (i / #tools) * math.pi * 2 + (tick() * (_G.HaloSpeed2 or 6))
+                                local distance = (_G.HaloDistance2 or 6) + math.random(0, (_G.HaloRandom or 0) * 10) / 10
+                                local offset = Vector3.new(math.cos(angle) * distance, 0, math.sin(angle) * distance)
+                                if tool:FindFirstChild('Handle') then
+                                    tool.Handle.CFrame = CFrame.new(hrp.Position + offset)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل هالة الادوات على اللاعب',
     Default = false,
 })
-task.spawn(function(...) end)
+
 _call269:AddSection({
-    [1] = '\u{647}\u{627}\u{644}\u{629} \u{627}\u{628}\u{648}\u{627}\u{628}',
+    Name = 'هالة ابواب',
 })
-game:GetService('RunService')
 
 local _LocalPlayer334 = game:GetService('Players').LocalPlayer
 local _Character335 = _LocalPlayer334.Character
-
 _Character335:WaitForChild('HumanoidRootPart')
 
-local _call342 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
-
+local _call342 = Instance.new('Part', Instance.new('Folder', workspace))
 Instance.new('Attachment', _call342)
-
 _call342.Anchored = true
 _call342.CanCollide = false
 _call342.Transparency = 1
 
-local _ = not genv.Network
+_LocalPlayer334.CharacterAdded:Connect(function(char)
+    char:WaitForChild('HumanoidRootPart')
+end)
 
-_LocalPlayer334.CharacterAdded:Connect(function(...) end)
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{627}\u{628}\u{639}\u{627}\u{62f} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'ابعاد الهالة',
     Max = 100,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.DoorHaloDistance = val
+    end,
     Default = 10,
 })
+
 _call269:AddSlider({
     Min = 1,
-    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'سرعة الهالة',
     Max = 20,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.DoorHaloSpeed = val
+    end,
     Default = 2,
 })
+
 _call269:AddSlider({
     Min = 0,
-    Name = '\u{639}\u{634}\u{648}\u{627}\u{626}\u{64a}\u{629} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Name = 'عشوائية الهالة',
     Max = 20,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.DoorHaloRandom = val
+    end,
     Default = 0,
 })
+
 _call269:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{647}\u{627}\u{644}\u{629}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    local hrp = char:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        local doors = {}
+                        for _, v in ipairs(workspace:GetDescendants()) do
+                            if v:IsA('Part') and v.Name:lower():find('door') then
+                                table.insert(doors, v)
+                            end
+                        end
+                        for i, door in ipairs(doors) do
+                            local angle = (i / #doors) * math.pi * 2 + (tick() * (_G.DoorHaloSpeed or 2))
+                            local distance = (_G.DoorHaloDistance or 10) + math.random(0, (_G.DoorHaloRandom or 0) * 10) / 10
+                            local offset = Vector3.new(math.cos(angle) * distance, math.sin(angle * 2) * 5, math.sin(angle) * distance)
+                            door.CFrame = CFrame.new(hrp.Position + offset)
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل الهالة',
     Default = false,
 })
+
 _call269:AddSection({
-    [1] = '\u{633}\u{62d}\u{628} \u{627}\u{628}\u{648}\u{627}\u{628} \u{639}\u{644}\u{649} \u{644}\u{627}\u{639}\u{628}',
+    Name = 'سحب ابواب على لاعب',
 })
-game:GetService('RunService')
 
-local _ = game:GetService('Players').LocalPlayer
-local _call370 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
-
+local _call370 = Instance.new('Part', Instance.new('Folder', workspace))
 Instance.new('Attachment', _call370)
-
 _call370.Anchored = true
 _call370.CanCollide = false
 _call370.Transparency = 1
 
-local _ = not genv.Network
-
 _call269:AddTextBox({
-    Placeholder = '\u{627}\u{643}\u{62a}\u{628} \u{627}\u{648}\u{644} \u{62d}\u{631}\u{648}\u{641} \u{627}\u{644}\u{627}\u{633}\u{645}',
-    Name = '\u{627}\u{633}\u{645} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Placeholder = 'اكتب اول حروف الاسم',
+    Name = 'اسم اللاعب',
     ClearText = false,
-    Callback = function(...) end,
+    Callback = function(text)
+        _G.DoorTargetName = text
+    end,
     Default = '',
 })
+
 _call269:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{633}\u{62d}\u{628}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.DoorTargetName
+                    for _, plr in ipairs(game:GetService('Players'):GetPlayers()) do
+                        if plr.Name:lower():find(_G.DoorTargetName:lower()) and plr.Character then
+                            local hrp = plr.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Part') and v.Name:lower():find('door') then
+                                        v.CFrame = CFrame.new(hrp.Position + Vector3.new(math.random(-10, 10), 0, math.random(-10, 10)))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل السحب',
     Default = false,
 })
+
 _call269:AddSection({
-    [1] = '\u{627}\u{639}\u{635}\u{627}\u{631} \u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629}',
+    Name = 'اعصار السفينة',
 })
+
 _call269:AddButton({
-    Callback = function(...) end,
-    Name = '\u{641}\u{639}\u{644} \u{627}\u{639}\u{635}\u{627}\u{631} \u{628}\u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629} \u{641}\u{64a} \u{637}\u{631}\u{64a}\u{642} \u{627}\u{644}\u{628}\u{62f}\u{627}\u{64a}\u{629}',
-    Description = '\u{644}\u{627} \u{62a}\u{646}\u{632}\u{644} \u{62d}\u{62a}\u{649} \u{64a}\u{646}\u{632}\u{644}\u{643} \u{647}\u{648}',
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local hrp = char:FindFirstChild('HumanoidRootPart')
+        if hrp then
+            for i = 1, 50 do
+                local part = Instance.new('Part')
+                part.Size = Vector3.new(5, 5, 5)
+                part.Position = hrp.Position + Vector3.new(math.random(-50, 50), math.random(0, 50), math.random(-50, 50))
+                part.Anchored = false
+                part.Parent = workspace
+                local bodyVelocity = Instance.new('BodyVelocity', part)
+                bodyVelocity.Velocity = Vector3.new(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100))
+            end
+        end
+    end,
+    Name = 'فعل اعصار بالسفينة في طريق البداية',
+    Description = 'لا تنزل حتى ينزلك هو',
 })
+
 _call269:AddButton({
-    Callback = function(...) end,
-    Name = '\u{627}\u{64a}\u{642}\u{627}\u{641} \u{627}\u{639}\u{635}\u{627}\u{631} \u{627}\u{644}\u{633}\u{641}\u{64a}\u{646}\u{629}',
+    Callback = function()
+        for _, v in ipairs(workspace:GetDescendants()) do
+            if v:IsA('Part') and v.Name:lower():find('tornado') then
+                v:Destroy()
+            end
+        end
+    end,
+    Name = 'ايقاف اعصار السفينة',
     Description = '',
 })
 
 local _call386 = _call48:MakeTab({
-    Title = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
+    Title = 'تخريب على اللاعبين',
     Icon = 'rbxassetid://10734962068',
 })
+
 local _call388 = game:GetService('Players')
 local _LocalPlayer389 = _call388.LocalPlayer
 
-for _392, _392_2 in ipairs(_call388:GetPlayers())do
-    local _ = _392_2 ~= _LocalPlayer389
-    local _ = _392_2 == _LocalPlayer389
-
-    _392_2.Name:lower()
-end
-
-_call386:AddDropdown({
+local _call392Dropdown = _call386:AddDropdown({
     Default = '',
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
-    Options = {
-        [1] = _392_2.Name,
-    },
+    Name = 'اختيار اللاعب',
+    Options = {},
     Flag = 'player list',
     Multi = false,
-    Callback = function(...) end,
+    Callback = function(selected)
+        _G.TargetPlayer = selected
+    end,
+})
+
+_call386:AddButton({
+    Name = 'تحديث قائمة اللاعبين',
+    Callback = function()
+        local options = {}
+        for _, plr in ipairs(_call388:GetPlayers()) do
+            if plr ~= _LocalPlayer389 then
+                table.insert(options, plr.Name)
+            end
+        end
+        _call392Dropdown:Set(options)
+    end,
+})
+
+_call386:AddToggle({
+    Name = 'سبام تنقل للاعب',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        local myHrp = game:GetService('Players').LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp and myHrp then
+                            myHrp.CFrame = hrp.CFrame + Vector3.new(math.random(-5, 5), 0, math.random(-5, 5))
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+})
+
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                if target and target.Character then
+                    local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        hrp.CFrame = hrp.CFrame + Vector3.new(math.random(-2, 2), math.random(-2, 2), math.random(-2, 2))
+                    end
+                end
+            end)
+        end
+    end,
+    Default = false,
+    Name = 'تجسس على اللاعب',
     Description = '',
 })
-_call386:AddButton({
-    Name = '\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{642}\u{627}\u{626}\u{645}\u{629} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}\u{64a}\u{646}',
-    Callback = function(...) end,
-})
-_call386:AddToggle({
-    Name = '\u{633}\u{628}\u{627}\u{645} \u{62a}\u{646}\u{642}\u{644} \u{644}\u{644}\u{627}\u{639}\u{628}',
-    Callback = function(...) end,
-})
-_call386:AddToggle({
-    Callback = function(...) end,
-    Default = false,
-    Name = '\u{62a}\u{62c}\u{633}\u{633} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
-    Description = '',
-})
-_call386:AddButton({
-    Callback = function(...) end,
-    Title = '\u{627}\u{644}\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{644}\u{644}\u{627}\u{639}\u{628}',
-    Desc = '',
-})
-_call386:AddButton({
-    Callback = function(...) end,
-    Title = '\u{646}\u{633}\u{62e} \u{64a}\u{648}\u{632}\u{631} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
-    Desc = '',
-})
-_call386:AddButton({
-    Callback = function(...) end,
-    Title = '\u{646}\u{633}\u{62e} \u{627}\u{644}\u{627}\u{633}\u{645} \u{627}\u{644}\u{627}\u{633}\u{64a} \u{644}\u{644}\u{627}\u{639}\u{628}',
-    Desc = '',
-})
-_call386:AddSection({
-    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642} \u{627}\u{62d}\u{633}\u{643} \u{63a}\u{628}\u{64a} \u{644}\u{648} \u{62a}\u{633}\u{62a}\u{62e}\u{62f}\u{645} \u{643}\u{646}\u{628}\u{629} \u{648}\u{628}\u{627}\u{635} \u{648}\u{645}\u{627}\u{62a}\u{633}\u{62a}\u{62e}\u{62f}\u{645}\u{647}',
-})
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-game:GetService('VirtualUser')
 
-local _ = game:GetService('Players').LocalPlayer
+_call386:AddButton({
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            local myHrp = game:GetService('Players').LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
+            if hrp and myHrp then
+                myHrp.CFrame = hrp.CFrame
+            end
+        end
+    end,
+    Title = 'الانتقال للاعب',
+    Desc = '',
+})
+
+_call386:AddButton({
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target then
+            game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = target.Character.HumanoidRootPart.CFrame
+        end
+    end,
+    Title = 'نسخ يوزر اللاعب',
+    Desc = '',
+})
+
+_call386:AddButton({
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target then
+            setclipboard(target.Name)
+        end
+    end,
+    Title = 'نسخ الاسم الاسي للاعب',
+    Desc = '',
+})
+
+_call386:AddSection({
+    Name = 'تخريب بادوات الصندوق احسك غبي لو تستخدم كنبة وباص وماتستخدمه',
+})
 
 _call386:AddDropdown({
-    Callback = function(...) end,
-    Default = '\u{641}\u{644}\u{646}\u{642}',
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{637}\u{631}\u{64a}\u{642}\u{629}',
+    Callback = function(selected)
+        _G.ToolMethod = selected
+    end,
+    Default = 'فلنق',
+    Name = 'اختيار الطريقة',
     Options = {
-        [1] = '\u{641}\u{644}\u{646}\u{642}',
-        [2] = '\u{633}\u{62d}\u{628}',
-        [3] = '\u{642}\u{62a}\u{644}',
-        [4] = '\u{62d}\u{628}\u{633}',
-        [5] = '\u{628}\u{627}\u{646}\u{62f} \u{627}\u{644}\u{628}\u{64a}\u{62a}',
+        'فلنق',
+        'سحب',
+        'قتل',
+        'حبس',
+        'باند البيت',
     },
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641}\n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    if target and target.Character and _G.ToolMethod then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, tool in ipairs(char:GetChildren()) do
+                                if tool:IsA('Tool') and tool:FindFirstChild('Handle') then
+                                    if _G.ToolMethod == 'فلنق' then
+                                        tool.Handle.CFrame = CFrame.new(hrp.Position + Vector3.new(0, 50, 0))
+                                    elseif _G.ToolMethod == 'سحب' then
+                                        tool.Handle.CFrame = hrp.CFrame
+                                    elseif _G.ToolMethod == 'قتل' then
+                                        firetouchinterest(hrp, tool.Handle, 0)
+                                        firetouchinterest(hrp, tool.Handle, 1)
+                                    elseif _G.ToolMethod == 'حبس' then
+                                        tool.Handle.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y + 10, hrp.Position.Z)
+                                    elseif _G.ToolMethod == 'باند البيت' then
+                                        tool.Handle.CFrame = CFrame.new(999999, 999999, 999999)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل /ايقاف\nالتخريب',
     Default = false,
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-game:GetService('VirtualUser')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddDropdown({
-    Callback = function(...) end,
-    Default = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644}',
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{637}\u{631}\u{64a}\u{642}\u{629}',
+    Callback = function(selected)
+        _G.ToolMethodAll = selected
+    end,
+    Default = 'قتل الكل',
+    Name = 'اختيار الطريقة',
     Options = {
-        [1] = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644}',
-        [2] = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644}',
-        [3] = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644}',
-        [4] = '\u{62d}\u{628}\u{633} \u{627}\u{644}\u{643}\u{644}',
-        [5] = '\u{628}\u{627}\u{646}\u{62f} \u{627}\u{644}\u{628}\u{64a}\u{62a} \u{644}\u{644}\u{643}\u{644}',
+        'قتل الكل',
+        'سحب الكل',
+        'فلنق الكل',
+        'حبس الكل',
+        'باند البيت للكل',
     },
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641}\n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp and _G.ToolMethodAll then
+                                for _, tool in ipairs(char:GetChildren()) do
+                                    if tool:IsA('Tool') and tool:FindFirstChild('Handle') then
+                                        if _G.ToolMethodAll == 'قتل الكل' then
+                                            firetouchinterest(hrp, tool.Handle, 0)
+                                            firetouchinterest(hrp, tool.Handle, 1)
+                                        elseif _G.ToolMethodAll == 'سحب الكل' then
+                                            tool.Handle.CFrame = hrp.CFrame
+                                        elseif _G.ToolMethodAll == 'فلنق الكل' then
+                                            tool.Handle.CFrame = CFrame.new(hrp.Position + Vector3.new(0, 50, 0))
+                                        elseif _G.ToolMethodAll == 'حبس الكل' then
+                                            tool.Handle.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y + 10, hrp.Position.Z)
+                                        elseif _G.ToolMethodAll == 'باند البيت للكل' then
+                                            tool.Handle.CFrame = CFrame.new(999999, 999999, 999999)
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل /ايقاف\nالتخريب',
     Default = false,
 })
+
 _call386:AddSection({
-    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{628}\u{627}\u{635}',
+    Name = 'تخريب بالباص',
 })
+
 _call386:AddButton({
-    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
-    Callback = function(...) end,
+    Name = 'قتل اللاعب باص',
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('bus') then
+                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                    end
+                end
+            end
+        end
+    end,
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
 
-local _ = game:GetService('Players').LocalPlayer
-local _call458 = Instance.new('Part', Instance.new('Folder', game:GetService('Workspace')))
-
+local _call458 = Instance.new('Part', Instance.new('Folder', workspace))
 Instance.new('Attachment', _call458)
-
 _call458.Anchored = true
 _call458.CanCollide = false
 _call458.Transparency = 1
 
-local _ = not genv.Network
-
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62b}\u{642}\u{628} \u{627}\u{633}\u{648}\u{62f} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('bus') then
+                                    v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 5, hrp.Position.Z))
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'ثقب اسود على اللاعب باص',
     Default = false,
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{627}\u{639}\u{628} \u{628}\u{627}\u{635}',
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                if target and target.Character then
+                    local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        for _, v in ipairs(workspace:GetDescendants()) do
+                            if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('bus') then
+                                v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.Angles(0, math.random(-180, 180), 0))
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سحب الاعب باص',
     Default = false,
 })
-_call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{628}\u{627}\u{635}',
-    Default = false,
-})
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
 
-local _ = game:GetService('Players').LocalPlayer
-
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644} \u{628}\u{627}\u{635}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('bus') then
+                                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'قتل الكل باص',
     Default = false,
 })
+
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                for _, target in ipairs(_call388:GetPlayers()) do
+                    if target ~= _LocalPlayer389 and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('bus') then
+                                    v:SetPrimaryPartCFrame(hrp.CFrame)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سحب الكل باص',
+    Default = false,
+})
+
 _call386:AddSection({
-    [1] = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Name = 'تخريب  بالكنبة',
 })
-
-local _ = workspace.CurrentCamera
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddSlider({
     Min = 0.1,
-    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{642}\u{62a}\u{644}',
+    Name = 'سرعة القتل',
     Max = 7,
     Increment = 0.1,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.CarKillSpeed = val
+    end,
     Default = 1,
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = 'V1 \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629}',
-    Default = false,
-})
-_call386:AddToggle({
-    Callback = function(...) end,
-    Name = 'V2 \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(_G.CarKillSpeed or 1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                                    v:SetPrimaryPartCFrame(hrp.CFrame)
+                                    task.wait(0.05)
+                                    v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'V1 قتل كنبة',
     Default = false,
 })
 
-local _ = workspace.CurrentCamera
-local _ = game:GetService('Players').LocalPlayer
-
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = 'V1 \u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                                    v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -5))
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'V2 قتل كنبة',
     Default = false,
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = 'V2 \u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{643}\u{646}\u{628}\u{629}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(_G.CarKillSpeed or 1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                                        task.wait(0.05)
+                                        v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'V1 قتل الكل كنبة',
     Default = false,
 })
-game:GetService('ReplicatedStorage')
-game:GetService('VirtualInputManager')
-game:GetService('RunService')
 
-local _ = game:GetService('Players').LocalPlayer
-local _ = workspace.CurrentCamera
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -5))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'V2 قتل الكل كنبة',
+    Default = false,
+})
 
 _call386:AddDropdown({
-    Callback = function(...) end,
-    Default = '\u{642}\u{62a}\u{644}',
-    Name = '\u{627}\u{62e}\u{62a}\u{631} \u{637}\u{631}\u{64a}\u{642}\u{629} \u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Callback = function(selected)
+        _G.CarMethod = selected
+    end,
+    Default = 'قتل',
+    Name = 'اختر طريقة التخريب بالكنبة',
     Options = {
-        [1] = '\u{642}\u{62a}\u{644}',
-        [2] = '\u{642}\u{62a}\u{644} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{627}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
-        [3] = '\u{62d}\u{628}\u{633}',
-        [4] = '\u{62d}\u{628}\u{633} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{627}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
-        [5] = '\u{633}\u{62d}\u{628}',
-        [6] = '\u{633}\u{62d}\u{628} \u{628}\u{62f}\u{648}\u{646} \u{645}\u{62a}\u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{628}',
+        'قتل',
+        'قتل بدون ماتروح للاعب',
+        'حبس',
+        'حبس بدون ماتروح للاعب',
+        'سحب',
+        'سحب بدون متروح للاعب',
     },
 })
-_call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} /\u{627}\u{64a}\u{642}\u{627}\u{641} \n\u{627}\u{644}\u{62a}\u{62e}\u{631}\u{64a}\u{628}',
-    Default = false,
-})
-_call386:AddSection({
-    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{627}\u{644}\u{643}\u{631}\u{629}',
-    Icon = 'rbxassetid://',
-})
-_call386:AddButton({
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
-    Callback = function(...) end,
-})
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-game:GetService('VirtualUser')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{643}\u{631}\u{629} \u{644}\u{627} \u{62a}\u{645}\u{633} \u{634}\u{64a}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp and _G.CarMethod then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                                    if _G.CarMethod == 'قتل' then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                                        task.wait(0.05)
+                                        v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                                    elseif _G.CarMethod == 'قتل بدون ماتروح للاعب' then
+                                        firetouchinterest(hrp, v.PrimaryPart or v:FindFirstChildWhichIsA('BasePart'), 0)
+                                        firetouchinterest(hrp, v.PrimaryPart or v:FindFirstChildWhichIsA('BasePart'), 1)
+                                    elseif _G.CarMethod == 'حبس' then
+                                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 10, hrp.Position.Z))
+                                    elseif _G.CarMethod == 'حبس بدون ماتروح للاعب' then
+                                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 20, hrp.Position.Z))
+                                    elseif _G.CarMethod == 'سحب' then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -5))
+                                    elseif _G.CarMethod == 'سحب بدون متروح للاعب' then
+                                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y, hrp.Position.Z - 10))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تفعيل /ايقاف \nالتخريب',
     Default = false,
 })
+
 _call386:AddSection({
-    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{627}\u{644}\u{634}\u{627}\u{62d}\u{646}\u{629}',
-    Icon = 'rbxassetid://',
+    Name = 'تخريب  بالكرة',
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-game:GetService('Workspace')
 
-local _ = game:GetService('Players').LocalPlayer
-
-Vector3.new(-26.09, 2.79, 6.11)
 _call386:AddButton({
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{634}\u{627}\u{62d}\u{646}\u{629}',
-    Callback = function(...) end,
+    Name = 'فلنق كرة',
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Part') and v.Name:lower():find('ball') then
+                        v.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z)
+                    end
+                end
+            end
+        end
+    end,
 })
+
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Part') and v.Name:lower():find('ball') then
+                                        v.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'فلنق الكل كرة لا تمس شي',
+    Default = false,
+})
+
 _call386:AddSection({
-    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628}  \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
-    Icon = 'rbxassetid://',
+    Name = 'تخريب  بالشاحنة',
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddButton({
-    Name = '\u{642}\u{62a}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
-    Callback = function(...) end,
+    Name = 'فلنق شاحنة',
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('truck') then
+                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z))
+                    end
+                end
+            end
+        end
+    end,
 })
+
+_call386:AddSection({
+    Name = 'تخريب  بقارب الصيد',
+})
+
 _call386:AddButton({
-    Callback = function(...) end,
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Name = 'قتل بقارب الصيد',
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                        task.wait(0.1)
+                        v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                    end
+                end
+            end
+        end
+    end,
+})
+
+_call386:AddButton({
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                        v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z))
+                    end
+                end
+            end
+        end
+    end,
+    Name = 'فلنق بقارب الصيد',
     Description = '',
 })
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{62d}\u{628} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
-    Default = false,
-})
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
-
-_call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{62d}\u{628} \u{627}\u{644}\u{643}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} ',
-    Default = false,
-})
-game:GetService('RunService')
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
-
-_call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{642}\u{62a}\u{644} \u{627}\u{644}\u{643}\u{644} \u{628}\u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} ',
+    Callback = function(state)
+        if state then
+            game:GetService('RunService').Heartbeat:Connect(function()
+                local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                if target and target.Character then
+                    local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                    if hrp then
+                        for _, v in ipairs(workspace:GetDescendants()) do
+                            if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                                v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -5))
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سحب بقارب الصيد',
     Default = false,
 })
 
-local _ = game:GetService('Players').LocalPlayer
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -5))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سحب الكل بقارب الصيد ',
+    Default = false,
+})
 
-Vector3.new(260.29, 4.37, 209.32)
-Vector3.new(234.49, 4.37, 228)
-Vector3.new(262.79, 21.37, 210.84)
-Vector3.new(229.6, 21.37, 225.4)
-Vector3.new(173.44, 21.37, 228.11)
-Vector3.new(-43, 21, -137)
-Vector3.new(-40, 36, -137)
-Vector3.new(-21, 40, 436)
-Vector3.new(155, 37, 433)
-Vector3.new(255, 35, 431)
-Vector3.new(254, 38, 394)
-Vector3.new(148, 39, 387)
-Vector3.new(-17, 42, 395)
-Vector3.new(-189, 37, -247)
-Vector3.new(-354, 37, -244)
-Vector3.new(-456, 36, -245)
-Vector3.new(-453, 38, -295)
-Vector3.new(-356, 38, -294)
-Vector3.new(-187, 37, -295)
-Vector3.new(-410, 68, -447)
-Vector3.new(-348, 69, -496)
-Vector3.new(-103, 12, 1087)
-Vector3.new(-730, 6, 808)
-Vector3.new(-245, 7, 822)
-Vector3.new(639, 76, -361)
-Vector3.new(-908, 6, -361)
-Vector3.new(-111, 70, -417)
-Vector3.new(230, 38, 569)
-Vector3.new(-30, 13, 2209)
-Vector3.new(-26.786, 4.549, -16.025)
-Vector3.new(149.82, 5.549, 60.242)
-Vector3.new(170.196, 5.549, 266.061)
-Vector3.new(-119.9, 4.641, 8.176)
-Vector3.new(-130.075, 4.649, -127.652)
-Vector3.new(-168.064, 4.649, -112.339)
-Vector3.new(-72.252, 4.649, -122.569)
-Vector3.new(10.353, 4.649, -115.098)
-Vector3.new(198.996, -33.061, -179.751)
-Vector3.new(295.139, 5.549, 40.569)
-Vector3.new(1.074, 4.549, 237.577)
-Vector3.new(-41.549, 4.549, 238.717)
-Vector3.new(-96.891, 4.549, 236.663)
-Vector3.new(-129.832, 4.549, 242.131)
-Vector3.new(-183.435, 4.549, 240.83)
-Vector3.new(-301.655, 4.749, 212.338)
-Vector3.new(-304.652, 4.636, 14.17)
-Vector3.new(-354.4, 8.555, -101.754)
-Vector3.new(-430.852, 4.549, -103.408)
-Vector3.new(-765.745, 4.149, -60.722)
-Vector3.new(-842.876, 4.149, -395.368)
-Vector3.new(-661.048, 251.373, 753.847)
-Vector3.new(-236.487, 1.136, 760.252)
+_call386:AddToggle({
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    for _, target in ipairs(_call388:GetPlayers()) do
+                        if target ~= _LocalPlayer389 and target.Character then
+                            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                            if hrp then
+                                for _, v in ipairs(workspace:GetDescendants()) do
+                                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                                        task.wait(0.1)
+                                        v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'قتل الكل بقارب الصيد ',
+    Default = false,
+})
+
+local _HousePositions = {
+    Vector3.new(260.29, 4.37, 209.32),
+    Vector3.new(234.49, 4.37, 228),
+    Vector3.new(262.79, 21.37, 210.84),
+    Vector3.new(229.6, 21.37, 225.4),
+    Vector3.new(173.44, 21.37, 228.11),
+    Vector3.new(-43, 21, -137),
+    Vector3.new(-40, 36, -137),
+    Vector3.new(-21, 40, 436),
+    Vector3.new(155, 37, 433),
+    Vector3.new(255, 35, 431),
+    Vector3.new(254, 38, 394),
+    Vector3.new(148, 39, 387),
+    Vector3.new(-17, 42, 395),
+    Vector3.new(-189, 37, -247),
+    Vector3.new(-354, 37, -244),
+    Vector3.new(-456, 36, -245),
+    Vector3.new(-453, 38, -295),
+    Vector3.new(-356, 38, -294),
+    Vector3.new(-187, 37, -295),
+    Vector3.new(-410, 68, -447),
+    Vector3.new(-348, 69, -496),
+    Vector3.new(-103, 12, 1087),
+    Vector3.new(-730, 6, 808),
+    Vector3.new(-245, 7, 822),
+    Vector3.new(639, 76, -361),
+    Vector3.new(-908, 6, -361),
+    Vector3.new(-111, 70, -417),
+    Vector3.new(230, 38, 569),
+    Vector3.new(-30, 13, 2209),
+    Vector3.new(-26.786, 4.549, -16.025),
+    Vector3.new(149.82, 5.549, 60.242),
+    Vector3.new(170.196, 5.549, 266.061),
+    Vector3.new(-119.9, 4.641, 8.176),
+    Vector3.new(-130.075, 4.649, -127.652),
+    Vector3.new(-168.064, 4.649, -112.339),
+    Vector3.new(-72.252, 4.649, -122.569),
+    Vector3.new(10.353, 4.649, -115.098),
+    Vector3.new(198.996, -33.061, -179.751),
+    Vector3.new(295.139, 5.549, 40.569),
+    Vector3.new(1.074, 4.549, 237.577),
+    Vector3.new(-41.549, 4.549, 238.717),
+    Vector3.new(-96.891, 4.549, 236.663),
+    Vector3.new(-129.832, 4.549, 242.131),
+    Vector3.new(-183.435, 4.549, 240.83),
+    Vector3.new(-301.655, 4.749, 212.338),
+    Vector3.new(-304.652, 4.636, 14.17),
+    Vector3.new(-354.4, 8.555, -101.754),
+    Vector3.new(-430.852, 4.549, -103.408),
+    Vector3.new(-765.745, 4.149, -60.722),
+    Vector3.new(-842.876, 4.149, -395.368),
+    Vector3.new(-661.048, 251.373, 753.847),
+    Vector3.new(-236.487, 1.136, 760.252),
+}
+
 _call386:AddDropdown({
-    Callback = function(...) end,
+    Callback = function(selected)
+        _G.SelectedHouse = selected
+    end,
     Default = '',
-    Name = '\u{627}\u{62e}\u{64a}\u{627}\u{631} \u{631}\u{642}\u{645} \u{627}\u{644}\u{628}\u{64a}\u{62a}',
+    Name = 'اخيار رقم البيت',
     Options = {
-        [1] = '\u{628}\u{64a}\u{62a} 1',
-        [2] = '\u{628}\u{64a}\u{62a} 11',
-        [3] = '\u{628}\u{64a}\u{62a} 12',
-        [4] = '\u{628}\u{64a}\u{62a} 13',
-        [5] = '\u{628}\u{64a}\u{62a} 14',
-        [6] = '\u{628}\u{64a}\u{62a} 15',
-        [7] = '\u{628}\u{64a}\u{62a} 16',
-        [8] = '\u{628}\u{64a}\u{62a} 17',
-        [9] = '\u{628}\u{64a}\u{62a} 18',
-        [10] = '\u{628}\u{64a}\u{62a} 19',
-        [11] = '\u{628}\u{64a}\u{62a} 2',
-        [12] = '\u{628}\u{64a}\u{62a} 20',
-        [13] = '\u{628}\u{64a}\u{62a} 21',
-        [14] = '\u{628}\u{64a}\u{62a} 22',
-        [15] = '\u{628}\u{64a}\u{62a} 23',
-        [16] = '\u{628}\u{64a}\u{62a} 24',
-        [17] = '\u{628}\u{64a}\u{62a} 28',
-        [18] = '\u{628}\u{64a}\u{62a} 29',
-        [19] = '\u{628}\u{64a}\u{62a} 3',
-        [20] = '\u{628}\u{64a}\u{62a} 30',
-        [21] = '\u{628}\u{64a}\u{62a} 31',
-        [22] = '\u{628}\u{64a}\u{62a} 32',
-        [23] = '\u{628}\u{64a}\u{62a} 33',
-        [24] = '\u{628}\u{64a}\u{62a} 34',
-        [25] = '\u{628}\u{64a}\u{62a} 35',
-        [26] = '\u{628}\u{64a}\u{62a} 4',
-        [27] = '\u{628}\u{64a}\u{62a} 5',
-        [28] = '\u{628}\u{64a}\u{62a} 6',
-        [29] = '\u{628}\u{64a}\u{62a} 7',
+        'بيت 1',
+        'بيت 11',
+        'بيت 12',
+        'بيت 13',
+        'بيت 14',
+        'بيت 15',
+        'بيت 16',
+        'بيت 17',
+        'بيت 18',
+        'بيت 19',
+        'بيت 2',
+        'بيت 20',
+        'بيت 21',
+        'بيت 22',
+        'بيت 23',
+        'بيت 24',
+        'بيت 28',
+        'بيت 29',
+        'بيت 3',
+        'بيت 30',
+        'بيت 31',
+        'بيت 32',
+        'بيت 33',
+        'بيت 34',
+        'بيت 35',
+        'بيت 4',
+        'بيت 5',
+        'بيت 6',
+        'بيت 7',
     },
 })
+
 _call386:AddDropdown({
-    Callback = function(...) end,
+    Callback = function(selected)
+        _G.SelectedLocation = selected
+    end,
     Default = '',
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
+    Name = 'اختيار المكان',
     Options = {
-        [1] = '\u{627}\u{644}\u{628}\u{62d}\u{631}',
-        [2] = '\u{627}\u{644}\u{628}\u{62f}\u{627}\u{64a}\u{629}',
-        [3] = '\u{627}\u{644}\u{628}\u{644}\u{62f}\u{64a}\u{629}',
-        [4] = '\u{627}\u{644}\u{628}\u{646}\u{643}',
-        [5] = '\u{627}\u{644}\u{633}\u{648}\u{628}\u{631}\u{645}\u{627}\u{631}\u{643}\u{62a}',
-        [6] = '\u{627}\u{644}\u{633}\u{64a}\u{646}\u{64a}\u{645}\u{627}',
-        [7] = '\u{627}\u{644}\u{641}\u{646}\u{62f}\u{642}',
-        [8] = '\u{627}\u{644}\u{645}\u{62f}\u{631}\u{633}\u{629}',
-        [9] = '\u{627}\u{644}\u{645}\u{632}\u{631}\u{639}\u{629}',
-        [10] = '\u{627}\u{644}\u{645}\u{633}\u{62a}\u{634}\u{641}\u{649} ',
-        [11] = '\u{627}\u{644}\u{645}\u{637}\u{627}\u{631}',
-        [12] = '\u{627}\u{644}\u{645}\u{637}\u{639}\u{645}',
-        [13] = '\u{627}\u{644}\u{645}\u{642}\u{647}\u{649}',
-        [14] = '\u{627}\u{644}\u{645}\u{643}\u{62a}\u{628}\u{629}',
-        [15] = '\u{62c}\u{628}\u{644} \u{62f}\u{631}\u{648}\u{646}',
-        [16] = '\u{635}\u{627}\u{644}\u{648}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
-        [17] = '\u{645}\u{62a}\u{62c}\u{631} \u{627}\u{644}\u{627}\u{644}\u{639}\u{627}\u{628}',
-        [18] = '\u{645}\u{62d}\u{637}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{621}',
-        [19] = '\u{645}\u{62d}\u{644} \u{627}\u{644}\u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{627}\u{64a}\u{633}\u{643}\u{631}\u{64a}\u{645} \u{644}\u{627} \u{62e}\u{644}\u{635} \u{62d}\u{645}\u{636}\u{62a}',
-        [20] = '\u{645}\u{62d}\u{644} \u{627}\u{644}\u{645}\u{644}\u{627}\u{628}\u{633}',
-        [21] = '\u{645}\u{631}\u{643}\u{632} \u{627}\u{644}\u{634}\u{631}\u{637}\u{629}',
-        [22] = '\u{645}\u{632}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62e}\u{64a}\u{648}\u{644}',
-        [23] = '\u{645}\u{643}\u{62a}\u{628} \u{627}\u{644}\u{628}\u{631}\u{64a}\u{62f}',
+        'البحر',
+        'البداية',
+        'البلدية',
+        'البنك',
+        'السوبرماركت',
+        'السينما',
+        'الفندق',
+        'المدرسة',
+        'المزرعة',
+        'المستشفى ',
+        'المطار',
+        'المطعم',
+        'المقهى',
+        'المكتبة',
+        'جبل درون',
+        'صالون الشعر',
+        'متجر الالعاب',
+        'محطة الاطفاء',
+        'محل الايسكريم ايسكريم ايسكريم لا خلص حمضت',
+        'محل الملابس',
+        'مركز الشرطة',
+        'مزرعة الخيول',
+        'مكتب البريد',
     },
 })
+
 _call386:AddButton({
-    Name = '\u{627}\u{639}\u{627}\u{62f}\u{629} \u{62a}\u{639}\u{64a}\u{64a}\u{646} \u{644}\u{627}\u{632}\u{645}\u{643} \u{645}\u{646} \u{62a}\u{631}\u{64a}\u{62f} \u{62a}\u{63a}\u{64a}\u{631} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
-    Callback = function(...) end,
+    Name = 'اعادة تعيين لازمك من تريد تغير المكان',
+    Callback = function()
+        _G.SelectedHouse = nil
+        _G.SelectedLocation = nil
+    end,
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{628}\u{627}\u{645} \u{642}\u{648}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} \u{641}\u{64a} \u{627}\u{644}\u{645}\u{643}\u{627}\u{646}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    if _G.SelectedHouse then
+                        local houseNum = tonumber(_G.SelectedHouse:match('%d+'))
+                        if houseNum and _HousePositions[houseNum] then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                                    v:SetPrimaryPartCFrame(CFrame.new(_HousePositions[houseNum]))
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سبام قوارب الصيد في المكان',
     Default = false,
 })
+
 _call386:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{633}\u{628}\u{627}\u{645} \u{642}\u{648}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f} \u{639}\u{644}\u{649} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.1)
+                    local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+                    if target and target.Character and _G.SelectedLocation then
+                        local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                        if hrp then
+                            for _, v in ipairs(workspace:GetDescendants()) do
+                                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                                    v:SetPrimaryPartCFrame(hrp.CFrame)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'سبام قوارب الصيد على اللاعب',
     Default = false,
 })
+
 _call386:AddSection({
-    Name = '\u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{628}\u{627}\u{644}\u{633}\u{641}\u{646} \u{627}\u{644}\u{643}\u{628}\u{64a}\u{631}\u{629}',
-    Icon = 'rbxassetid://',
+    Name = 'تخريب بالسفن الكبيرة',
 })
+
 _call386:AddButton({
-    Callback = function(...) end,
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{633}\u{641}\u{64a}\u{646}\u{629} \u{627}\u{644}\u{642}\u{631}\u{627}\u{635}\u{646}\u{629} ',
+    Callback = function()
+        local target = _G.TargetPlayer and _call388:FindFirstChild(_G.TargetPlayer)
+        if target and target.Character then
+            local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Model') and v.Name:lower():find('ship') then
+                        v:SetPrimaryPartCFrame(hrp.CFrame)
+                    end
+                end
+            end
+        end
+    end,
+    Name = 'فلنق سفينة القراصنة ',
     Description = '',
 })
+
 _call386:AddButton({
-    Callback = function(...) end,
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{633}\u{641}\u{64a}\u{646}\u{629} \u{627}\u{644}\u{642}\u{631}\u{627}\u{635}\u{646}\u{629}',
+    Callback = function()
+        for _, target in ipairs(_call388:GetPlayers()) do
+            if target ~= _LocalPlayer389 and target.Character then
+                local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Model') and v.Name:lower():find('ship') then
+                            v:SetPrimaryPartCFrame(hrp.CFrame)
+                        end
+                    end
+                end
+            end
+        end
+    end,
+    Name = 'فلنق الكل سفينة القراصنة',
     Description = '',
 })
+
 _call386:AddButton({
-    Name = '\u{641}\u{644}\u{646}\u{642} \u{627}\u{644}\u{643}\u{644} \u{642}\u{627}\u{631}\u{628} ',
-    Callback = function(...) end,
+    Name = 'فلنق الكل قارب ',
+    Callback = function()
+        for _, target in ipairs(_call388:GetPlayers()) do
+            if target ~= _LocalPlayer389 and target.Character then
+                local hrp = target.Character:FindFirstChild('HumanoidRootPart')
+                if hrp then
+                    for _, v in ipairs(workspace:GetDescendants()) do
+                        if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('boat') then
+                            v:SetPrimaryPartCFrame(CFrame.new(hrp.Position.X, hrp.Position.Y + 50, hrp.Position.Z))
+                        end
+                    end
+                end
+            end
+        end
+    end,
 })
+
 _call386:AddSection({
-    Name = '\u{627}\u{62f}\u{648}\u{627}\u{62a} \u{62a}\u{62e}\u{631}\u{64a}\u{628}',
-    Icon = 'rbxassetid://10723405360',
+    Name = 'ادوات تخريب',
 })
+
 _call386:AddButton({
-    Name = '\u{627}\u{62f}\u{627}\u{629} \u{641}\u{644}\u{646}\u{642} \u{643}\u{646}\u{628}\u{629}',
-    Callback = function(...) end,
+    Name = 'اداة فلنق كنبة',
+    Callback = function()
+        local tool = Instance.new('Tool')
+        tool.Name = 'Fling Car'
+        tool.RequiresHandle = false
+        tool.Activated:Connect(function()
+            local mouse = game:GetService('Players').LocalPlayer:GetMouse()
+            for _, v in ipairs(workspace:GetDescendants()) do
+                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                    v:SetPrimaryPartCFrame(CFrame.new(mouse.Hit.Position.X, mouse.Hit.Position.Y + 50, mouse.Hit.Position.Z))
+                end
+            end
+        end)
+        tool.Parent = game:GetService('Players').LocalPlayer.Backpack
+    end,
 })
+
 _call386:AddButton({
-    Name = '\u{627}\u{62f}\u{627}\u{629} \u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
-    Callback = function(...) end,
+    Name = 'اداة فلنق كرة',
+    Callback = function()
+        local tool = Instance.new('Tool')
+        tool.Name = 'Fling Ball'
+        tool.RequiresHandle = false
+        tool.Activated:Connect(function()
+            local mouse = game:GetService('Players').LocalPlayer:GetMouse()
+            for _, v in ipairs(workspace:GetDescendants()) do
+                if v:IsA('Part') and v.Name:lower():find('ball') then
+                    v.CFrame = CFrame.new(mouse.Hit.Position.X, mouse.Hit.Position.Y + 50, mouse.Hit.Position.Z)
+                end
+            end
+        end)
+        tool.Parent = game:GetService('Players').LocalPlayer.Backpack
+    end,
 })
+
 _call386:AddButton({
-    Name = '\u{627}\u{62f}\u{627}\u{629} \u{642}\u{62a}\u{644} \u{643}\u{646}\u{628}\u{629} ',
-    Callback = function(...) end,
+    Name = 'اداة قتل كنبة ',
+    Callback = function()
+        local tool = Instance.new('Tool')
+        tool.Name = 'Kill Car'
+        tool.RequiresHandle = false
+        tool.Activated:Connect(function()
+            local mouse = game:GetService('Players').LocalPlayer:GetMouse()
+            for _, v in ipairs(workspace:GetDescendants()) do
+                if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('car') then
+                    v:SetPrimaryPartCFrame(CFrame.new(mouse.Hit.Position))
+                    task.wait(0.1)
+                    v:SetPrimaryPartCFrame(CFrame.new(0, -1000, 0))
+                end
+            end
+        end)
+        tool.Parent = game:GetService('Players').LocalPlayer.Backpack
+    end,
 })
 
 local _call723 = _call48:MakeTab({
-    Title = '\u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Title = 'نسخ سكنات',
     Icon = 'rbxassetid://10734952036',
 })
 
 _call723:AddSection({
-    Name = 'v1 \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Name = 'v1 نسخ سكنات',
     Icon = 'rbxassetid://10734952036',
 })
-game:GetService('ReplicatedStorage')
-
-local _ = game:GetService('Players').LocalPlayer
 
 _call723:AddTextBox({
-    Callback = function(...) end,
-    Name = '\u{627}\u{633}\u{645} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Callback = function(text)
+        _G.CopyTargetName = text
+    end,
+    Name = 'اسم اللاعب',
     Default = '',
 })
+
 _call723:AddDropdown({
-    Callback = function(...) end,
-    Name = '\u{637}\u{631}\u{64a}\u{642}\u{629} \u{627}\u{644}\u{646}\u{633}\u{62e}',
+    Callback = function(selected)
+        _G.CopyMethod = selected
+    end,
+    Name = 'طريقة النسخ',
     Options = {
-        [1] = '\u{628}\u{631}\u{648}\u{643}\u{647}\u{627}\u{641}\u{646}',
-        [2] = '\u{633}\u{643}\u{646} \u{644}\u{627}\u{633}\u{627}\u{633}\u{64a}',
+        'بروكهافن',
+        'سكن كلاسي',
     },
 })
+
 _call723:AddButton({
-    Name = '\u{646}\u{633}\u{62e}',
-    Callback = function(...) end,
+    Name = 'نسخ',
+    Callback = function()
+        local target = _G.CopyTargetName and game:GetService('Players'):FindFirstChild(_G.CopyTargetName)
+        if target and target.Character then
+            if _G.CopyMethod == 'بروكهافن' then
+                for _, v in ipairs(target.Character:GetDescendants()) do
+                    if v:IsA('Accessory') or v:IsA('Shirt') or v:IsA('Pants') then
+                        v:Clone().Parent = game:GetService('Players').LocalPlayer.Character
+                    end
+                end
+            elseif _G.CopyMethod == 'سكن كلاسي' then
+                local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid:ApplyDescription(target.Character:FindFirstChildOfClass('Humanoid'):GetAppliedDescription())
+                end
+            end
+        end
+    end,
 })
+
 _call723:AddSection({
-    Name = 'v2 \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Name = 'v2 نسخ سكنات',
     Icon = 'rbxassetid://10734952036',
 })
 
 local _call740 = game:GetService('Players')
 
-game:GetService('ReplicatedStorage'):WaitForChild('Remotes')
-
-for _747, _747_2 in ipairs(_call740:GetPlayers()) do end
-
-_call723:AddDropdown({
-    Callback = function(...) end,
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{644}\u{627}\u{639}\u{628}',
-    Options = {
-        [1] = _747_2.Name,
-    },
+local _call747Dropdown = _call723:AddDropdown({
+    Callback = function(selected)
+        _G.CopyTargetV2 = selected
+    end,
+    Name = 'اختيار لاعب',
+    Options = {},
 })
-_call740.PlayerAdded:Connect(function(...) end)
-_call740.PlayerRemoving:Connect(function(...) end)
+
+_call740.PlayerAdded:Connect(function(plr)
+    local currentOptions = _call747Dropdown.Options or {}
+    table.insert(currentOptions, plr.Name)
+    _call747Dropdown:Set(currentOptions)
+end)
+
+_call740.PlayerRemoving:Connect(function(plr)
+    local currentOptions = _call747Dropdown.Options or {}
+    for i, name in ipairs(currentOptions) do
+        if name == plr.Name then
+            table.remove(currentOptions, i)
+            break
+        end
+    end
+    _call747Dropdown:Set(currentOptions)
+end)
+
 _call723:AddButton({
-    Name = '\u{646}\u{633}\u{62e}',
-    Callback = function(...) end,
+    Name = 'نسخ',
+    Callback = function()
+        local target = _G.CopyTargetV2 and _call740:FindFirstChild(_G.CopyTargetV2)
+        if target and target.Character then
+            local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+            if humanoid then
+                humanoid:ApplyDescription(target.Character:FindFirstChildOfClass('Humanoid'):GetAppliedDescription())
+            end
+        end
+    end,
 })
 
 local _call761 = _call48:MakeTab({
-    Title = '\u{627}\u{644}\u{62a}\u{644}\u{648}\u{64a}\u{646}',
+    Title = 'التلوين',
     Icon = 'rbxassetid://10734910187',
 })
 
 _call761:AddSection({
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a}',
+    Name = 'تلوين الادوات',
     Icon = 'rbxassetid://',
 })
 
 local _call767 = game:GetService('ReplicatedStorage')
 
-game:GetService('RunService')
-
-local _ = game:GetService('Players').LocalPlayer
-
-_call767:WaitForChild('RE')
 _call761:AddDropdown({
-    Callback = function(...) end,
+    Callback = function(selected)
+        _G.SelectedToolColor = selected
+    end,
     Options = {
-        [1] = '\u{62d}\u{642} \u{627}\u{644}\u{637}\u{644}\u{627}\u{621}',
-        [2] = '\u{62d}\u{645}\u{631}\u{629}',
-        [3] = '\u{642}\u{648}\u{633} \u{62d}\u{642} \u{627}\u{644}\u{627}\u{633}\u{647}\u{645}',
-        [4] = '\u{631}\u{627}\u{62f}\u{64a}\u{648} \u{627}\u{644}\u{627}\u{63a}\u{627}\u{646}\u{64a}',
-        [5] = '\u{62a}\u{627}\u{631}\u{645}\u{648}\u{633}',
-        [6] = '\u{62f}\u{648}\u{646}\u{627}\u{62a}',
-        [7] = '\u{645}\u{634}\u{637} \u{62d}\u{642} \u{627}\u{644}\u{627}\u{62d}\u{635}\u{646}\u{629}',
-        [8] = '\u{639}\u{635}\u{64a}',
-        [9] = '\u{645}\u{643}\u{628}\u{631} \u{635}\u{648}\u{62a}',
-        [10] = '\u{634}\u{645}\u{639}\u{629}',
-        [11] = '\u{645}\u{634}\u{639}\u{644}',
-        [12] = '\u{644}\u{639}\u{628}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{644}',
+        'حق الطلاء',
+        'حمرة',
+        'قوس حق الاسهم',
+        'راديو الاغاني',
+        'تارموس',
+        'دونات',
+        'مشط حق الاحصنة',
+        'عصي',
+        'مكبر صوت',
+        'شمعة',
+        'مشعل',
+        'لعبة الاطفال',
     },
-    Name = '\u{627}\u{62e}\u{62a}\u{64a}\u{627}\u{631} \u{627}\u{644}\u{627}\u{62f}\u{627}\u{629}',
-    Default = '\u{644}\u{639}\u{628}\u{629} \u{627}\u{644}\u{627}\u{637}\u{641}\u{627}\u{644}',
+    Name = 'اختيار الادة',
+    Default = 'لعبة الاطفال',
 })
+
 _call761:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{62f}\u{627}\u{629}',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.5)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    for _, tool in ipairs(char:GetChildren()) do
+                        if tool:IsA('Tool') and tool.Name == _G.SelectedToolColor then
+                            for _, part in ipairs(tool:GetDescendants())
+                            if part:IsA('BasePart') then
+                                part.Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تلوين الادة',
     Default = false,
 })
+
 _call761:AddSection({
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
+    Name = 'تلوين الشعر',
     Icon = 'rbxassetid://10734939942',
 })
-Color3.new(1, 1, 0)
-Color3.new(0, 0, 1)
-Color3.new(1, 0, 1)
-Color3.new(1, 1, 1)
-Color3.new(0, 1, 0)
-Color3.new(0.5, 0, 1)
-Color3.new(1, 0.647, 0)
-Color3.new(0, 1, 1)
+
 _call761:AddToggle({
-    Callback = function(...) end,
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.5)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    for _, v in ipairs(char:GetDescendants()) do
+                        if v:IsA('Accessory') and v.Name:lower():find('hair') then
+                            for _, part in ipairs(v:GetDescendants()) do
+                                if part:IsA('BasePart') then
+                                    part.Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end,
     Default = false,
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{634}\u{639}\u{631}',
+    Name = 'تلوين الشعر',
     Description = '',
 })
+
 _call761:AddSection({
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{62c}\u{633}\u{645}',
+    Name = 'تلوين الجسم',
     Icon = 'rbxassetid://10709782758',
 })
 
 local _call800 = game:GetService('ReplicatedStorage')
-local _ = game:GetService('Players').LocalPlayer
 
-game:GetService('RunService')
-_call800:WaitForChild('Remotes'):WaitForChild('ChangeBodyColor')
 _call761:AddToggle({
-    Callback = function(...) end,
-    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{62c}\u{633}\u{645} ',
+    Callback = function(state)
+        if state then
+            task.spawn(function()
+                while true do
+                    task.wait(0.5)
+                    local char = game:GetService('Players').LocalPlayer.Character
+                    for _, v in ipairs(char:GetDescendants()) do
+                        if v:IsA('BasePart') and v.Name ~= 'HumanoidRootPart' then
+                            v.Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+                        end
+                    end
+                end
+            end)
+        end
+    end,
+    Name = 'تلوين الجسم ',
     Default = false,
 })
+
 _call761:AddSection({
-    [1] = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{633}\u{643}\u{648}\u{62a}\u{631}',
+    Name = 'تلوين السكوتر',
 })
+
 _call761:AddSlider({
     Min = 1,
-    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62a}\u{644}\u{648}\u{64a}\u{646}',
+    Name = 'سرعة التلوين',
     Max = 100,
     Default = 3,
-    Callback = function(...) end,
+    Callback = function(val)
+        _G.RainbowSpeed = val
+    end,
     Increase = 1,
 })
 
 local _call817 = _call761:AddToggle({
-    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644}',
+    Name = 'تفعيل',
     Default = false,
 })
 
-_call817:Callback(function(...) end)
+_call817:Callback(function(state)
+    if state then
+        task.spawn(function()
+            while true do
+                task.wait(1 / (_G.RainbowSpeed or 3))
+                local char = game:GetService('Players').LocalPlayer.Character
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA('Vehicle') or v:IsA('Model') and v.Name:lower():find('scooter') then
+                        for _, part in ipairs(v:GetDescendants()) do
+                            if part:IsA('BasePart') then
+                                part.Color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 local _call821 = _call48:MakeTab({
-    Title = '\u{627}\u{62c}\u{633}\u{627}\u{645}',
+    Title = 'اجسام',
     Icon = 'rbxassetid://10734883598',
 })
 
 _call821:AddSection({
-    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{627}\u{648}\u{644}\u{627}\u{62f} \u{643}\u{627}\u{645}\u{644}\u{629}',
+    Name = 'اجسام اولاد كاملة',
     Icon = 'rbxassetid://',
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644}\u{64a}\u{646}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجلين',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{645}\u{646}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجل شبح يمنى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.5
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{633}\u{631}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجل شبح يسرى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.5
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{642}\u{637}\u{648}\u{639}\u{629}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجل مقطوعة',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627} \u{64a}\u{645}\u{646}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجل مافيا يمنى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.3
+            humanoid:WaitForChild('BodyWidthScale').Value = 1.2
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627}  \u{64a}\u{633}\u{631}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم ولد طويل برجل مافيا  يسرى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.3
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1.2
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{627}\u{641}\u{64a}\u{627}  \u{64a}\u{633}\u{631}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم ولد انمي',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.2
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.8
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.8
+            humanoid:WaitForChild('HeadScale').Value = 1.2
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{648}\u{644}\u{62f} \u{627}\u{646}\u{645}\u{64a}',
-    Callback = function(...) end,
+    Name = 'جسم مونستر مطلوب',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.8
+            humanoid:WaitForChild('BodyWidthScale').Value = 1.5
+            humanoid:WaitForChild('BodyDepthScale').Value = 1.5
+            humanoid:WaitForChild('HeadScale').Value = 0.8
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{645}\u{648}\u{646}\u{633}\u{62a}\u{631} \u{645}\u{637}\u{644}\u{648}\u{628}',
-    Callback = function(...) end,
+    Name = 'جسم مونستر تركيب مورفن',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 2
+            humanoid:WaitForChild('BodyDepthScale').Value = 2
+            humanoid:WaitForChild('HeadScale').Value = 0.5
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{645}\u{648}\u{646}\u{633}\u{62a}\u{631} \u{62a}\u{631}\u{643}\u{64a}\u{628} \u{645}\u{648}\u{631}\u{641}\u{646}',
-    Callback = function(...) end,
+    Name = 'جسم ترند',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{62a}\u{631}\u{646}\u{62f}',
-    Callback = function(...) end,
+    Name = 'جسم كيوت',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.9
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.9
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.9
+            humanoid:WaitForChild('HeadScale').Value = 1.1
+        end
+    end,
 })
-_call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{643}\u{64a}\u{648}\u{62a}',
-    Callback = function(...) end,
-})
+
 _call821:AddSection({
-    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{628}\u{646}\u{627}\u{62a} \u{643}\u{627}\u{645}\u{644}\u{629}',
+    Name = 'اجسام بنات كاملة',
     Icon = 'rbxassetid://',
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644}\u{64a}\u{646}',
-    Callback = function(...) end,
+    Name = 'جسم بنت طويل برجلين',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.9
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.9
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{645}\u{646}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم بنت طويل برجل شبح يمنى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.4
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.9
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{634}\u{628}\u{62d} \u{64a}\u{633}\u{631}\u{649}',
-    Callback = function(...) end,
+    Name = 'جسم بنت طويل برجل شبح يسرى',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.9
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.4
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{637}\u{648}\u{64a}\u{644} \u{628}\u{631}\u{62c}\u{644} \u{645}\u{642}\u{637}\u{648}\u{639}\u{629}',
-    Callback = function(...) end,
+    Name = 'جسم بنت طويل برجل مقطوعة',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.1
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.9
+            humanoid:WaitForChild('HeadScale').Value = 1
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{62c}\u{633}\u{645} \u{628}\u{646}\u{62a} \u{631}\u{64a}\u{644}',
-    Callback = function(...) end,
+    Name = 'جسم بنت ريل',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 1.2
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.8
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.8
+            humanoid:WaitForChild('HeadScale').Value = 1.1
+        end
+    end,
 })
+
 _call821:AddSection({
-    Name = 'R6 \u{627}\u{62c}\u{633}\u{627}\u{645}',
+    Name = 'R6 اجسام',
     Icon = 'rbxassetid://',
 })
+
 _call821:AddButton({
     Name = 'R6_1',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_2',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and v.Name ~= 'Head' and v.Name ~= 'HumanoidRootPart' then
+                    v:Destroy()
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_3',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and (v.Name == 'Left Arm' or v.Name == 'Right Arm') then
+                    v:Destroy()
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_4',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and (v.Name == 'Left Leg' or v.Name == 'Right Leg') then
+                    v:Destroy()
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_5',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and v.Name == 'Torso' then
+                    v:Destroy()
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_1X1X1X',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') then
+                    v.Size = Vector3.new(1, 1, 1)
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_GIRL1',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and v.Name == 'Torso' then
+                    v.MeshId = 'rbxassetid://5596208916'
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
     Name = 'R6_GIRL2',
-    Callback = function(...) end,
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA('BasePart') and v.Name == 'Torso' then
+                    v.MeshId = 'rbxassetid://5596208916'
+                    v.TextureID = 'rbxassetid://5596208954'
+                end
+            end
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = 'R6_\u{645}\u{642}\u{644}\u{648}\u{628}',
-    Callback = function(...) end,
+    Name = 'R6_مقلوب',
+    Callback = function()
+        local char = game:GetService('Players').LocalPlayer.Character
+        local humanoid = char:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid.RigType = Enum.HumanoidRigType.R6
+            local hrp = char:FindFirstChild('HumanoidRootPart')
+            if hrp then
+                hrp.CFrame = hrp.CFrame * CFrame.Angles(math.pi, 0, 0)
+            end
+        end
+    end,
 })
+
 _call821:AddSection({
-    Name = '\u{627}\u{62c}\u{633}\u{627}\u{645} \u{627}\u{642}\u{632}\u{627}\u{645}',
+    Name = 'اجسام اقزام',
     Icon = 'rbxassetid://',
 })
+
 _call821:AddButton({
-    Name = '\u{642}\u{632}\u{645} 1',
-    Callback = function(...) end,
+    Name = 'قزم 1',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.5
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 1.5
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{642}\u{632}\u{645} 2',
-    Callback = function(...) end,
+    Name = 'قزم 2',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.3
+            humanoid:WaitForChild('BodyWidthScale').Value = 1
+            humanoid:WaitForChild('BodyDepthScale').Value = 1
+            humanoid:WaitForChild('HeadScale').Value = 2
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{642}\u{632}\u{645} 3',
-    Callback = function(...) end,
+    Name = 'قزم 3',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.4
+            humanoid:WaitForChild('BodyWidthScale').Value = 1.5
+            humanoid:WaitForChild('BodyDepthScale').Value = 1.5
+            humanoid:WaitForChild('HeadScale').Value = 1.2
+        end
+    end,
 })
+
 _call821:AddButton({
-    Name = '\u{642}\u{632}\u{645} 4',
-    Callback = function(...) end,
+    Name = 'قزم 4',
+    Callback = function()
+        local humanoid = game:GetService('Players').LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+        if humanoid then
+            humanoid:WaitForChild('BodyHeightScale').Value = 0.6
+            humanoid:WaitForChild('BodyWidthScale').Value = 0.6
+            humanoid:WaitForChild('BodyDepthScale').Value = 0.6
+            humanoid:WaitForChild('HeadScale').Value = 1.3
+        end
+    end,
 })
-error('internal 557: <25ms: infinitelooperror>')
+
