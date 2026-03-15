@@ -876,6 +876,34 @@ Tab6:AddToggle({
        end
    end
 })
+
+Tab6:AddToggle({
+    Name = "مضاد SkyBox",
+    Default = false,
+    Callback = function(state)
+        _G.AntiSky = state
+        if state then
+            local Settings = settings()
+            Settings.Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
+            Settings.Rendering.QualityLevel = 1
+            setfpscap(999)
+            
+            task.spawn(function()
+                while _G.AntiSky do
+                    setfpscap(999)
+                    for _, effect in ipairs(game:GetService("Lighting"):GetChildren()) do
+                        if effect:IsA("Sky") or effect:IsA("Atmosphere") or effect:IsA("Clouds") then
+                            effect:Destroy()
+                        end
+                    end
+                    game:GetService("Lighting").ExposureCompensation = 0
+                    game:GetService("Lighting").Brightness = 2
+                    task.wait(0.5)
+                end
+            end)
+        end
+    end
+})
 TeleportTab = Window:MakeTab({"التنقلات","rbxassetid://"})
 TeleportLocations = {
 {Name="مكان النجمة {الترند}", CFrame=CFrame.new(-6, -133, 12)},
