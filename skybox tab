@@ -1,0 +1,1073 @@
+local SkyboxTab = Window:MakeTab({
+    Title = "FE",
+    Icon = "rbxassetid://"
+})
+
+local skyboxEnabled = false
+local skyboxTrack = nil
+local rigidTrack = nil
+local savedNukeBody = {}
+
+local function stopAllAnimations()
+    if rigidTrack then
+        pcall(function()
+            rigidTrack:Stop()
+            rigidTrack:Destroy()
+        end)
+        rigidTrack = nil
+    end
+    
+    if skyboxTrack then
+        pcall(function()
+            skyboxTrack:Stop()
+            skyboxTrack:Destroy()
+        end)
+        skyboxTrack = nil
+    end
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            local animator = humanoid:FindFirstChild("Animator")
+            if animator then
+                for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+                    if track.Animation then
+                        local animId = track.Animation.AnimationId
+                        if animId == "rbxassetid://70883871260184" or animId == "rbxassetid://3695333486" then
+                            pcall(function()
+                                track:Stop()
+                            end)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V1",
+    Default = false,
+    Callback = function(value)
+        skyboxEnabled = value
+        
+        if value then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    local description = humanoid:GetAppliedDescription()
+                    
+                    savedNukeBody = {
+                        Torso = description.Torso,
+                        RightArm = description.RightArm,
+                        LeftArm = description.LeftArm,
+                        RightLeg = description.RightLeg,
+                        LeftLeg = description.LeftLeg,
+                        Head = description.Head
+                    }
+                    
+                    task.wait(0.2)
+                    
+                    local args = {
+                        [1] = 123402086843885,
+                        [2] = 100839513065432,
+                        [3] = 78300682916056,
+                        [4] = 86276701020724,
+                        [5] = 78409653958165,
+                        [6] = 15093053680
+                    }
+                    
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(args)
+                    end)
+                    
+                    task.wait(0.3)
+                    
+                    local newAnim = Instance.new("Animation")
+                    newAnim.AnimationId = "rbxassetid://70883871260184"
+                    
+                    skyboxTrack = humanoid:LoadAnimation(newAnim)
+                    skyboxTrack.Priority = Enum.AnimationPriority.Action4
+                    skyboxTrack:Play(0.1, 1, 0.01)
+                    
+                    task.wait(0.5)
+                    
+                    local plankAnim = Instance.new("Animation")
+                    plankAnim.AnimationId = "rbxassetid://3695333486"
+                    rigidTrack = humanoid:LoadAnimation(plankAnim)
+                    rigidTrack.Priority = Enum.AnimationPriority.Movement
+                    rigidTrack:Play(0.1, 1, 0)
+                end
+            end
+        else
+            stopAllAnimations()
+            
+            task.wait(0.2)
+            
+            if next(savedNukeBody) then
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                
+                if character then
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        local restoreBody = {
+                            [1] = savedNukeBody.Torso,
+                            [2] = savedNukeBody.RightArm,
+                            [3] = savedNukeBody.LeftArm,
+                            [4] = savedNukeBody.RightLeg,
+                            [5] = savedNukeBody.LeftLeg,
+                            [6] = savedNukeBody.Head
+                        }
+                        
+                        local args = {
+                            [1] = restoreBody
+                        }
+                        
+                        pcall(function()
+                            game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                        end)
+                        
+                        savedNukeBody = {}
+                    end
+                end
+            end
+        end
+    end
+})
+
+local nukeFlashEnabled = false
+local nukeFlashTrack = nil
+local flashRigidTrack = nil
+local savedNukeFlashBody = {}
+
+local function stopFlashAnimations()
+    if flashRigidTrack then
+        pcall(function()
+            flashRigidTrack:Stop()
+            flashRigidTrack:Destroy()
+        end)
+        flashRigidTrack = nil
+    end
+    
+    if nukeFlashTrack then
+        pcall(function()
+            nukeFlashTrack:Stop()
+            nukeFlashTrack:Destroy()
+        end)
+        nukeFlashTrack = nil
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V2",
+    Default = false,
+    Callback = function(value)
+        nukeFlashEnabled = value
+        
+        if value then
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            
+            if character then
+                local humanoid = character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    local description = humanoid:GetAppliedDescription()
+                    
+                    savedNukeFlashBody = {
+                        Torso = description.Torso,
+                        RightArm = description.RightArm,
+                        LeftArm = description.LeftArm,
+                        RightLeg = description.RightLeg,
+                        LeftLeg = description.LeftLeg,
+                        Head = description.Head
+                    }
+                    
+                    task.wait(0.2)
+                    
+                    local args = {
+                        [1] = 123402086843885,
+                        [2] = 100839513065432,
+                        [3] = 78300682916056,
+                        [4] = 86276701020724,
+                        [5] = 78409653958165,
+                        [6] = 15093053680
+                    }
+                    
+                    pcall(function()
+                        game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(args)
+                    end)
+                    
+                    task.wait(0.3)
+                    
+                    local newAnim = Instance.new("Animation")
+                    newAnim.AnimationId = "rbxassetid://70883871260184"
+                    
+                    nukeFlashTrack = humanoid:LoadAnimation(newAnim)
+                    nukeFlashTrack.Priority = Enum.AnimationPriority.Action4
+                    nukeFlashTrack:Play(0.1, 1, 1)
+                    
+                    task.wait(0.1)
+                    nukeFlashTrack:AdjustSpeed(5)
+                    
+                    task.wait(0.3)
+                    
+                    local plankAnim = Instance.new("Animation")
+                    plankAnim.AnimationId = "rbxassetid://3695333486"
+                    flashRigidTrack = humanoid:LoadAnimation(plankAnim)
+                    flashRigidTrack.Priority = Enum.AnimationPriority.Movement
+                    flashRigidTrack:Play(0.1, 1, 0)
+                end
+            end
+        else
+            stopFlashAnimations()
+            
+            task.wait(0.2)
+            
+            if next(savedNukeFlashBody) then
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                
+                if character then
+                    local humanoid = character:FindFirstChildOfClass("Humanoid")
+                    if humanoid then
+                        local restoreBody = {
+                            [1] = savedNukeFlashBody.Torso,
+                            [2] = savedNukeFlashBody.RightArm,
+                            [3] = savedNukeFlashBody.LeftArm,
+                            [4] = savedNukeFlashBody.RightLeg,
+                            [5] = savedNukeFlashBody.LeftLeg,
+                            [6] = savedNukeFlashBody.Head
+                        }
+                        
+                        local args = {
+                            [1] = restoreBody
+                        }
+                        
+                        pcall(function()
+                            game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                        end)
+                        
+                        savedNukeFlashBody = {}
+                    end
+                end
+            end
+        end
+    end
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+local ResetAppearance = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ResetCharacterAppearance")
+
+local LoopAnim = false
+local CurrentTrack
+local Initialized = false
+
+local function ApplyFreshBang()
+    pcall(function()
+        local args = {
+            [1] = {
+                96655874457685,
+                123402086843885,
+                78300682916056,
+                86276701020724,
+                78409653958165,
+                120668655481073
+            }
+        }
+        ChangeCharacterBody:InvokeServer(unpack(args))
+    end)
+end
+
+local function PlayAnimation()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local humanoid = char:WaitForChild("Humanoid")
+    local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
+
+    local anim = Instance.new("Animation")
+    anim.AnimationId = "rbxassetid://70883871260184"
+
+    local track = animator:LoadAnimation(anim)
+    track.Priority = Enum.AnimationPriority.Action
+    track.Looped = false
+    track:Play()
+
+    CurrentTrack = track
+end
+
+local function StopEverything()
+    LoopAnim = false
+
+    if CurrentTrack then
+        pcall(function()
+            CurrentTrack:Stop()
+        end)
+        CurrentTrack = nil
+    end
+
+    pcall(function()
+        ResetAppearance:FireServer()
+    end)
+
+    task.wait(0.5)
+
+    local char = LocalPlayer.Character
+    if char then
+        local hum = char:FindFirstChildOfClass("Humanoid")
+        if hum then
+            hum.Health = 0
+        end
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V3",
+    Default = false,
+    Callback = function(Value)
+        if not Initialized then
+            Initialized = true
+            return
+        end
+
+        if Value then
+            if LoopAnim then return end
+            LoopAnim = true
+
+            task.spawn(function()
+                while LoopAnim do
+                    PlayAnimation()
+                    task.wait(0.1)
+                end
+            end)
+
+            task.delay(1.2, ApplyFreshBang)
+        else
+            StopEverything()
+        end
+    end
+})
+
+local allVersionsEnabled = false
+local allVersionsConnection = nil
+
+local function StopAllVersions()
+    allVersionsEnabled = false
+    
+    if allVersionsConnection then
+        allVersionsConnection:Disconnect()
+        allVersionsConnection = nil
+    end
+    
+    stopAllAnimations()
+    stopFlashAnimations()
+    StopEverything()
+    
+    task.wait(0.2)
+    
+    if next(savedNukeBody) then
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                local restoreBody = {
+                    [1] = savedNukeBody.Torso,
+                    [2] = savedNukeBody.RightArm,
+                    [3] = savedNukeBody.LeftArm,
+                    [4] = savedNukeBody.RightLeg,
+                    [5] = savedNukeBody.LeftLeg,
+                    [6] = savedNukeBody.Head
+                }
+                
+                local args = {
+                    [1] = restoreBody
+                }
+                
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                end)
+                
+                savedNukeBody = {}
+            end
+        end
+    end
+    
+    if next(savedNukeFlashBody) then
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                local restoreBody = {
+                    [1] = savedNukeFlashBody.Torso,
+                    [2] = savedNukeFlashBody.RightArm,
+                    [3] = savedNukeFlashBody.LeftArm,
+                    [4] = savedNukeFlashBody.RightLeg,
+                    [5] = savedNukeFlashBody.LeftLeg,
+                    [6] = savedNukeFlashBody.Head
+                }
+                
+                local args = {
+                    [1] = restoreBody
+                }
+                
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(unpack(args))
+                end)
+                
+                savedNukeFlashBody = {}
+            end
+        end
+    end
+end
+
+local function RunAllVersions()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    
+    if not character then return end
+    
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return end
+    
+    local description = humanoid:GetAppliedDescription()
+    
+    savedNukeBody = {
+        Torso = description.Torso,
+        RightArm = description.RightArm,
+        LeftArm = description.LeftArm,
+        RightLeg = description.RightLeg,
+        LeftLeg = description.LeftLeg,
+        Head = description.Head
+    }
+    
+    task.wait(0.1)
+    
+    local args = {
+        [1] = 123402086843885,
+        [2] = 100839513065432,
+        [3] = 78300682916056,
+        [4] = 86276701020724,
+        [5] = 78409653958165,
+        [6] = 15093053680
+    }
+    
+    pcall(function()
+        game:GetService("ReplicatedStorage").Remotes.ChangeCharacterBody:InvokeServer(args)
+    end)
+    
+    task.wait(0.2)
+    
+    local newAnim = Instance.new("Animation")
+    newAnim.AnimationId = "rbxassetid://70883871260184"
+    
+    skyboxTrack = humanoid:LoadAnimation(newAnim)
+    skyboxTrack.Priority = Enum.AnimationPriority.Action4
+    skyboxTrack:Play(0.1, 1, 0.01)
+    
+    task.wait(0.3)
+    
+    local plankAnim = Instance.new("Animation")
+    plankAnim.AnimationId = "rbxassetid://3695333486"
+    rigidTrack = humanoid:LoadAnimation(plankAnim)
+    rigidTrack.Priority = Enum.AnimationPriority.Movement
+    rigidTrack:Play(0.1, 1, 0)
+    
+    task.wait(0.2)
+    
+    local flashAnim = Instance.new("Animation")
+    flashAnim.AnimationId = "rbxassetid://70883871260184"
+    
+    nukeFlashTrack = humanoid:LoadAnimation(flashAnim)
+    nukeFlashTrack.Priority = Enum.AnimationPriority.Action4
+    nukeFlashTrack:Play(0.1, 1, 1)
+    
+    task.wait(0.1)
+    nukeFlashTrack:AdjustSpeed(5)
+    
+    task.wait(0.2)
+    
+    local flashPlankAnim = Instance.new("Animation")
+    flashPlankAnim.AnimationId = "rbxassetid://3695333486"
+    flashRigidTrack = humanoid:LoadAnimation(flashPlankAnim)
+    flashRigidTrack.Priority = Enum.AnimationPriority.Movement
+    flashRigidTrack:Play(0.1, 1, 0)
+    
+    LoopAnim = true
+    
+    task.spawn(function()
+        while LoopAnim and allVersionsEnabled do
+            PlayAnimation()
+            task.wait(0.05)
+        end
+    end)
+    
+    task.delay(0.8, ApplyFreshBang)
+    
+    allVersionsConnection = game:GetService("RunService").Heartbeat:Connect(function()
+        if not allVersionsEnabled then return end
+        
+        pcall(function()
+            local char = LocalPlayer.Character
+            if char then
+                local hum = char:FindFirstChildOfClass("Humanoid")
+                if hum then
+                    local animator = hum:FindFirstChildOfClass("Animator")
+                    if animator then
+                        for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+                            if track.Animation then
+                                local animId = track.Animation.AnimationId
+                                if animId == "rbxassetid://70883871260184" then
+                                    if track.Speed < 5 then
+                                        track:AdjustSpeed(10)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end
+
+SkyboxTab:AddToggle({
+    Name = "V4",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            if allVersionsEnabled then return end
+            allVersionsEnabled = true
+            RunAllVersions()
+        else
+            StopAllVersions()
+        end
+    end
+})
+
+local v5Track = nil
+
+local function StopV5()
+    if v5Track then
+        pcall(function()
+            v5Track:Stop(0)
+        end)
+        v5Track = nil
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V5",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody"):InvokeServer(unpack(args))
+
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    return cloneref(game:GetService(name))
+                end
+            })
+
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            player.CharacterAdded:Connect(function(newCharacter)
+                character = newCharacter
+                humanoid = character:WaitForChild("Humanoid")
+            end)
+
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0
+            }
+
+            local function LoadTrack(id)
+                if v5Track then 
+                    v5Track:Stop(0) 
+                end
+
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                local newTrack = humanoid:LoadAnimation(newAnim)
+                newTrack.Priority = Enum.AnimationPriority.Action4
+
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+
+                newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                
+                v5Track = newTrack
+                v5Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v5Track.Length
+
+                return newTrack
+            end
+
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+        else
+            StopV5()
+        end
+    end
+})
+
+local v6Track = nil
+local v6Connection = nil
+
+local function StopV6()
+    if v6Track then
+        pcall(function()
+            v6Track:Stop(0)
+        end)
+        v6Track = nil
+    end
+    
+    if v6Connection then
+        pcall(function()
+            v6Connection:Disconnect()
+        end)
+        v6Connection = nil
+    end
+end
+
+local function safeInvokeServer(remote, args)
+    local success, result = pcall(function()
+        return remote:InvokeServer(unpack(args))
+    end)
+    return success, result
+end
+
+SkyboxTab:AddToggle({
+    Name = "V6",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+            
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            
+            safeInvokeServer(ChangeCharacterBody, args)
+            
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+            
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    local success, result = pcall(function()
+                        return cloneref(game:GetService(name))
+                    end)
+                    if success then
+                        return result
+                    end
+                    return nil
+                end
+            })
+            
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+            
+            v6Connection = player.CharacterAdded:Connect(function(newCharacter)
+                local success, result = pcall(function()
+                    character = newCharacter
+                    humanoid = newCharacter:WaitForChild("Humanoid")
+                    return true
+                end)
+                if not success then
+                    warn("CharacterAdded error: " .. tostring(result))
+                end
+            end)
+            
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0,
+                ["Loop"] = false
+            }
+            
+            local function StopCurrentTrack()
+                if v6Track then
+                    local success = pcall(function()
+                        v6Track:Stop(Settings["Fade Out"] or 0)
+                    end)
+                    v6Track = nil
+                    return success
+                end
+                return false
+            end
+            
+            local function LoadTrack(id)
+                StopCurrentTrack()
+                
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+                
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+                
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                
+                local loadSuccess, newTrack = pcall(function()
+                    return humanoid:LoadAnimation(newAnim)
+                end)
+                
+                if not loadSuccess or not newTrack then
+                    warn("Failed to load animation: " .. tostring(newTrack))
+                    return nil
+                end
+                
+                newTrack.Priority = Enum.AnimationPriority.Action4
+                
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+                
+                local playSuccess = pcall(function()
+                    newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                end)
+                
+                if not playSuccess then
+                    warn("Failed to play animation")
+                    return nil
+                end
+                
+                v6Track = newTrack
+                
+                pcall(function()
+                    v6Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v6Track.Length
+                end)
+                
+                return newTrack
+            end
+            
+            local function ReloadOnRespawn()
+                pcall(function()
+                    player.CharacterAdded:Connect(function(newChar)
+                        task.wait(0.5)
+                        local success = pcall(function()
+                            character = newChar
+                            humanoid = newChar:WaitForChild("Humanoid", 5)
+                            LoadTrack(70883871260184)
+                        end)
+                        if not success then
+                            warn("Auto-reload failed")
+                        end
+                    end)
+                end)
+            end
+            
+            ReloadOnRespawn()
+            
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+            
+            spawn(function()
+                while true do
+                    task.wait(30)
+                    pcall(function()
+                        if not v6Track or not v6Track.IsPlaying then
+                            LoadTrack(EmoteId)
+                        end
+                    end)
+                end
+            end)
+        else
+            StopV6()
+        end
+    end
+})
+
+local v7Track = nil
+
+local function StopV7()
+    if v7Track then
+        pcall(function()
+            v7Track:Stop(0)
+        end)
+        v7Track = nil
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V7",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+            
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            
+            pcall(function()
+                ChangeCharacterBody:InvokeServer(unpack(args))
+            end)
+            
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+            
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    local success, result = pcall(function()
+                        return cloneref(game:GetService(name))
+                    end)
+                    if success then
+                        return result
+                    end
+                    return nil
+                end
+            })
+            
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+            
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0
+            }
+            
+            local function LoadTrack(id)
+                if v7Track then 
+                    pcall(function()
+                        v7Track:Stop(Settings["Fade Out"] or 0)
+                    end)
+                    v7Track = nil
+                end
+                
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+                
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+                
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                
+                local loadSuccess, newTrack = pcall(function()
+                    return humanoid:LoadAnimation(newAnim)
+                end)
+                
+                if not loadSuccess or not newTrack then
+                    return nil
+                end
+                
+                newTrack.Priority = Enum.AnimationPriority.Action4
+                
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+                
+                pcall(function()
+                    newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                end)
+                
+                v7Track = newTrack
+                
+                pcall(function()
+                    v7Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v7Track.Length
+                end)
+                
+                return newTrack
+            end
+            
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+        else
+            StopV7()
+        end
+    end
+})
+
+SkyboxTab:AddSection({ Title = "مؤثرات" })
+
+local ApplyEmmiter = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ApplyEmmiter")
+
+local particleData = {
+    {display = "أبيض حر", server = "0002FreeWhite", asset = "rbxassetid://18635845425"},
+    {display = "أصفر حر", server = "0003FreeYellow", asset = "rbxassetid://18635841291"},
+    {display = "برتقالي حر", server = "0004FreeOrange", asset = "rbxassetid://18635859639"},
+    {display = "أخضر حر", server = "0005FreeGreen", asset = "rbxassetid://18635848788"},
+    {display = "أزرق حر", server = "0006FreeBlue", asset = "rbxassetid://18635847163"},
+    {display = "بنفسجي حر", server = "0007FreePurple", asset = "rbxassetid://18635843697"},
+    {display = "وردي حر", server = "0008FreePink", asset = "rbxassetid://18635852477"},
+    {display = "أحمر حر", server = "0009FreeRed", asset = "rbxassetid://18635837646"},
+    {display = "قلوب صفراء", server = "001HeartsYellow", asset = "rbxassetid://18635672195"},
+    {display = "قلوب خضراء", server = "002HeartsGreen", asset = "rbxassetid://18635727693"},
+    {display = "قلوب زرقاء", server = "003HeartsBlue", asset = "rbxassetid://18635732186"},
+    {display = "قلوب بنفسجية", server = "004HeartsPurple", asset = "rbxassetid://18635723426"},
+    {display = "قلوب وردية", server = "005HeartsPink", asset = "rbxassetid://18635726250"},
+    {display = "قلوب حمراء", server = "006HeartsRed", asset = "rbxassetid://18635729673"},
+    {display = "نقاط برتقالية", server = "010DotsOrange", asset = "rbxassetid://18637252424"},
+    {display = "نقاط صفراء", server = "011DotsYellow", asset = "rbxassetid://18637263004"},
+    {display = "نقاط بيضاء", server = "012DotsWhite", asset = "rbxassetid://18637254199"},
+    {display = "نقاط خضراء", server = "013DotsGreen", asset = "rbxassetid://18637265264"},
+    {display = "نقاط زرقاء", server = "014DotsBlue", asset = "rbxassetid://18637256859"},
+    {display = "نقاط بنفسجية", server = "015DotsPurple", asset = "rbxassetid://18637261058"},
+    {display = "نقاط وردية", server = "016DotsPink", asset = "rbxassetid://18637259328"},
+    {display = "نقاط حمراء", server = "017DotsRed", asset = "rbxassetid://18637267290"},
+    {display = "بريق أبيض", server = "020TwinkleWhite", asset = "rbxassetid://18637115654"},
+    {display = "بريق أصفر", server = "021TwinkleYellow", asset = "rbxassetid://18637118923"},
+    {display = "بريق أخضر", server = "022TwinkleGreen", asset = "rbxassetid://18637151114"},
+    {display = "بريق بنفسجي", server = "023TwinklePurple", asset = "rbxassetid://18637153880"},
+    {display = "بريق وردي", server = "024TwinklePink", asset = "rbxassetid://18637157071"},
+    {display = "بريق أحمر", server = "025TwinkleRed", asset = "rbxassetid://18637155247"},
+    {display = "نار بيضاء", server = "030FireWhite", asset = "rbxassetid://18637074370"},
+    {display = "نار برتقالية", server = "031FireOrange", asset = "rbxassetid://18637025451"},
+    {display = "نار خضراء", server = "032FireGreen", asset = "rbxassetid://18637078598"},
+    {display = "نار زرقاء", server = "033FireBlue", asset = "rbxassetid://18637076370"},
+    {display = "نار بنفسجية", server = "034FirePurple", asset = "rbxassetid://18637070174"},
+    {display = "نار سوداء", server = "035FireBlack", asset = "rbxassetid://18637072603"},
+    {display = "قلوب صغيرة صفراء", server = "040SmallHeartsYellow", asset = "rbxassetid://18637339451"},
+    {display = "قلوب صغيرة خضراء", server = "041SmallHeartsGreen", asset = "rbxassetid://18637337576"},
+    {display = "قلوب صغيرة زرقاء", server = "042SmallHeartsBlue", asset = "rbxassetid://18637345162"},
+    {display = "قلوب صغيرة بنفسجية", server = "043SmallHeartsPurple", asset = "rbxassetid://18637335865"},
+    {display = "قلوب صغيرة وردية", server = "044SmallHeartsPink", asset = "rbxassetid://18637343416"},
+    {display = "قلوب صغيرة حمراء", server = "045SmallHeartsRed", asset = "rbxassetid://18637341847"},
+    {display = "شرارات بيضاء", server = "050SparksWhite", asset = "rbxassetid://18637383085"},
+    {display = "شرارات خضراء", server = "051SparksGreen", asset = "rbxassetid://18637385236"},
+    {display = "شرارات زرقاء", server = "052SparksBlue", asset = "rbxassetid://18637386856"},
+    {display = "شرارات بنفسجية", server = "053SparksPurple", asset = "rbxassetid://18637442447"},
+    {display = "شرارات وردية", server = "054SparksPink", asset = "rbxassetid://18637445897"},
+    {display = "شرارات حمراء", server = "055SparksRed", asset = "rbxassetid://18637447550"},
+    {display = "فقاعات بيضاء", server = "060BubbleWhite", asset = "rbxassetid://18637495023"},
+    {display = "فقاعات خضراء", server = "061BubbleGreen", asset = "rbxassetid://18637493072"},
+    {display = "فقاعات زرقاء", server = "062BubbleBlue", asset = "rbxassetid://18637499282"},
+    {display = "فقاعات بنفسجية", server = "063BubblePurple", asset = "rbxassetid://18637497343"},
+    {display = "فقاعات حمراء", server = "064BubbleRed", asset = "rbxassetid://18637500927"},
+    {display = "موسيقى بيضاء", server = "070MusicWhite", asset = "rbxassetid://18637675173"},
+    {display = "موسيقى خضراء", server = "071MusicGreen", asset = "rbxassetid://18637677789"},
+    {display = "موسيقى زرقاء", server = "072MusicBlue", asset = "rbxassetid://18637680960"},
+    {display = "موسيقى بنفسجية", server = "073MusicPurple", asset = "rbxassetid://18637679384"},
+    {display = "موسيقى حمراء", server = "074MusicRed", asset = "rbxassetid://18637672698"},
+    {display = "دخان أبيض", server = "080SmokeWhite", asset = "rbxassetid://18637791748"},
+    {display = "دخان أصفر", server = "081SmokeYellow", asset = "rbxassetid://18637800482"},
+    {display = "دخان برتقالي", server = "082SmokeOrange", asset = "rbxassetid://18637793920"},
+    {display = "دخان أخضر", server = "083SmokeGreen", asset = "rbxassetid://18637789299"},
+    {display = "دخان أزرق", server = "084SmokeBlue", asset = "rbxassetid://18637803021"},
+    {display = "دخان بنفسجي", server = "085SmokePurple", asset = "rbxassetid://18637813360"},
+    {display = "دخان أحمر", server = "086SmokeRed", asset = "rbxassetid://18637796598"},
+    {display = "دخان أسود", server = "087SmokeBlack", asset = "rbxassetid://18637798529"},
+    {display = "نجوم بيضاء", server = "090StarWhite", asset = "rbxassetid://18637942956"},
+    {display = "نجوم برتقالية", server = "091StarOrange", asset = "rbxassetid://18637946172"},
+    {display = "نجوم خضراء", server = "092StarGreen", asset = "rbxassetid://18637934500"},
+    {display = "نجوم زرقاء", server = "093StarBlue", asset = "rbxassetid://18637940338"},
+    {display = "نجوم بنفسجية", server = "094StarPurple", asset = "rbxassetid://18637944796"},
+    {display = "نجوم وردية", server = "095StarPink", asset = "rbxassetid://18637947820"},
+    {display = "نجوم حمراء", server = "096StarRed", asset = "rbxassetid://18637949457"},
+}
+
+local displayNames = {}
+for _, v in ipairs(particleData) do
+    table.insert(displayNames, v.display)
+end
+
+local selectedEffect = particleData[1]
+
+SkyboxTab:AddDropdown({
+    Name = "اختار المؤثر",
+    Options = displayNames,
+    Default = displayNames[1],
+    Callback = function(value)
+        for _, v in ipairs(particleData) do
+            if v.display == value then
+                selectedEffect = v
+                break
+            end
+        end
+    end
+})
+
+SkyboxTab:AddButton({
+    Name = "تطبيق المؤثر",
+    Callback = function()
+        local cleanId = selectedEffect.asset:gsub("rbxassetid://", "")
+        ApplyEmmiter:InvokeServer(cleanId, selectedEffect.server)
+    end
+})
+-- by Shadow
