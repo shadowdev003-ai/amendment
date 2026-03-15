@@ -4207,7 +4207,10 @@ TrollTab:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe./main/Fling%20GUI"))()
     end
 })
-local SkyboxTab = Window:MakeTab({ Title = "FE", Icon = "rbxassetid://" })
+local SkyboxTab = Window:MakeTab({
+    Title = "FE",
+    Icon = "rbxassetid://"
+})
 
 local skyboxEnabled = false
 local skyboxTrack = nil
@@ -4762,6 +4765,414 @@ SkyboxTab:AddToggle({
     end
 })
 
+local v5Track = nil
+
+local function StopV5()
+    if v5Track then
+        pcall(function()
+            v5Track:Stop(0)
+        end)
+        v5Track = nil
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V5",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody"):InvokeServer(unpack(args))
+
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    return cloneref(game:GetService(name))
+                end
+            })
+
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+
+            player.CharacterAdded:Connect(function(newCharacter)
+                character = newCharacter
+                humanoid = character:WaitForChild("Humanoid")
+            end)
+
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0
+            }
+
+            local function LoadTrack(id)
+                if v5Track then 
+                    v5Track:Stop(0) 
+                end
+
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                local newTrack = humanoid:LoadAnimation(newAnim)
+                newTrack.Priority = Enum.AnimationPriority.Action4
+
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+
+                newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                
+                v5Track = newTrack
+                v5Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v5Track.Length
+
+                return newTrack
+            end
+
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+        else
+            StopV5()
+        end
+    end
+})
+
+local v6Track = nil
+local v6Connection = nil
+
+local function StopV6()
+    if v6Track then
+        pcall(function()
+            v6Track:Stop(0)
+        end)
+        v6Track = nil
+    end
+    
+    if v6Connection then
+        pcall(function()
+            v6Connection:Disconnect()
+        end)
+        v6Connection = nil
+    end
+end
+
+local function safeInvokeServer(remote, args)
+    local success, result = pcall(function()
+        return remote:InvokeServer(unpack(args))
+    end)
+    return success, result
+end
+
+SkyboxTab:AddToggle({
+    Name = "V6",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+            
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            
+            safeInvokeServer(ChangeCharacterBody, args)
+            
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+            
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    local success, result = pcall(function()
+                        return cloneref(game:GetService(name))
+                    end)
+                    if success then
+                        return result
+                    end
+                    return nil
+                end
+            })
+            
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+            
+            v6Connection = player.CharacterAdded:Connect(function(newCharacter)
+                local success, result = pcall(function()
+                    character = newCharacter
+                    humanoid = newCharacter:WaitForChild("Humanoid")
+                    return true
+                end)
+                if not success then
+                    warn("CharacterAdded error: " .. tostring(result))
+                end
+            end)
+            
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0,
+                ["Loop"] = false
+            }
+            
+            local function StopCurrentTrack()
+                if v6Track then
+                    local success = pcall(function()
+                        v6Track:Stop(Settings["Fade Out"] or 0)
+                    end)
+                    v6Track = nil
+                    return success
+                end
+                return false
+            end
+            
+            local function LoadTrack(id)
+                StopCurrentTrack()
+                
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+                
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+                
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                
+                local loadSuccess, newTrack = pcall(function()
+                    return humanoid:LoadAnimation(newAnim)
+                end)
+                
+                if not loadSuccess or not newTrack then
+                    warn("Failed to load animation: " .. tostring(newTrack))
+                    return nil
+                end
+                
+                newTrack.Priority = Enum.AnimationPriority.Action4
+                
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+                
+                local playSuccess = pcall(function()
+                    newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                end)
+                
+                if not playSuccess then
+                    warn("Failed to play animation")
+                    return nil
+                end
+                
+                v6Track = newTrack
+                
+                pcall(function()
+                    v6Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v6Track.Length
+                end)
+                
+                return newTrack
+            end
+            
+            local function ReloadOnRespawn()
+                pcall(function()
+                    player.CharacterAdded:Connect(function(newChar)
+                        task.wait(0.5)
+                        local success = pcall(function()
+                            character = newChar
+                            humanoid = newChar:WaitForChild("Humanoid", 5)
+                            LoadTrack(70883871260184)
+                        end)
+                        if not success then
+                            warn("Auto-reload failed")
+                        end
+                    end)
+                end)
+            end
+            
+            ReloadOnRespawn()
+            
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+            
+            spawn(function()
+                while true do
+                    task.wait(30)
+                    pcall(function()
+                        if not v6Track or not v6Track.IsPlaying then
+                            LoadTrack(EmoteId)
+                        end
+                    end)
+                end
+            end)
+        else
+            StopV6()
+        end
+    end
+})
+
+local v7Track = nil
+
+local function StopV7()
+    if v7Track then
+        pcall(function()
+            v7Track:Stop(0)
+        end)
+        v7Track = nil
+    end
+end
+
+SkyboxTab:AddToggle({
+    Name = "V7",
+    Default = false,
+    Callback = function(value)
+        if value then
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local ChangeCharacterBody = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ChangeCharacterBody")
+            
+            local args = {
+                {
+                    100839513065432
+                }
+            }
+            
+            pcall(function()
+                ChangeCharacterBody:InvokeServer(unpack(args))
+            end)
+            
+            local function missing(t, f, fallback)
+                if type(f) == t then return f end
+                return fallback 
+            end
+            
+            cloneref = missing("function", cloneref, function(...) return ... end)
+            
+            local Services = setmetatable({}, {
+                __index = function(_, name)
+                    local success, result = pcall(function()
+                        return cloneref(game:GetService(name))
+                    end)
+                    if success then
+                        return result
+                    end
+                    return nil
+                end
+            })
+            
+            local Players = Services.Players
+            local player = Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local humanoid = character:WaitForChild("Humanoid")
+            
+            local Settings = {
+                ["Fade In"] = 0.1,
+                ["Fade Out"] = 0.1,
+                ["Weight"] = 1,
+                ["Speed"] = 1,
+                ["Time Position"] = 0
+            }
+            
+            local function LoadTrack(id)
+                if v7Track then 
+                    pcall(function()
+                        v7Track:Stop(Settings["Fade Out"] or 0)
+                    end)
+                    v7Track = nil
+                end
+                
+                local animId
+                local ok, result = pcall(function()
+                    return game:GetObjects("rbxassetid://" .. tostring(id))
+                end)
+                
+                if ok and result and #result > 0 then
+                    local anim = result[1]
+                    if anim:IsA("Animation") then
+                        animId = anim.AnimationId
+                    else
+                        animId = "rbxassetid://" .. tostring(id)
+                    end
+                else
+                    animId = "rbxassetid://" .. tostring(id)
+                end
+                
+                local newAnim = Instance.new("Animation")
+                newAnim.AnimationId = animId
+                
+                local loadSuccess, newTrack = pcall(function()
+                    return humanoid:LoadAnimation(newAnim)
+                end)
+                
+                if not loadSuccess or not newTrack then
+                    return nil
+                end
+                
+                newTrack.Priority = Enum.AnimationPriority.Action4
+                
+                local weight = Settings["Weight"]
+                if weight == 0 then weight = 0.001 end
+                
+                pcall(function()
+                    newTrack:Play(Settings["Fade In"], weight, Settings["Speed"])
+                end)
+                
+                v7Track = newTrack
+                
+                pcall(function()
+                    v7Track.TimePosition = math.clamp(Settings["Time Position"], 0, 1) * v7Track.Length
+                end)
+                
+                return newTrack
+            end
+            
+            local EmoteId = 70883871260184
+            LoadTrack(EmoteId)
+        else
+            StopV7()
+        end
+    end
+})
+
 SkyboxTab:AddSection({ Title = "مؤثرات" })
 
 local ApplyEmmiter = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ApplyEmmiter")
@@ -4868,4 +5279,3 @@ SkyboxTab:AddButton({
         ApplyEmmiter:InvokeServer(cleanId, selectedEffect.server)
     end
 })
-                                            
