@@ -1,0 +1,293 @@
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local pgui = player:WaitForChild("PlayerGui")
+
+local CONFIG = {
+    Duration = 7.8,
+    FadeOut = 1.4,
+    DeepPurple = Color3.fromRGB(28, 8, 58),
+    MainNeon   = Color3.fromRGB(175, 95, 255),
+    GlowNeon   = Color3.fromRGB(225, 165, 255),
+    LightNeon  = Color3.fromRGB(245, 205, 255),
+    ParticleWhite = Color3.fromRGB(248, 245, 255),
+    ParticleCount = 170,
+    CircleCount = 6
+}
+
+local statusMsgs = {
+    "فك يو",
+    "فك يو",
+    "فك يو",
+    "فك يو",
+    "فك يو",
+    "فك يو"
+}
+
+local particles, connections = {}, {}
+
+local function newParticle(parent)
+    local sz = math.random(2, 6)
+    local p = Instance.new("Frame")
+    p.BackgroundColor3 = math.random() > 0.35 and CONFIG.GlowNeon or CONFIG.ParticleWhite
+    p.Size = UDim2.new(0, sz, 0, sz)
+    p.Position = UDim2.new(math.random(), 0, math.random(), 0)
+    p.BackgroundTransparency = 0.3 + math.random() * 0.45
+    p.ZIndex = 7
+    p.Parent = parent
+
+    Instance.new("UICorner", p).CornerRadius = UDim.new(1,0)
+
+    local grad = Instance.new("UIGradient", p)
+    grad.Color = ColorSequence.new(p.BackgroundColor3, Color3.new(1,1,1))
+    grad.Transparency = NumberSequence.new(0.08, 0.82)
+
+    table.insert(particles, {
+        obj = p,
+        vx = (math.random()-0.5)*2.5,
+        vy = (math.random()-0.5)*2.5,
+        rotSpeed = math.random(-7,7),
+        pulse = math.random(1.3, 3.4)
+    })
+end
+
+local function createCircles(parent)
+    for i = 1, CONFIG.CircleCount do
+        local circ = Instance.new("Frame")
+        circ.BackgroundColor3 = CONFIG.MainNeon
+        circ.Size = UDim2.new(0, 100 + i*60, 0, 100 + i*60)
+        circ.Position = UDim2.new(0.5, -(50 + i*30), 0.5, -(50 + i*30))
+        circ.AnchorPoint = Vector2.new(0.5,0.5)
+        circ.BackgroundTransparency = 0.82 + i*0.03
+        circ.ZIndex = 3
+        circ.Parent = parent
+
+        Instance.new("UICorner", circ).CornerRadius = UDim.new(1,0)
+
+        local pulseTween = TweenService:Create(
+            circ,
+            TweenInfo.new(2.2 + i*0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+            {
+                Size = UDim2.new(0, 130 + i*75, 0, 130 + i*75),
+                Position = UDim2.new(0.5, -(65 + i*37.5), 0.5, -(65 + i*37.5)),
+                BackgroundTransparency = 0.96
+            }
+        )
+        pulseTween:Play()
+        table.insert(connections, pulseTween)
+    end
+end
+
+local function advancedBG(parent)
+    local bg = Instance.new("Frame", parent)
+    bg.Size = UDim2.new(1,0,1,0)
+    bg.BackgroundColor3 = CONFIG.DeepPurple
+    bg.ZIndex = 1
+
+    local g1 = Instance.new("UIGradient", bg)
+    g1.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, CONFIG.MainNeon),
+        ColorSequenceKeypoint.new(0.38, CONFIG.DeepPurple),
+        ColorSequenceKeypoint.new(0.72, CONFIG.GlowNeon),
+        ColorSequenceKeypoint.new(1, CONFIG.DeepPurple)
+    })
+    g1.Rotation = 45
+
+    TweenService:Create(g1, TweenInfo.new(4.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Rotation = 225}):Play()
+
+    local overlay = Instance.new("Frame", bg)
+    overlay.Size = UDim2.new(1,0,1,0)
+    overlay.BackgroundTransparency = 0.32
+    overlay.ZIndex = 2
+
+    local g2 = Instance.new("UIGradient", overlay)
+    g2.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, CONFIG.GlowNeon),
+        ColorSequenceKeypoint.new(0.5, CONFIG.DeepPurple),
+        ColorSequenceKeypoint.new(1, CONFIG.MainNeon)
+    })
+    g2.Rotation = -45
+
+    TweenService:Create(g2, TweenInfo.new(6.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Rotation = 315}):Play()
+end
+
+local function build()
+    local sg = Instance.new("ScreenGui")
+    sg.IgnoreGuiInset = true
+    sg.Name = "NexusNeonLoad"
+    sg.Parent = pgui
+
+    local main = Instance.new("Frame", sg)
+    main.AnchorPoint = Vector2.new(0.5, 0.5)
+    -- انميشن الدخول: يبدأ من تحت وصغير
+    main.Position = UDim2.new(0.5, 0, 1.2, 0)
+    main.Size = UDim2.new(0.3, 0, 0.3, 0)
+    main.BackgroundTransparency = 1
+    main.ZIndex = 10
+
+    advancedBG(main)
+    createCircles(main)
+
+    for _ = 1, CONFIG.ParticleCount do
+        newParticle(main)
+    end
+
+    local particleLoop = RunService.Heartbeat:Connect(function()
+        local vs = workspace.CurrentCamera.ViewportSize
+        for _, p in ipairs(particles) do
+            local o = p.obj
+            if not o.Parent then continue end
+
+            local pos = o.Position
+            local nx = pos.X.Offset + p.vx
+            local ny = pos.Y.Offset + p.vy
+
+            if nx < -40 then nx = vs.X + 40 elseif nx > vs.X + 40 then nx = -40 end
+            if ny < -40 then ny = vs.Y + 40 elseif ny > vs.Y + 40 then ny = -40 end
+
+            o.Position = UDim2.new(0,nx,0,ny)
+            o.Rotation += p.rotSpeed
+
+            local pulse = math.sin(tick() * p.pulse) * 0.38 + 0.62
+            o.BackgroundTransparency = 0.28 + (1 - pulse) * 0.48
+            local s = 3.5 + pulse * 4.5
+            o.Size = UDim2.new(0,s,0,s)
+        end
+    end)
+    table.insert(connections, particleLoop)
+
+    local title = Instance.new("TextLabel", main)
+    title.AnchorPoint = Vector2.new(0.5,0.5)
+    title.Position = UDim2.new(0.5,0,0.34,0)
+    title.Size = UDim2.new(0.9,0,0.24,0)
+    title.BackgroundTransparency = 1
+    title.Text = "NEXUS HUB"
+    title.TextColor3 = CONFIG.LightNeon
+    title.TextScaled = true
+    title.Font = Enum.Font.GothamBlack
+    title.ZIndex = 25
+
+    local stroke = Instance.new("UIStroke", title)
+    stroke.Color = CONFIG.MainNeon
+    stroke.Thickness = 4.5
+    stroke.Transparency = 0.28
+
+    local txtGrad = Instance.new("UIGradient", title)
+    txtGrad.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, CONFIG.MainNeon),
+        ColorSequenceKeypoint.new(0.5, CONFIG.LightNeon),
+        ColorSequenceKeypoint.new(1, CONFIG.GlowNeon)
+    })
+
+    TweenService:Create(txtGrad, TweenInfo.new(4.8, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Offset = Vector2.new(1.8, 0)}):Play()
+    TweenService:Create(stroke, TweenInfo.new(2.4, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.06}):Play()
+
+    local status = Instance.new("TextLabel", main)
+    status.AnchorPoint = Vector2.new(0.5,0)
+    status.Position = UDim2.new(0.5,0,0.62,0)
+    status.Size = UDim2.new(0.82,0,0.1,0)
+    status.BackgroundTransparency = 1
+    status.Text = statusMsgs[1]
+    status.TextColor3 = CONFIG.GlowNeon
+    status.TextScaled = true
+    status.Font = Enum.Font.Gotham
+    status.ZIndex = 22
+
+    local barCont = Instance.new("Frame", main)
+    barCont.AnchorPoint = Vector2.new(0.5,0)
+    barCont.Position = UDim2.new(0.5,0,0.88,0)
+    barCont.Size = UDim2.new(0.46,0,0.018,0)
+    barCont.BackgroundColor3 = Color3.fromRGB(38,18,78)
+    barCont.BackgroundTransparency = 0.5
+    barCont.ZIndex = 15
+
+    Instance.new("UICorner", barCont).CornerRadius = UDim.new(1,0)
+
+    local fill = Instance.new("Frame", barCont)
+    fill.Size = UDim2.new(0,0,1,0)
+    fill.BackgroundColor3 = CONFIG.MainNeon
+    fill.ZIndex = 16
+
+    Instance.new("UICorner", fill).CornerRadius = UDim.new(1,0)
+
+    local shine = Instance.new("Frame", fill)
+    shine.Size = UDim2.new(0,90,1,0)
+    shine.Position = UDim2.new(-0.35,0,0,0)
+    shine.BackgroundColor3 = CONFIG.LightNeon
+    shine.BackgroundTransparency = 0.45
+    shine.ZIndex = 17
+
+    local shineGrad = Instance.new("UIGradient", shine)
+    shineGrad.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1), NumberSequenceKeypoint.new(0.35,0.15), NumberSequenceKeypoint.new(1,1)})
+
+    TweenService:Create(shine, TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {Position = UDim2.new(1.4,0,0,0)}):Play()
+
+    -- ── الدخول: يكبر ويطلع لفوق (نفس Y2 HUB)
+    local enterTween = TweenService:Create(main, TweenInfo.new(1.1, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Size = UDim2.new(1, 0, 1, 0),
+        Position = UDim2.new(0.5, 0, 0.5, 0)
+    })
+    enterTween:Play()
+
+    local t0 = tick()
+    local idx = 1
+
+    spawn(function()
+        while status.Parent do
+            status.Text = statusMsgs[idx]
+            idx = (idx % #statusMsgs) + 1
+            task.wait(2.2)
+        end
+    end)
+
+    local function tickProgress()
+        local dt = tick() - t0
+        local prog = math.min(dt / CONFIG.Duration, 1)
+
+        fill:TweenSize(UDim2.new(prog,0,1,0), "Out", "Quad", 0.16, true)
+
+        if prog >= 1 then
+            for _, c in ipairs(connections) do
+                if typeof(c) == "RBXScriptConnection" then c:Disconnect() end
+            end
+
+            -- ── الخروج: يتصغر ويختفي للأسفل (نفس Y2 HUB)
+            local fadeOutTween = TweenService:Create(
+                main,
+                TweenInfo.new(CONFIG.FadeOut, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+                {
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1.5, 0, 1.5, 0),
+                    Position = UDim2.new(-0.25, 0, -0.25, 0)
+                }
+            )
+
+            local contentFadeTween = TweenService:Create(
+                main,
+                TweenInfo.new(CONFIG.FadeOut * 0.7, Enum.EasingStyle.Back, Enum.EasingDirection.In),
+                {
+                    Size = UDim2.new(0, 0, 0, 0),
+                    Position = UDim2.new(0.5, 0, 0.5, 0)
+                }
+            )
+
+            fadeOutTween:Play()
+            contentFadeTween:Play()
+
+            fadeOutTween.Completed:Connect(function()
+                sg:Destroy()
+            end)
+
+            return
+        end
+
+        task.wait()
+        tickProgress()
+    end
+
+    tickProgress()
+end
+
+build()
