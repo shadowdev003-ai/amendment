@@ -315,8 +315,6 @@ Tab3:AddButton({
   end
 })
 
-Tab3:AddSection({""})
-
 local playersFrame = Instance.new("Frame")
 playersFrame.Size = UDim2.new(1, 0, 0, 200)
 playersFrame.BackgroundTransparency = 1
@@ -754,14 +752,22 @@ end
 end
 end
 })
-Tab6 = Window:MakeTab({"المضادات"})
+ Tab6 = Window:MakeTab({"المضادات"})
 
 local sitConnection = nil
 local voidConnection = nil
 local teleportConnection = nil
 local antiBangConnection = nil
 local soundConnection = nil
-local originalCFrame = nil
+local babyConnection = nil
+local copySkinEnabled = false
+local doorConnection = nil
+local flingConnection = nil
+local lagConnection = nil
+local partConnection = nil
+local antiFlingActive = false
+local antiLagActive = false
+local antiPartActive = false
 
 Tab6:AddToggle({
    Name = "مضاد جلوس",
@@ -857,7 +863,7 @@ Tab6:AddToggle({
 })
 
 Tab6:AddToggle({
-   Name = " مضاد اصوات تجريبي",
+   Name = "مضاد اصوات تجريبي",
    Default = false,
    Callback = function(value)
        if value then
@@ -904,6 +910,340 @@ Tab6:AddToggle({
         end
     end
 })
+
+Tab6:AddToggle({
+   Name = "مضاد زعطوط",
+   Default = false,
+   Callback = function(value)
+       if value then
+           local lastCF = nil
+           babyConnection = game:GetService("RunService").Heartbeat:Connect(function()
+               local char = game.Players.LocalPlayer.Character
+               if not char then return end
+               local hrp = char:FindFirstChild("HumanoidRootPart")
+               if not hrp then return end
+               
+               for _, p in ipairs(game:GetService("Players"):GetPlayers()) do
+                   if p ~= game.Players.LocalPlayer and workspace:FindFirstChild(p.Name) then
+                       local follow = workspace[p.Name]:FindFirstChild("FollowCharacter")
+                       if follow and follow:FindFirstChild("Torso") then
+                           local torso = follow.Torso
+                           if (torso.Position - hrp.Position).Magnitude < 6 then
+                               lastCF = hrp.CFrame
+                               hrp.CFrame = hrp.CFrame * CFrame.new(0, -200, 0)
+                               task.wait(2)
+                               if hrp and lastCF then
+                                   game:GetService("TweenService"):Create(hrp, TweenInfo.new(0.2, Enum.EasingStyle.Linear), {CFrame = lastCF}):Play()
+                               end
+                               task.wait(2.5)
+                               break
+                           end
+                       end
+                   end
+               end
+           end)
+       else
+           if babyConnection then
+               babyConnection:Disconnect()
+               babyConnection = nil
+           end
+       end
+   end
+})
+
+Tab6:AddToggle({
+   Name = "مضاد نسخ سكنات",
+   Default = false,
+   Callback = function(value)
+       copySkinEnabled = value
+       if value then
+           local Players = game:GetService("Players")
+           local TweenService = game:GetService("TweenService")
+           local RS = game:GetService("ReplicatedStorage")
+           local LocalPlayer = Players.LocalPlayer
+           local Remotes = RS:WaitForChild("Remotes")
+           local resetRemote = Remotes:WaitForChild("ResetCharacterAppearance")
+           
+           local function getAccSet(desc)
+               local t = {}
+               for _, a in ipairs(desc:GetAccessories(true)) do
+                   if a.AssetId then t[a.AssetId] = true end
+               end
+               return t
+           end
+           
+           local function countMatch(a, b)
+               local c = 0
+               for id in pairs(a) do
+                   if b[id] then c = c + 1 end
+               end
+               return c
+           end
+           
+           local function tweenTo(plr)
+               if not (plr.Character and LocalPlayer.Character) then return end
+               local hrp = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+               local thrp = plr.Character:FindFirstChild("HumanoidRootPart")
+               if not (hrp and thrp) then return end
+               TweenService:Create(hrp, TweenInfo.new(0.2, Enum.EasingStyle.Linear), {CFrame = thrp.CFrame}):Play()
+           end
+           
+           local function watch(plr)
+               if plr == LocalPlayer then return end
+               task.spawn(function()
+                   while copySkinEnabled and plr.Parent do
+                       if plr.Character and LocalPlayer.Character then
+                           local lhum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                           local thum = plr.Character:FindFirstChildOfClass("Humanoid")
+                           if lhum and thum then
+                               local lset = getAccSet(lhum:GetAppliedDescription())
+                               local tset = getAccSet(thum:GetAppliedDescription())
+                               if countMatch(lset, tset) >= 3 then
+                                   resetRemote:FireServer()
+                                   task.wait(0.1)
+                                   tweenTo(plr)
+                                   task.wait(1)
+                               end
+                           end
+                       end
+                       task.wait(0.2)
+                   end
+               end)
+           end
+           
+           for _, p in ipairs(Players:GetPlayers()) do watch(p) end
+           Players.PlayerAdded:Connect(watch)
+       end
+   end
+})
+
+Tab6:AddToggle({
+   Name = "مضاد ابواب",
+   Default = false,
+   Callback = function(value)
+       if not _G.hiddenDoors then _G.hiddenDoors = {} end
+       if value then
+           _G.hiddenDoors = {}
+           for _, obj in ipairs(workspace:GetDescendants()) do
+               if obj:IsA("BasePart") and obj.Name:lower():find("door") then
+                   local doorData = {
+                       door = obj,
+                       originalTransparency = obj.Transparency,
+                       originalCanCollide = obj.CanCollide,
+                       originalCastShadow = obj.CastShadow
+                   }
+                   obj.Transparency = 1
+                   obj.CanCollide = false
+                   obj.CastShadow = false
+                   for _, child in ipairs(obj:GetChildren()) do
+                       if child:IsA("BasePart") then
+                           child.Transparency = 1
+                           child.CanCollide = false
+                       elseif child:IsA("SurfaceGui") or child:IsA("BillboardGui") then
+                           child.Enabled = false
+                       end
+                   end
+                   table.insert(_G.hiddenDoors, doorData)
+               end
+           end
+       else
+           for _, doorData in ipairs(_G.hiddenDoors or {}) do
+               if doorData.door and doorData.door.Parent then
+                   doorData.door.Transparency = doorData.originalTransparency
+                   doorData.door.CanCollide = doorData.originalCanCollide
+                   doorData.door.CastShadow = doorData.originalCastShadow
+                   for _, child in ipairs(doorData.door:GetChildren()) do
+                       if child:IsA("BasePart") then
+                           child.Transparency = 0
+                           child.CanCollide = true
+                       elseif child:IsA("SurfaceGui") or child:IsA("BillboardGui") then
+                           child.Enabled = true
+                       end
+                   end
+               end
+           end
+           _G.hiddenDoors = {}
+       end
+   end
+})
+
+Tab6:AddToggle({
+   Name = "مضاد فلينج قوي",
+   Default = false,
+   Callback = function(value)
+       antiFlingActive = value
+       if value then
+           local backupTables = {Vehicles = {}, Canoes = {}, Jets = {}, Helis = {}, Balls = {}}
+           
+           local function AntiFlingLoop(name, getFolderFunc)
+               task.spawn(function()
+                   while antiFlingActive do
+                       local folder = getFolderFunc()
+                       if folder then
+                           for _, item in ipairs(folder:GetChildren()) do
+                               local isMine = false
+                               if name == "Vehicles" then
+                                   for _, seat in ipairs(item:GetDescendants()) do
+                                       if (seat:IsA("VehicleSeat") or seat:IsA("Seat")) and seat.Occupant and seat.Occupant.Parent == game.Players.LocalPlayer.Character then
+                                           isMine = true
+                                           break
+                                       end
+                                   end
+                               elseif name == "Canoes" then
+                                   local owner = item:FindFirstChild("Owner")
+                                   isMine = owner and owner.Value == game.Players.LocalPlayer
+                               elseif name == "Jets" or name == "Helis" then
+                                   isMine = item.Name == game.Players.LocalPlayer.Name
+                               end
+                               if not isMine then
+                                   table.insert(backupTables[name], item:Clone())
+                                   item:Destroy()
+                               end
+                           end
+                       end
+                       task.wait(0.03)
+                   end
+               end)
+           end
+           
+           AntiFlingLoop("Vehicles", function() return workspace:FindFirstChild("Vehicles") end)
+           AntiFlingLoop("Canoes", function()
+               local ws = workspace:FindFirstChild("WorkspaceCom")
+               return ws and ws:FindFirstChild("001_CanoeStorage")
+           end)
+           AntiFlingLoop("Jets", function()
+               local folder = workspace:FindFirstChild("WorkspaceCom")
+               if folder and folder:FindFirstChild("001_Airport") then
+                   local storage = folder["001_Airport"]:FindFirstChild("AirportHanger")
+                   return storage and storage:FindFirstChild("001_JetStorage") and storage["001_JetStorage"]:FindFirstChild("JetAirport")
+               end
+           end)
+           AntiFlingLoop("Helis", function()
+               local folder = workspace:FindFirstChild("WorkspaceCom")
+               return folder and folder:FindFirstChild("001_HeliStorage") and folder["001_HeliStorage"]:FindFirstChild("PoliceStationHeli")
+           end)
+           AntiFlingLoop("Balls", function()
+               local folder = workspace:FindFirstChild("WorkspaceCom")
+               return folder and folder:FindFirstChild("001_SoccerBalls")
+           end)
+       end
+   end
+})
+
+Tab6:AddToggle({
+   Name = "مضاد لاق قوي",
+   Default = false,
+   Callback = function(value)
+       antiLagActive = value
+       if not value then return end
+       
+       local Players = game:GetService("Players")
+       local dedupLock = {}
+       local IGNORED_PLAYER
+
+       local function marcarIgnorado(player)
+           IGNORED_PLAYER = player
+       end
+
+       local function isTargetTool(inst)
+           return inst:IsA("Tool")
+       end
+
+       local function gatherTools(player)
+           local found = {}
+           local containers = {}
+           if player.Character then table.insert(containers, player.Character) end
+           local backpack = player:FindFirstChildOfClass("Backpack")
+           if backpack then table.insert(containers, backpack) end
+           local sg = player:FindFirstChild("StarterGear")
+           if sg then table.insert(containers, sg) end
+           for _, container in ipairs(containers) do
+               for _, child in ipairs(container:GetChildren()) do
+                   if isTargetTool(child) then table.insert(found, child) end
+               end
+           end
+           return found
+       end
+
+       local function dedupePlayer(player)
+           if player == IGNORED_PLAYER then return end
+           if dedupLock[player] then return end
+           dedupLock[player] = true
+           local tools = gatherTools(player)
+           if #tools > 1 then
+               for i = 2, #tools do pcall(function() tools[i]:Destroy() end) end
+           end
+           dedupLock[player] = false
+       end
+
+       local function hookPlayer(player)
+           if not IGNORED_PLAYER then marcarIgnorado(player) end
+           task.defer(dedupePlayer, player)
+           local function setupChar(char)
+               task.delay(0.5, function() dedupePlayer(player) end)
+               char.ChildAdded:Connect(function(child)
+                   if isTargetTool(child) then task.delay(0.1, function() dedupePlayer(player) end) end
+               end)
+           end
+           if player.Character then setupChar(player.Character) end
+           player.CharacterAdded:Connect(setupChar)
+           local backpack = player:WaitForChild("Backpack", 10)
+           if backpack then
+               backpack.ChildAdded:Connect(function(child)
+                   if isTargetTool(child) then task.delay(0.1, function() dedupePlayer(player) end) end
+               end)
+           end
+           local sg = player:FindFirstChild("StarterGear") or player:WaitForChild("StarterGear", 10)
+           if sg then
+               sg.ChildAdded:Connect(function(child)
+                   if isTargetTool(child) then task.delay(0.1, function() dedupePlayer(player) end) end
+               end)
+           end
+       end
+
+       Players.PlayerAdded:Connect(hookPlayer)
+       for _, plr in ipairs(Players:GetPlayers()) do hookPlayer(plr) end
+
+       task.spawn(function()
+           while antiLagActive do
+               for _, plr in ipairs(Players:GetPlayers()) do dedupePlayer(plr) end
+               task.wait(2)
+           end
+       end)
+   end
+})
+
+Tab6:AddToggle({
+   Name = "مضاد بارت قوي",
+   Default = false,
+   Callback = function(value)
+       antiPartActive = value
+       if value then
+           partConnection = game:GetService("RunService").Heartbeat:Connect(function()
+               for _, obj in ipairs(workspace:GetDescendants()) do
+                   if obj:IsA("BasePart") then
+                       local vel = obj.Velocity
+                       if vel.Magnitude > 100 then
+                           obj.Velocity = Vector3.new(0, 0, 0)
+                           obj.RotVelocity = Vector3.new(0, 0, 0)
+                       end
+                       if obj.Position.Y > 1000 or obj.Position.Y < -1000 then
+                           if obj.CanCollide then
+                               obj.CanCollide = false
+                           end
+                       end
+                   end
+               end
+           end)
+       else
+           if partConnection then
+               partConnection:Disconnect()
+               partConnection = nil
+           end
+       end
+   end
+})
+
 TeleportTab = Window:MakeTab({"التنقلات","rbxassetid://"})
 TeleportLocations = {
 {Name="مكان النجمة {الترند}", CFrame=CFrame.new(-6, -133, 12)},
