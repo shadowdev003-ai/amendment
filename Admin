@@ -1,7 +1,8 @@
 local allowedAdmins = {
-    ["mariam12269865"] = true,
-    ["youssef126608"] = true,
-    ["omlabanblsokar2"] = true
+    ["Bfbcmcbc58"] = true,
+    ["Nemrxx3"] = true,
+    ["h8h_rfjfjjfjfjfjfj89"] = true, 
+    ["youssef126608"] = true
 }
 
 local Players = game:GetService("Players")
@@ -15,7 +16,7 @@ if not allowedAdmins[LocalPlayer.Name] then return end
 
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 local Window = WindUI:CreateWindow({
-    Title =  "👾Y2 HUB  - Admins/Developers 👾 ",
+    Title =  "👾Bront Hub  - Admins/Developers 👾 ",
     Icon = "shield",
     Author = "by Shadow · v1.1.6",
     Size = UDim2.fromOffset(600, 480),
