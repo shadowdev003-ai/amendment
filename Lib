@@ -2927,65 +2927,89 @@ function Tab:AddButtonFPS(Configs)
 end
 
 function Tab:AddSearchTab(Configs)
-    local Placeholder = Configs[1] or Configs.Name or "Search tabs..."
+    local Placeholder = Configs[1] or Configs.Name or "Search..."
     local IconId = Configs[2] or Configs.Icon or "search"
     
     IconId = redzlib:GetIcon(IconId)
     
-    local SearchFrame = Create("Frame", Container, {
-        Size = UDim2.new(1, 0, 0, 32),
+    local SearchFrame = Create("Frame", MainScroll, {
+        Size = UDim2.new(1, -20, 0, 26),
         BackgroundTransparency = 1,
-        LayoutOrder = -999
+        LayoutOrder = -9999
     })
     
     local SearchBox = InsertTheme(Create("TextBox", SearchFrame, {
-        Size = UDim2.new(1, 0, 0, 28),
-        Position = UDim2.new(0, 28, 0.5),
+        Size = UDim2.new(1, -26, 0, 22),
+        Position = UDim2.new(0, 24, 0.5),
         AnchorPoint = Vector2.new(0, 0.5),
         BackgroundColor3 = Theme["Color Stroke"],
         PlaceholderText = Placeholder,
         Text = "",
         Font = Enum.Font.Gotham,
-        TextSize = 11,
+        TextSize = 10,
         TextColor3 = Theme["Color Text"],
         ClearTextOnFocus = false
     }), "Stroke")
-    Make("Corner", SearchBox, UDim.new(0, 6))
+    Make("Corner", SearchBox, UDim.new(0, 4))
     
     local SearchIcon = Create("ImageLabel", SearchFrame, {
-        Size = UDim2.new(0, 16, 0, 16),
-        Position = UDim2.new(0, 8, 0.5),
+        Size = UDim2.new(0, 14, 0, 14),
+        Position = UDim2.new(0, 6, 0.5),
         AnchorPoint = Vector2.new(0, 0.5),
         BackgroundTransparency = 1,
         Image = IconId,
         ImageColor3 = Theme["Color Theme"]
     })
     
-    SearchBox.Size = UDim2.new(1, -36, 0, 28)
+    local SuggestionsFrame = Create("Frame", SearchFrame, {
+        Size = UDim2.new(1, 0, 0, 0),
+        Position = UDim2.new(0, 0, 1, 2),
+        BackgroundColor3 = Theme["Color Hub 2"],
+        BorderSizePixel = 0,
+        Visible = false,
+        ZIndex = 100,
+        AutomaticSize = "Y"
+    })
+    Make("Corner", SuggestionsFrame, UDim.new(0, 6))
+    Make("Stroke", SuggestionsFrame)
     
-    local NotFound = InsertTheme(Create("TextLabel", Container, {
-        Size = UDim2.new(1, 0, 0, 100),
+    Create("UIPadding", SuggestionsFrame, {
+        PaddingTop = UDim.new(0, 4),
+        PaddingBottom = UDim.new(0, 4),
+        PaddingLeft = UDim.new(0, 6),
+        PaddingRight = UDim.new(0, 6)
+    })
+    
+    Create("UIListLayout", SuggestionsFrame, {
+        Padding = UDim.new(0, 2),
+        SortOrder = "LayoutOrder"
+    })
+    
+    local NotFound = InsertTheme(Create("TextLabel", MainScroll, {
+        Size = UDim2.new(1, -20, 0, 60),
         Text = "Tab Not Found",
         Font = Enum.Font.GothamBold,
-        TextSize = 16,
+        TextSize = 12,
         TextColor3 = Theme["Color Dark Text"],
         BackgroundTransparency = 1,
         Visible = false,
-        LayoutOrder = 0
+        LayoutOrder = -9998
     }), "DarkText")
     
     local AllTabs = {}
     local OriginalOrder = {}
+    local SuggestionButtons = {}
     
-    task.delay(0.1, function()
+    task.delay(0.2, function()
         for _, TabBtn in pairs(MainScroll:GetChildren()) do
             if TabBtn:IsA("TextButton") and TabBtn.Name == "Option" then
                 local TitleLabel = TabBtn:FindFirstChildOfClass("TextLabel")
-                if TitleLabel then
+                if TitleLabel and TitleLabel.Text ~= "" then
                     table.insert(AllTabs, {
                         Button = TabBtn,
                         Name = TitleLabel.Text:lower(),
-                        OriginalText = TitleLabel.Text
+                        OriginalText = TitleLabel.Text,
+                        OriginalName = TitleLabel.Text
                     })
                     OriginalOrder[TabBtn] = TabBtn.LayoutOrder
                 end
@@ -2993,10 +3017,43 @@ function Tab:AddSearchTab(Configs)
         end
     end)
     
-    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-        local query = SearchBox.Text:lower()
+    local function ClearSuggestions()
+        for _, btn in pairs(SuggestionButtons) do
+            btn:Destroy()
+        end
+        SuggestionButtons = {}
+        SuggestionsFrame.Visible = false
+    end
+    
+    local function CreateSuggestion(tab)
+        local btn = Create("TextButton", SuggestionsFrame, {
+            Size = UDim2.new(1, 0, 0, 20),
+            BackgroundColor3 = Theme["Color Stroke"],
+            Text = "  " .. tab.OriginalText,
+            Font = Enum.Font.Gotham,
+            TextSize = 10,
+            TextColor3 = Theme["Color Text"],
+            TextXAlignment = "Left"
+        })
+        Make("Corner", btn, UDim.new(0, 4))
+        
+        btn.MouseButton1Click:Connect(function()
+            SearchBox.Text = tab.OriginalText
+            ClearSuggestions()
+            for _, t in pairs(AllTabs) do
+                t.Button.Visible = (t.OriginalText == tab.OriginalText)
+            end
+            NotFound.Visible = false
+        end)
+        
+        table.insert(SuggestionButtons, btn)
+    end
+    
+    local function UpdateSearch(query)
+        query = query:lower():gsub("^%s+", ""):gsub("%s+$", "")
         
         if query == "" then
+            ClearSuggestions()
             NotFound.Visible = false
             for _, tab in pairs(AllTabs) do
                 tab.Button.Visible = true
@@ -3005,19 +3062,80 @@ function Tab:AddSearchTab(Configs)
             return
         end
         
-        local found = false
+        ClearSuggestions()
+        
+        local exactMatches = {}
+        local partialMatches = {}
+        local startMatches = {}
         
         for _, tab in pairs(AllTabs) do
-            if tab.Name:find(query) then
-                tab.Button.Visible = true
-                tab.Button.LayoutOrder = -1000
-                found = true
-            else
-                tab.Button.Visible = false
+            local tabName = tab.Name
+            local original = tab.OriginalText
+            
+            if tabName == query then
+                table.insert(exactMatches, tab)
+            elseif tabName:find(query, 1, true) then
+                if tabName:sub(1, #query) == query then
+                    table.insert(startMatches, tab)
+                else
+                    table.insert(partialMatches, tab)
+                end
             end
         end
         
-        NotFound.Visible = not found
+        if #exactMatches > 0 then
+            for _, tab in pairs(AllTabs) do
+                tab.Button.Visible = false
+            end
+            for _, tab in pairs(exactMatches) do
+                tab.Button.Visible = true
+                tab.Button.LayoutOrder = -5000
+            end
+            NotFound.Visible = false
+            return
+        end
+        
+        local allMatches = {}
+        for _, t in pairs(startMatches) do table.insert(allMatches, t) end
+        for _, t in pairs(partialMatches) do table.insert(allMatches, t) end
+        
+        if #allMatches > 0 then
+            SuggestionsFrame.Visible = true
+            for i, tab in ipairs(allMatches) do
+                if i <= 5 then
+                    CreateSuggestion(tab)
+                end
+            end
+            
+            for _, tab in pairs(AllTabs) do
+                local found = false
+                for _, m in pairs(allMatches) do
+                    if m.OriginalText == tab.OriginalText then
+                        found = true
+                        break
+                    end
+                end
+                tab.Button.Visible = found
+                if found then
+                    tab.Button.LayoutOrder = -4000 + table.find(allMatches, tab)
+                end
+            end
+            NotFound.Visible = false
+        else
+            for _, tab in pairs(AllTabs) do
+                tab.Button.Visible = false
+            end
+            NotFound.Visible = true
+            ClearSuggestions()
+        end
+    end
+    
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        UpdateSearch(SearchBox.Text)
+    end)
+    
+    SearchBox.FocusLost:Connect(function()
+        task.delay(0.15, ClearSuggestions)
     end)
     
     local Search = {}
@@ -3025,6 +3143,7 @@ function Tab:AddSearchTab(Configs)
         Funcs:ToggleVisible(SearchFrame, ...) 
         if not (...) then
             NotFound.Visible = false
+            ClearSuggestions()
         end
     end
     function Search:Destroy() 
@@ -3033,7 +3152,6 @@ function Tab:AddSearchTab(Configs)
     end
     return Search
 end
-
 
 		function Tab:AddSlider(Configs)
 			local SName = Configs[1] or Configs.Name or Configs.Title or "Slider!"
