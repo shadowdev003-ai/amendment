@@ -1446,36 +1446,27 @@ function redzlib:MakeWindow(Configs)
 		end
 	end;LoadFile()
 	
-	
-	
-	
-	
-	
-local UISizeX, UISizeY = unpack(redzlib.Save.UISize)
-
-local MainFrame = InsertTheme(Create("ImageButton", ScreenGui, {
+	local UISizeX, UISizeY = unpack(redzlib.Save.UISize)
+	local MainFrame = InsertTheme(Create("ImageButton", ScreenGui, {
     Size = UDim2.new(0, 475, 0, 300),
-    Position = UDim2.new(0.5, -190, 0.5, -110),
+    Position = UDim2.fromScale(0.5, 0.5),
+    AnchorPoint = Vector2.new(0.5, 0.5),
     BackgroundTransparency = 1,
     Name = "Hub"
 }), "Main")
+
 
 local WindowBackground = Create("ImageLabel", MainFrame, {
     Name = "WindowBackground",
     Size = UDim2.new(1, 0, 1, 0),
     Position = UDim2.new(0, 0, 0, 0),
     BackgroundTransparency = 1,
-    Image = "rbxassetid://98233136941826", 
-    ImageTransparency = 0.1,
+    Image = "rbxassetid://83554422321074", 
+    ImageTransparency = 0.2,
     ScaleType = Enum.ScaleType.Crop,
     ZIndex = 0
 })
-
 Make("Corner", WindowBackground)
-
-
-
-
 
 Make("Gradient", MainFrame, {
     Rotation = 45
@@ -1493,189 +1484,40 @@ local DropdownHolder = Create("Folder", ScreenGui, {
 })
 
 
-
-
-local RunService = game:GetService("RunService")
-
-local GlowImage = Create("ImageLabel", MainFrame, {
-    Name = "GlowCircle",
-    Size = UDim2.fromOffset(150, 150),
-    Position = UDim2.fromScale(0.5, 0.5),
-    AnchorPoint = Vector2.new(0.5, 0.5),
-    BackgroundTransparency = 1,
-    Image = "rbxassetid://76498282033632",
-    ImageTransparency = 0,
-    ZIndex = 0
-})
-
-
-
-RunService.Heartbeat:Connect(function(deltaTime)
-    GlowImage.Rotation = GlowImage.Rotation + 90 * deltaTime -- 90 ثانيه 
-end)
-
-
-
-
-
-
-local GlowImage = Create("ImageLabel", MainFrame, {
-    Name = "TopLeftGlow",
-    Size = UDim2.fromOffset(24, 24),
-    Position = UDim2.new(0, 2, 0, 0),
-    BackgroundTransparency = 1,
-    Image = "rbxassetid://132345390907066",
-    ImageTransparency = 0,
-    ZIndex = 10
-})
-
-
-
-
-local SizeButton = Create("TextButton", MainFrame, {
-    Name = "SizeButton",
-    Size = UDim2.fromOffset(25, 25),
-    Position = UDim2.new(1, -70, 0, -6),
-    BackgroundTransparency = 1,
-    Text = "♡",
-    TextSize = 18,
-    Font = Enum.Font.GothamBold,
-    TextColor3 = Color3.fromRGB(255,255,255),
-    ZIndex = 50
-})
-
-
-local SizeMenu = Create("Frame", MainFrame, {
-    Name = "SizeMenu",
-    Size = UDim2.fromOffset(110, 130),
-    Position = UDim2.new(1, -115, 0, 30),
-    BackgroundColor3 = Color3.fromRGB(20,20,20),
-    Visible = false,
-    ZIndex = 49
-})
-
-Create("UICorner", SizeMenu, {
-    CornerRadius = UDim.new(0,8)
-})
-
-
-local function ChangeSize(x, y)
-    local TweenService = game:GetService("TweenService")
-
-    local tween = TweenService:Create(
-        MainFrame,
-        TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
-        {Size = UDim2.fromOffset(x, y)}
-    )
-
-    tween:Play()
-end
-
-
-local function CreateSizeOption(text, yPos, sizeX, sizeY)
-    local Btn = Create("TextButton", SizeMenu, {
-        Size = UDim2.new(1, -10, 0, 25),
-        Position = UDim2.new(0, 5, 0, yPos),
-        BackgroundColor3 = Color3.fromRGB(35,35,35),
-        Text = text,
-        TextSize = 12,
-        Font = Enum.Font.Gotham,
-        TextColor3 = Color3.fromRGB(255,255,255),
-        ZIndex = 51
-    })
-
-    Create("UICorner", Btn, {
-        CornerRadius = UDim.new(0,6)
-    })
-
-    Btn.MouseButton1Click:Connect(function()
-        ChangeSize(sizeX, sizeY)
-        SizeMenu.Visible = false
-    end)
-end
-
-
-CreateSizeOption("صغير", 5, 350, 200)
-CreateSizeOption("وسط", 35, 420, 250)
-CreateSizeOption("كبير", 65, 550, 320)
-CreateSizeOption("افتراضي", 95, 420, 250)
-
-
-SizeButton.MouseButton1Click:Connect(function()
-    SizeMenu.Visible = not SizeMenu.Visible
-end)
-
-
-
-
-
 	local TopBar = Create("Frame", Components, {
 		Size = UDim2.new(1, 0, 0, 28),
 		BackgroundTransparency = 1,
 		Name = "Top Bar"
 	})
 	
-  local StartTime = tick()
-
-local SubTitle = InsertTheme(Create("TextLabel", {
-    Size = UDim2.fromScale(0, 1),
-    AutomaticSize = "X",
-    AnchorPoint = Vector2.new(0, 1),
-    Position = UDim2.new(1, 5, 0.9),
-    Text = '<font family="12187370000">'..WMiniText..'</font>',
-    RichText = true,
-    TextColor3 = Theme["Color Dark Text"],
-    BackgroundTransparency = 1,
-    TextXAlignment = "Left",
-    TextYAlignment = "Bottom",
-    TextSize = 8,
-    Name = "SubTitle"
-}), "DarkText")
-
-local TimerLabel = Create("TextLabel", {
-    Size = UDim2.fromOffset(50, 12),
-    Position = UDim2.new(1, 5, 0.9),
-    AnchorPoint = Vector2.new(0, 1),
-    BackgroundTransparency = 1,
-    TextColor3 = Theme["Color Theme"],
-    Font = Enum.Font.GothamBold,
-    TextSize = 8,
-    TextXAlignment = "Left",
-    Text = "00:00:00",
-    Name = "Timer"
-})
-
-local Title = InsertTheme(Create("TextLabel", TopBar, {
-    Position = UDim2.new(0, 30, 0.5),
-    AnchorPoint = Vector2.new(0, 0.5),
-    AutomaticSize = "XY",
-    Text = '<font family="12187370000">'..WTitle..'</font>',
-    RichText = true,
-    TextXAlignment = "Left",
-    TextSize = 12,
-    TextColor3 = Theme["Color Text"],
-    BackgroundTransparency = 1,
-    Name = "Title"
-}, {
-    SubTitle,
-    TimerLabel
-}), "Text")
-
-task.spawn(function()
-    while TimerLabel and TimerLabel.Parent do
-        local e = tick() - StartTime
-        local h = math.floor(e / 3600)
-        local m = math.floor((e % 3600) / 60)
-        local s = math.floor(e % 60)
-        TimerLabel.Text = string.format("%02d:%02d:%02d", h, m, s)
-        TimerLabel.Position = UDim2.new(1, SubTitle.AbsoluteSize.X + 19, 0.9)
-        task.wait(1)
-    end
-end)
-
-
-
-
+	local Title = InsertTheme(Create("TextLabel", TopBar, {
+		Position = UDim2.new(0, 15, 0.5),
+		AnchorPoint = Vector2.new(0, 0.5),
+		AutomaticSize = "XY",
+		Text = WTitle,
+		TextXAlignment = "Left",
+		TextSize = 12,
+		TextColor3 = Theme["Color Text"],
+		BackgroundTransparency = 1,
+		Font = Enum.Font.GothamMedium,
+		Name = "Title"
+	}, {
+		InsertTheme(Create("TextLabel", {
+			Size = UDim2.fromScale(0, 1),
+			AutomaticSize = "X",
+			AnchorPoint = Vector2.new(0, 1),
+			Position = UDim2.new(1, 5, 0.9),
+			Text = WMiniText,
+			TextColor3 = Theme["Color Dark Text"],
+			BackgroundTransparency = 1,
+			TextXAlignment = "Left",
+			TextYAlignment = "Bottom",
+			TextSize = 8,
+			Font = Enum.Font.Gotham,
+			Name = "SubTitle"
+		}), "DarkText")
+	}), "Text")
+	
 	local MainScroll = InsertTheme(Create("ScrollingFrame", Components, {
 		Size = UDim2.new(0, redzlib.Save.TabSize, 1, -TopBar.Size.Y.Offset),
 		ScrollBarImageColor3 = Theme["Color Theme"],
@@ -2084,11 +1926,6 @@ end
 			end
 		end
 	end
-	
-	
-	
-	
-	
 	
 	local ContainerList = {}
 	function Window:MakeTab(paste, Configs)
@@ -3028,11 +2865,11 @@ function Tab:AddButtonFPS(Configs)
         Position = UDim2.new(1, -10, 0.5),
         AnchorPoint = Vector2.new(1, 0.5),
         BackgroundTransparency = 1,
-        Image = "rbxassetid://95967503310967"
+        Image = "rbxassetid://10709791437"
     })
     
-    local DefaultIcon = "rbxassetid://95967503310967"
-    local ClickIcon = "rbxassetid://95967503310967"
+    local DefaultIcon = "rbxassetid://10709791437"
+    local ClickIcon = "rbxassetid://10709769508"
     local Busy = false
     local RunService = game:GetService("RunService")
     local FPS = 0
@@ -3089,6 +2926,113 @@ function Tab:AddButtonFPS(Configs)
     return Button
 end
 
+function Tab:AddSearchTab(Configs)
+    local Placeholder = Configs[1] or Configs.Name or "Search tabs..."
+    local IconId = Configs[2] or Configs.Icon or "search"
+    
+    IconId = redzlib:GetIcon(IconId)
+    
+    local SearchFrame = Create("Frame", Container, {
+        Size = UDim2.new(1, 0, 0, 32),
+        BackgroundTransparency = 1,
+        LayoutOrder = -999
+    })
+    
+    local SearchBox = InsertTheme(Create("TextBox", SearchFrame, {
+        Size = UDim2.new(1, 0, 0, 28),
+        Position = UDim2.new(0, 28, 0.5),
+        AnchorPoint = Vector2.new(0, 0.5),
+        BackgroundColor3 = Theme["Color Stroke"],
+        PlaceholderText = Placeholder,
+        Text = "",
+        Font = Enum.Font.Gotham,
+        TextSize = 11,
+        TextColor3 = Theme["Color Text"],
+        ClearTextOnFocus = false
+    }), "Stroke")
+    Make("Corner", SearchBox, UDim.new(0, 6))
+    
+    local SearchIcon = Create("ImageLabel", SearchFrame, {
+        Size = UDim2.new(0, 16, 0, 16),
+        Position = UDim2.new(0, 8, 0.5),
+        AnchorPoint = Vector2.new(0, 0.5),
+        BackgroundTransparency = 1,
+        Image = IconId,
+        ImageColor3 = Theme["Color Theme"]
+    })
+    
+    SearchBox.Size = UDim2.new(1, -36, 0, 28)
+    
+    local NotFound = InsertTheme(Create("TextLabel", Container, {
+        Size = UDim2.new(1, 0, 0, 100),
+        Text = "Tab Not Found",
+        Font = Enum.Font.GothamBold,
+        TextSize = 16,
+        TextColor3 = Theme["Color Dark Text"],
+        BackgroundTransparency = 1,
+        Visible = false,
+        LayoutOrder = 0
+    }), "DarkText")
+    
+    local AllTabs = {}
+    local OriginalOrder = {}
+    
+    task.delay(0.1, function()
+        for _, TabBtn in pairs(MainScroll:GetChildren()) do
+            if TabBtn:IsA("TextButton") and TabBtn.Name == "Option" then
+                local TitleLabel = TabBtn:FindFirstChildOfClass("TextLabel")
+                if TitleLabel then
+                    table.insert(AllTabs, {
+                        Button = TabBtn,
+                        Name = TitleLabel.Text:lower(),
+                        OriginalText = TitleLabel.Text
+                    })
+                    OriginalOrder[TabBtn] = TabBtn.LayoutOrder
+                end
+            end
+        end
+    end)
+    
+    SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        local query = SearchBox.Text:lower()
+        
+        if query == "" then
+            NotFound.Visible = false
+            for _, tab in pairs(AllTabs) do
+                tab.Button.Visible = true
+                tab.Button.LayoutOrder = OriginalOrder[tab.Button] or 0
+            end
+            return
+        end
+        
+        local found = false
+        
+        for _, tab in pairs(AllTabs) do
+            if tab.Name:find(query) then
+                tab.Button.Visible = true
+                tab.Button.LayoutOrder = -1000
+                found = true
+            else
+                tab.Button.Visible = false
+            end
+        end
+        
+        NotFound.Visible = not found
+    end)
+    
+    local Search = {}
+    function Search:Visible(...) 
+        Funcs:ToggleVisible(SearchFrame, ...) 
+        if not (...) then
+            NotFound.Visible = false
+        end
+    end
+    function Search:Destroy() 
+        SearchFrame:Destroy() 
+        NotFound:Destroy()
+    end
+    return Search
+end
 
 
 		function Tab:AddSlider(Configs)
@@ -3225,15 +3169,6 @@ end
 			function Slider:Destroy() Button:Destroy() end
 			return Slider
 		end
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		function Tab:AddTextBox(Configs)
 			local TName = Configs[1] or Configs.Name or Configs.Title or "Text Box"
 			local TDesc = Configs.Desc or Configs.Description or ""
@@ -3300,188 +3235,6 @@ end
 			function TextBox:Destroy() Button:Destroy() end
 			return TextBox
 		end
-			
-			
-			
-			
-			
-			
-			
-		function Tab:AddImageUsers(Configs)
-
-    local Title = Configs.Title or "Users"
-    local Background = Configs.Background or ""
-
-    local Image1 = Configs.Image1 or ""
-    local Image2 = Configs.Image2 or ""
-    local Image3 = Configs.Image3 or ""
-
-    local Copy1 = Configs.Copy1 or ""
-    local Copy2 = Configs.Copy2 or ""
-    local Copy3 = Configs.Copy3 or ""
-
-
-    local Holder = Create("Frame", Container, {
-        Size = UDim2.new(1,0,0,220),
-        BackgroundColor3 = Color3.fromRGB(0,0,0),
-        BorderColor3 = Color3.fromRGB(170,0,255),
-        BorderSizePixel = 2
-    })
-
-
-    Create("UICorner", Holder, {
-        CornerRadius = UDim.new(0,12)
-    })
-
-
-    local BgImage = Create("ImageLabel", Holder, {
-        Size = UDim2.new(1,0,0,120),
-        BackgroundTransparency = 1,
-        Image = Background
-    })
-
-
-    Create("UICorner", BgImage, {
-        CornerRadius = UDim.new(0,12)
-    })
-
-    local function MakeUser(Pos, Img, CopyText)
-
-        local Image = Create("ImageLabel", Holder, {
-            Size = UDim2.new(0,60,0,60),
-            Position = Pos,
-            BackgroundTransparency = 1,
-            Image = Img
-        })
-
-
-        Create("UICorner", Image, {
-            CornerRadius = UDim.new(1,0)
-        })
-
-        local Button = Create("TextButton", Holder, {
-            Size = UDim2.new(0,70,0,28),
-            Position = UDim2.new(Pos.X.Scale, Pos.X.Offset-5, 0, 150),
-            BackgroundColor3 = Color3.fromRGB(120,0,200),
-            Text = "Copy",
-            Font = Enum.Font.GothamBold,
-            TextSize = 14,
-            TextColor3 = Color3.fromRGB(255,255,255)
-        })
-
-
-        Create("UICorner", Button, {
-            CornerRadius = UDim.new(0,6)
-        })
-
-        Button.MouseButton1Click:Connect(function()
-            setclipboard(CopyText)
-        end)
-
-    end
-
-
-    MakeUser(UDim2.new(0.2,-30,0,80), Image1, Copy1)
-    MakeUser(UDim2.new(0.5,-30,0,80), Image2, Copy2)
-    MakeUser(UDim2.new(0.8,-30,0,80), Image3, Copy3)
-
-end
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			function Tab:AddButton(Configs)
-
-    local BName = Configs[1] or Configs.Name or Configs.Title or "Button!"
-    local BDescription = Configs.Desc or Configs.Description or ""
-    local Callback = Funcs:GetCallback(Configs, 2)
-
-
-    local IconImage = Configs.Icon or ""
-    local IconTransparency = Configs.IconTransparency or 0
-
-    local FButton, LabelFunc = ButtonFrame(Container, BName, BDescription, UDim2.new(1, -20))
-
-
-    local LeftIcon = Create("ImageLabel", FButton, {
-        Size = UDim2.new(0, 18, 0, 18),
-        Position = UDim2.new(0, 8, 0.5),
-        AnchorPoint = Vector2.new(0, 0.5),
-        BackgroundTransparency = 1,
-        Image = IconImage,
-        ImageTransparency = IconTransparency
-    })
-
-
-    local ButtonIcon = Create("ImageLabel", FButton, {
-        Size = UDim2.new(0, 14, 0, 14),
-        Position = UDim2.new(1, -10, 0.5),
-        AnchorPoint = Vector2.new(1, 0.5),
-        BackgroundTransparency = 1,
-        Image = "rbxassetid://95967503310967"
-    })
-
-    local DefaultIcon = "rbxassetid://95967503310967"
-    local ClickIcon = "rbxassetid://95967503310967"
-    local Busy = false
-
-    FButton.Activated:Connect(function()
-        if Busy then return end
-        Busy = true
-        ButtonIcon.Image = ClickIcon
-
-        task.delay(0.5,function()
-            ButtonIcon.Image = DefaultIcon
-            Busy = false
-        end)
-
-        Funcs:FireCallback(Callback)
-    end)
-
-    local Button = {}
-
-    function Button:SetIcon(ImageId)
-        LeftIcon.Image = ImageId
-    end
-
-    function Button:SetTransparency(Value)
-        LeftIcon.ImageTransparency = Value
-    end
-
-    function Button:Destroy()
-        FButton:Destroy()
-    end
-
-    return Button
-end
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 	function Tab:AddDiscordInvite(Configs)
     local Title = Configs[1] or Configs.Name or Configs.Title or "Discord"
