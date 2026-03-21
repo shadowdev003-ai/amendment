@@ -1,0 +1,1404 @@
+
+
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t'):FireServer('RolePlayName', 'LOC4T HUB V0.4')
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPNameColor', Color3.fromRGB(100, 200, 255))
+
+local _call30 = game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t')
+
+_call30:FireServer('RolePlayBio', 'Welcome ' .. game:GetService('Players').LocalPlayer.DisplayName)
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r'):FireServer('PickingRPBioColor', Color3.fromRGB(20, 20, 20))
+
+local _46 = loadstring(game:HttpGet('https://raw.githubusercontent.com/bruton-lua-sources/library/refs/heads/main/Tista.txt'))()
+
+_46:CreateNotification({
+    Duration = 5,
+    Title = 'LOC4T HUB',
+    Content = '\u{646}\u{648}\u{631}\u{62a} \u{633}\u{643}\u{631}\u{628}\u{62a} \u{639}\u{644}\u{645}\u{648}\u{62f} \u{62a}\u{631}\u{62a}\u{627}\u{62d} \u{628}\u{633}\u{643}\u{631}\u{628}\u{62a} \u{631}\u{648}\u{62d} \u{644}\u{644}\u{627}\u{639}\u{62f}\u{627}\u{62f}\u{627}\u{62a} \u{648}\u{635}\u{63a}\u{631} \u{62d}\u{62c}\u{645} \u{627}\u{644}\u{646}\u{635}',
+})
+task.wait(5)
+_46:CreateNotification({
+    Duration = 3,
+    Title = 'LOC4T HUB',
+    Content = '\u{62a}\u{645} \u{62a}\u{641}\u{639}\u{64a}\u{644} \u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{627}\u{641}\u{643}',
+})
+task.wait(3)
+_46:CreateNotification({
+    Duration = 3,
+    Title = 'LOC4T HUB',
+    Content = '\u{627}\u{630}\u{627} \u{635}\u{627}\u{631} \u{644}\u{627}\u{642} \u{64a}\u{639}\u{646}\u{64a} \u{627}\u{646}\u{62a} \u{645}\u{641}\u{639}\u{644} \u{62a}\u{62e}\u{631}\u{64a}\u{628} \u{639}\u{644}\u{649} \u{634}\u{62e}\u{635} \u{647}\u{648} \u{628}\u{631}\u{627} \u{627}\u{644}\u{645}\u{627}\u{628}',
+})
+task.wait(3)
+_46:CreateNotification({
+    Duration = 3,
+    Title = 'LOC4T HUB',
+    Content = '\u{644}\u{628}\u{64a}\u{62a} \u{643}\u{644} \u{637}\u{644}\u{628}\u{627}\u{62a}\u{643}\u{645} \u{64a}\u{644}\u{64a} \u{62a}\u{62d}\u{62a}\u{627}\u{62c}\u{648}\u{646}\u{647}\u{627} \u{648}\u{62a}\u{645} \u{62a}\u{639}\u{62f}\u{64a}\u{644} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a}',
+})
+task.wait(3)
+_46:CreateNotification({
+    Duration = 3,
+    Title = 'LOC4T HUB',
+    Content = '\u{627}\u{639}\u{631}\u{641} \u{627}\u{644}\u{627}\u{634}\u{639}\u{627}\u{631}\u{627}\u{62a} \u{645}\u{632}\u{639}\u{62c}\u{629} \u{628}\u{633} \u{639}\u{634}\u{627}\u{646} \u{62a}\u{633}\u{62a}\u{62e}\u{62f}\u{645} \u{633}\u{643}\u{631}\u{628}\u{62a} \u{628}\u{637}\u{631}\u{64a}\u{642}\u{629} \u{62a}\u{631}\u{64a}\u{62d}\u{643}',
+})
+task.wait(5)
+_46:CreateNotification({
+    Duration = 3,
+    Title = 'LOC4T HUB',
+    Content = '\u{62a}\u{645} \u{62a}\u{62d}\u{645}\u{64a}\u{644} \u{627}\u{642}\u{648}\u{649} \u{633}\u{643}\u{631}\u{628}\u{62a} \u{639}\u{631}\u{628}\u{64a}',
+})
+task.wait(3)
+
+_46.SoundSettings = {
+    Enabled = true,
+    SoundId = 'rbxassetid://74904686799214',
+    Volume = 2,
+}
+_46.BackgroundSettings = {
+    Enabled = true,
+    Transparency = 0.2,
+    ImageId = 'rbxassetid://121170831338800',
+}
+_46.IntroSettings = {Enabled = false}
+workspace.FallenPartsDestroyHeight = -1 / 0
+
+local _call60 = _46:MakeWindow({
+    LoadText = 'LOC4T',
+    SubTitle = 'BY BRUTON',
+    Title = 'LOC4T HUB',
+    Flags = 'LOC4T_Broookhaven',
+})
+
+task.spawn(function(_63, _63_2, _63_3, _63_4, _63_5)
+    local _call65 = game:GetService('CoreGui')
+    local _call67 = game:GetService('TweenService')
+    local _call69 = _call65:WaitForChild('bruton hub with bruton library', 20)
+    local _call71 = _call69:FindFirstChild('Hub')
+
+    _call71.Size = UDim2.new(0, 560, 0, 310)
+
+    for _76, _76_2 in pairs(_call71:GetDescendants())do
+        _76_2:IsA('TextLabel')
+
+        _76_2.TextSize = 10
+        _76_2.Font = Enum.Font.SourceSansBold
+        _76_2.TextScaled = false
+        _76_2.TextWrapped = true
+    end
+
+    _call71.DescendantAdded:Connect(function(_84, _84_2, _84_3, _84_4, _84_5)
+        _84:IsA('TextLabel')
+
+        _84.TextSize = 10
+        _84.Font = Enum.Font.SourceSansBold
+        _84.TextScaled = false
+        _84.TextWrapped = true
+    end)
+    _call71:GetPropertyChangedSignal('Size'):Connect(function(_93, _93_2, _93_3)
+        _call71.Size = UDim2.new(0, 560, 0, 310)
+    end)
+
+    local _call97 = Instance.new('Frame')
+
+    _call97.Name = 'QuantumScreenBG'
+    _call97.Size = UDim2.new(10, 0, 10, 0)
+    _call97.Position = UDim2.new(-5, 0, -5, 0)
+    _call97.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    _call97.BackgroundTransparency = 0.6
+    _call97.ZIndex = -1
+    _call97.Visible = _call71.Visible
+    _call97.Parent = _call71
+
+    local _call106 = Instance.new('UIGradient')
+    local _call120 = ColorSequence.new({
+        [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 180, 255)),
+        [2] = ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 130, 255)),
+        [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 180, 255)),
+    })
+
+    _call106.Color = _call120
+    _call106.Parent = _call97
+
+    _call71:GetPropertyChangedSignal('Visible'):Connect(function(_125, _125_2, _125_3)
+        _call97.Visible = _call71.Visible
+    end)
+    task.spawn(function(_129, _129_2, _129_3, _129_4)
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        task.wait(0.02)
+
+        _call106.Rotation = (_call106.Rotation + 0.5)
+
+        error('internal 557: <25ms: infinitelooperror>')
+    end)
+
+    local _call241 = Instance.new('Frame')
+
+    _call241.Name = 'QuantumBubbleContainer'
+    _call241.Size = UDim2.new(1, 0, 1, 0)
+    _call241.BackgroundTransparency = 1
+    _call241.ClipsDescendants = true
+    _call241.ZIndex = 3
+    _call241.Parent = _call71
+
+    local _call245 = Instance.new('UICorner', _call241)
+
+    _call245.CornerRadius = UDim.new(0, 15)
+
+    task.spawn(function()
+        Color3.fromRGB(0, 255, 255)
+
+        local _call254 = Color3.fromRGB(255, 100, 255)
+
+        task.wait(0.6)
+
+        local _call256 = Instance.new('ImageLabel')
+
+        _call256.BackgroundTransparency = 1
+        _call256.Image = 'rbxassetid://241584340'
+        _call256.ImageColor3 = _call254
+        _call256.ImageTransparency = 0.4
+        _call256.Size = UDim2.new(0, 23, 0, 23)
+        _call256.Position = UDim2.new(0.6112744123966788, 0, 1, 10)
+        _call256.ZIndex = 4
+        _call256.Parent = _call241
+
+        local _call272 = _call67:Create(_call256, TweenInfo.new(4, Enum.EasingStyle.SineOut), {
+            ImageTransparency = 1,
+            Position = UDim2.new((_call256.Position.X.Scale + -0.08), 0, -0.2, 0),
+        })
+
+        _call272:Play()
+        game:GetService('Debris'):AddItem(_call256, 4)
+        task.wait(0.6)
+
+        local _call280 = Instance.new('ImageLabel')
+
+        _call280.BackgroundTransparency = 1
+        _call280.Image = 'rbxassetid://241584340'
+        _call280.ImageColor3 = _call254
+        _call280.ImageTransparency = 0.4
+
+        local _ = UDim2.new
+
+        error('internal 557: <25ms: infinitelooperror>')
+    end)
+
+    local _call284 = Instance.new('UIStroke')
+
+    _call284.Thickness = 3.5
+    _call284.Color = Color3.fromRGB(255, 255, 255)
+    _call284.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    _call284.Parent = _call71
+
+    local _call290 = Instance.new('UIGradient')
+    local _call304 = ColorSequence.new({
+        [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 180, 255)),
+        [2] = ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 130, 255)),
+        [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 180, 255)),
+    })
+
+    _call290.Color = _call304
+    _call290.Parent = _call284
+
+    task.spawn(function()
+        _call290.Rotation = (_call290.Rotation + 1)
+
+        task.wait(0.02)
+        error('internal 557: <25ms: infinitelooperror>')
+    end)
+
+    for _313, _313_2 in pairs(_call69:GetDescendants())do
+        _313_2:IsA('TextButton')
+        _313_2.Activated:Connect(function()
+            local _ = _46.SoundSettings.Enabled
+
+            error('internal 557: <25ms: infinitelooperror>')
+        end)
+    end
+
+    _call69.DescendantAdded:Connect(function(_326, _326_2, _326_3) end)
+end)
+
+local _call330 = _call60:AddMinimizeButton({
+    Button = {
+        BackgroundTransparency = 0,
+        Image = 'rbxassetid://109054965864541',
+    },
+    Corner = {
+        CornerRadius = UDim.new(0, 12),
+    },
+})
+local _Button331 = _call330.Button
+
+game:GetService('TweenService')
+_Button331.MouseEnter:Connect(function() end)
+_Button331.MouseLeave:Connect(function() end)
+_Button331.MouseButton1Down:Connect(function(_345) end)
+_Button331.MouseButton1Up:Connect(function(_349, _349_2, _349_3, _349_4) end)
+
+local _call351 = _call60:MakeTab({
+    Title = ' \u{627}\u{644}\u{62d}\u{642}\u{648}\u{642}',
+    Icon = 'rbxassetid://10723415903',
+})
+
+_call351:AddParagraph({
+    [1] = '\u{62d}\u{642}\u{648}\u{642}',
+    [2] = 'BRUTON',
+})
+_call351:AddButton({
+    Name = '\u{627}\u{646}\u{633}\u{62e} \u{62d}\u{633}\u{627}\u{628}\u{64a} \u{62a}\u{64a}\u{643}',
+    Callback = function() end,
+})
+_call351:AddButton({
+    Name = '\u{627}\u{646}\u{633}\u{62e} \u{62d}\u{633}\u{627}\u{628}\u{64a} \u{631}\u{648}\u{628}',
+    Callback = function(_359) end,
+})
+
+local _call361 = _call60:MakeTab({
+    Title = '\u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Icon = 'rbxassetid://17132521951',
+})
+
+_call361:AddSection({
+    Name = '\u{627}\u{644}\u{62a}\u{62d}\u{643}\u{645}',
+    Icon = 'rbxassetid://',
+})
+
+local _LocalPlayer370 = game:GetService('Players').LocalPlayer
+local _Character371 = _LocalPlayer370.Character
+local _call373 = _Character371:WaitForChild('Humanoid')
+
+_Character371:WaitForChild('HumanoidRootPart')
+_LocalPlayer370.CharacterAdded:Connect(function(_379, _379_2) end)
+_call361:AddSlider({
+    Min = 16,
+    Name = '\u{627}\u{644}\u{633}\u{631}\u{639}\u{629}',
+    Max = 500,
+    Callback = function(_383) end,
+    Default = _call373.WalkSpeed,
+})
+_call361:AddSlider({
+    Min = 50,
+    Name = '\u{627}\u{644}\u{642}\u{641}\u{632}',
+    Max = 500,
+    Callback = function(_387, _387_2, _387_3) end,
+    Default = _call373.JumpPower,
+})
+_call361:AddSlider({
+    Min = 10,
+    Name = '\u{627}\u{644}\u{62c}\u{627}\u{630}\u{628}\u{64a}\u{629}',
+    Max = 500,
+    Callback = function(_391, _391_2, _391_3, _391_4, _391_5, _391_6) end,
+    Default = game:GetService('Workspace').Gravity,
+})
+_call361:AddButton({
+    Name = '\u{627}\u{639}\u{627}\u{62f}\u{629} \u{627}\u{644}\u{648}\u{636}\u{639} \u{627}\u{644}\u{637}\u{628}\u{64a}\u{639}\u{64a}',
+    Callback = function(_394, _394_2) end,
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _ = workspace.Gravity
+
+_call361:AddToggle({
+    Callback = function(_403, _403_2, _403_3, _403_4, _403_5, _403_6) end,
+    Name = '\u{627}\u{633}\u{628}\u{62d}',
+    Default = false,
+})
+
+local _call407 = game:GetService('RunService')
+local _ = game:GetService('Players').LocalPlayer
+
+_call361:AddToggle({
+    Callback = function(_411) end,
+    Name = 'FLOAT',
+    Default = false,
+})
+_call361:AddToggle({
+    Callback = function(_414, _414_2) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644}/\u{627}\u{64a}\u{642}\u{627}\u{641}\n\u{627}\u{644}\u{62f}\u{648}\u{631}\u{627}\u{646}',
+    Default = false,
+})
+_call361:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62f}\u{648}\u{631}\u{627}\u{646}',
+    Max = 1000,
+    Callback = function(_417, _417_2, _417_3, _417_4, _417_5, _417_6) end,
+    Default = 50,
+})
+_call407.RenderStepped:Connect(function(_421, _421_2) end)
+_call361:AddToggle({
+    Callback = function(_424) end,
+    Name = '\u{627}\u{62e}\u{62a}\u{631}\u{627}\u{642} \u{627}\u{644}\u{62c}\u{62f}\u{631}\u{627}\u{646}',
+    Default = false,
+})
+_call407.Stepped:Connect(function(_428, _428_2, _428_3, _428_4, _428_5) end)
+_call361:AddToggle({
+    Callback = function(_431, _431_2, _431_3, _431_4, _431_5) end,
+    Name = '\u{642}\u{641}\u{632} \u{644}\u{627} \u{646}\u{647}\u{627}\u{626}\u{64a}',
+    Default = false,
+})
+game:GetService('UserInputService').JumpRequest:Connect(function(_435, _435_2) end)
+
+local _call437 = _call60:MakeTab({
+    [1] = '\u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a}',
+    [2] = 'rbxassetid://10734951847',
+})
+
+_call437:AddSection({
+    Name = '\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a} \u{627}\u{644}\u{628}\u{627}\u{646}\u{62c}',
+    Icon = 'rbxassetid://10734951847',
+})
+game:GetService('TweenService')
+game:GetService('Players').LocalPlayer.Character:WaitForChild('HumanoidRootPart')
+
+local _call451 = Instance.new('ScreenGui')
+
+_call451.Name = 'QuantumGlowUI'
+_call451.DisplayOrder = 999
+_call451.Enabled = false
+_call451.Parent = game:GetService('CoreGui')
+
+local _call455 = Instance.new('Frame')
+
+_call455.Size = UDim2.new(0, 240, 0, 80)
+_call455.Position = UDim2.new(0.5, -120, -0.2, 0)
+_call455.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+_call455.BorderSizePixel = 0
+_call455.Parent = _call451
+
+local _call463 = Instance.new('UICorner')
+
+_call463.CornerRadius = UDim.new(0, 15)
+_call463.Parent = _call455
+
+local _call467 = Instance.new('UIStroke')
+
+_call467.Thickness = 2.5
+_call467.Color = Color3.fromRGB(255, 255, 255)
+_call467.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+_call467.Parent = _call455
+
+local _call473 = Instance.new('UIGradient')
+local _call487 = ColorSequence.new({
+    [1] = ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 150, 255)),
+    [2] = ColorSequenceKeypoint.new(0.5, Color3.fromRGB(130, 0, 255)),
+    [3] = ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 150, 255)),
+})
+
+_call473.Color = _call487
+_call473.Parent = _call467
+
+local _call489 = Instance.new('TextLabel')
+
+_call489.Size = UDim2.new(1, 0, 0, 30)
+_call489.Position = UDim2.new(0, 0, 0.1, 0)
+_call489.BackgroundTransparency = 1
+_call489.Text = 'LOC4T HUB'
+_call489.TextColor3 = Color3.fromRGB(255, 255, 255)
+_call489.Font = Enum.Font.GothamBold
+_call489.TextSize = 16
+_call489.Parent = _call455
+
+local _call499 = Instance.new('TextLabel')
+
+_call499.Size = UDim2.new(1, 0, 0, 20)
+_call499.Position = UDim2.new(0, 0, 0.55, 0)
+_call499.BackgroundTransparency = 1
+_call499.Text = ' \u{645}\u{62d}\u{645}\u{64a} \u{645}\u{646} \u{627}\u{644}\u{628}\u{627}\u{646}\u{62c}'
+_call499.TextColor3 = Color3.fromRGB(255, 255, 255)
+_call499.Font = Enum.Font.GothamMedium
+_call499.TextSize = 14
+_call499.Parent = _call455
+
+task.spawn(function(_510, _510_2, _510_3, _510_4) end)
+game:GetService('RunService').Heartbeat:Connect(function(_514) end)
+_call437:AddTextBox({
+    Callback = function(_517) end,
+    TextDisappear = false,
+    Name = '\u{627}\u{648}\u{644} \u{62d}\u{631}\u{648}\u{641} \u{645}\u{646} \u{627}\u{633}\u{645} \u{627}\u{644}\u{644}\u{627}\u{639}\u{628}',
+    Default = '',
+})
+_call437:AddToggle({
+    Callback = function(_520, _520_2, _520_3, _520_4) end,
+    Name = '\u{641}\u{639}\u{644} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f} \u{639}\u{644}\u{64a}\u{647}',
+    Default = false,
+})
+_call437:AddTextBox({
+    Callback = function(_523, _523_2, _523_3, _523_4) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 1',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_526, _526_2, _526_3, _526_4, _526_5) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 2',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_529, _529_2, _529_3) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 3',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_532, _532_2, _532_3, _532_4) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 4',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_535) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 5',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_538, _538_2, _538_3) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 6',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_541, _541_2, _541_3, _541_4) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 7',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_544, _544_2, _544_3, _544_4, _544_5, _544_6) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 8',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_547, _547_2) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 9',
+    Default = '',
+})
+_call437:AddTextBox({
+    Callback = function(_550, _550_2) end,
+    TextDisappear = false,
+    Name = '\u{644}\u{627}\u{639}\u{628} 10',
+    Default = '',
+})
+_call437:AddToggle({
+    Callback = function(_553) end,
+    Name = ' \u{641}\u{639}\u{644} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f} \u{639}\u{644}\u{64a}\u{647}\u{645}',
+    Default = false,
+})
+_call437:AddSection({
+    Name = '\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a} \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734951847',
+})
+game:GetService('TweenService')
+
+local _call561 = game:GetService('ReplicatedStorage')
+local _ = game:GetService('Players').LocalPlayer
+
+_call561:WaitForChild('Remotes'):WaitForChild('ResetCharacterAppearance')
+_call437:AddDropdown({
+    Callback = function(_569, _569_2, _569_3, _569_4, _569_5) end,
+    Options = {
+        [1] = 'V1',
+        [2] = 'V2',
+        [3] = 'V3',
+    },
+    Name = '\u{646}\u{648}\u{639} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}',
+    Default = 'V1',
+})
+_call437:AddDropdown({
+    Callback = function(_572) end,
+    Options = {
+        [1] = '\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{64a}\u{633}\u{62d}\u{628}\u{643}',
+        [2] = '\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{645}\u{628}\u{627}\u{634}\u{631}\u{629}',
+    },
+    Name = '\u{637}\u{631}\u{64a}\u{642}\u{629} \u{627}\u{644}\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644}',
+    Default = '\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{64a}\u{633}\u{62d}\u{628}\u{643}',
+})
+_call437:AddToggle({
+    Callback = function(_575, _575_2, _575_3, _575_4, _575_5, _575_6) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{627}\u{646}\u{62a}\u{642}\u{627}\u{644} \u{648}\u{64a}\u{627} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}',
+    Default = false,
+})
+_call437:AddToggle({
+    Callback = function(_578) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}',
+    Default = false,
+})
+_call437:AddSection({
+    Name = '\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a} \u{627}\u{644}\u{641}\u{648}\u{64a}\u{62f}',
+    Icon = 'rbxassetid://10734951847',
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+Vector3.new(-26.09, 2.79, 6.11)
+_call437:AddDropdown({
+    Callback = function(_590, _590_2, _590_3, _590_4, _590_5, _590_6) end,
+    Options = {
+        [1] = 'V1',
+        [2] = 'V2',
+        [3] = 'V3',
+        [4] = 'V4',
+    },
+    Name = '\u{642}\u{648}\u{629} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}',
+    Default = 'V1',
+})
+_call437:AddToggle({
+    Callback = function(_593) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{627}\u{644}\u{627}\u{634}\u{639}\u{627}\u{631}\u{627}\u{62a}',
+    Default = false,
+})
+_call437:AddToggle({
+    Callback = function(_596, _596_2) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{641}\u{648}\u{64a}\u{62f}',
+    Default = false,
+})
+_call437:AddSection({
+    Name = '\u{628}\u{627}\u{642}\u{64a} \u{627}\u{644}\u{645}\u{636}\u{627}\u{62f}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734951847',
+})
+game:GetService('RunService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+task.spawn(function() end)
+_call437:AddToggle({
+    Callback = function(_609) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{633}\u{643}\u{64a} \u{628}\u{648}\u{643}\u{633}',
+    Default = false,
+})
+game:GetService('VirtualUser')
+game:GetService('Players').LocalPlayer.Idled:Connect(function(_618, _618_2) end)
+_call437:AddToggle({
+    Callback = function(_621) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{641}\u{643}',
+    Default = true,
+})
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('RunService').Heartbeat:Connect(function(_630, _630_2, _630_3) end)
+_call437:AddToggle({
+    Callback = function(_633) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{643}\u{646}\u{628}\u{629}',
+    Default = false,
+})
+_call437:AddToggle({
+    Callback = function(_636, _636_2, _636_3, _636_4) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633} \u{641}\u{64a} \u{627}\u{644}\u{633}\u{644}\u{629}',
+    Default = false,
+})
+workspace.DescendantAdded:Connect(function(_640, _640_2, _640_3, _640_4, _640_5, _640_6) end)
+game:GetService('TweenService')
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('RunService').Heartbeat:Connect(function() end)
+_call437:AddToggle({
+    Callback = function(_654, _654_2, _654_3, _654_4) end,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{623}\u{637}\u{641}\u{627}\u{644} ',
+    Default = false,
+})
+_call437:AddToggle({
+    Callback = function(_657, _657_2, _657_3, _657_4, _657_5, _657_6) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{644}\u{627}\u{628}\u{648}\u{627}\u{628}',
+    Description = '',
+})
+_call437:AddToggle({
+    Callback = function(_660, _660_2, _660_3, _660_4, _660_5, _660_6) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{644}\u{627}\u{642} \u{627}\u{644}\u{627}\u{62f}\u{648}\u{627}\u{62a}',
+    Description = '',
+})
+_call437:AddToggle({
+    Callback = function(_663, _663_2, _663_3, _663_4, _663_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{62c}\u{644}\u{648}\u{633}',
+    Description = '',
+})
+
+local _ = game:GetService('Players').LocalPlayer
+
+game:GetService('Workspace')
+game:GetService('RunService')
+task.spawn(function(_674, _674_2) end)
+_call437:AddToggle({
+    Callback = function(_676, _676_2, _676_3, _676_4, _676_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} ',
+    Description = '',
+})
+task.spawn(function(_679, _679_2) end)
+_call437:AddToggle({
+    Callback = function(_682, _682_2, _682_3, _682_4, _682_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{642}\u{627}\u{631}\u{628} \u{627}\u{644}\u{635}\u{64a}\u{62f}',
+    Description = '',
+})
+task.spawn(function(_686, _686_2) end)
+_call437:AddToggle({
+    Callback = function(_688, _688_2, _688_3, _688_4, _688_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{637}\u{627}\u{626}\u{631}\u{629}',
+    Description = '',
+})
+task.spawn(function(_692, _692_2) end)
+_call437:AddToggle({
+    Callback = function(_694, _694_2, _694_3, _694_4, _694_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{647}\u{64a}\u{644}\u{64a}\u{643}\u{648}\u{628}\u{62a}\u{631}',
+    Description = '',
+})
+task.spawn(function(_698, _698_2) end)
+_call437:AddToggle({
+    Callback = function(_700, _700_2, _700_3, _700_4, _700_5) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{641}\u{644}\u{646}\u{642} \u{643}\u{631}\u{629}',
+    Description = '',
+})
+_call437:AddToggle({
+    Callback = function(_703, _703_2, _703_3, _703_4, _703_5, _703_6) end,
+    Default = false,
+    Name = '\u{645}\u{636}\u{627}\u{62f} \u{627}\u{632}\u{639}\u{627}\u{62c} \u{627}\u{644}\u{635}\u{648}\u{62a}',
+    Description = '',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call437:AddButton({
+    Name = '\u{627}\u{636}\u{63a}\u{637} \u{627}\u{647}\u{646}\u{627} \u{645}\u{646} \u{64a}\u{641}\u{639}\u{644}\u{648} \u{639}\u{644}\u{64a}\u{643} \u{631}\u{648}\u{628}\u{648}\u{62a}\u{627}\u{62a} \u{627}\u{648} \u{627}\u{64a} \u{634}\u{64a} \u{64a}\u{62e}\u{635} \u{627}\u{62f}\u{648}\u{627}\u{62a} \u{627}\u{644}\u{635}\u{646}\u{62f}\u{648}\u{642}',
+    Callback = function(_711, _711_2) end,
+})
+
+local _call713 = _call60:MakeTab({
+    Title = '\u{627}\u{644}\u{627}\u{633}\u{645}\u{627}\u{621}',
+    Icon = 'rbxassetid://10723425539',
+})
+
+_call713:AddSection({
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{633}\u{645} \u{648}\u{627}\u{644}\u{628}\u{627}\u{628}\u{648}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r')
+game:GetService('RunService').RenderStepped:Connect(function(_727, _727_2, _727_3, _727_4) end)
+_call713:AddSlider({
+    Min = 0.1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{627}\u{644}\u{62a}\u{644}\u{648}\u{64a}\u{646}',
+    Max = 1000,
+    Increment = 0.1,
+    Callback = function(_730) end,
+    Default = 2,
+})
+_call713:AddToggle({
+    Callback = function(_733, _733_2, _733_3, _733_4, _733_5, _733_6) end,
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{627}\u{633}\u{645}',
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_736) end,
+    Name = '\u{62a}\u{644}\u{648}\u{64a}\u{646} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648}',
+    Default = false,
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eColo1r')
+game:GetService('RunService').RenderStepped:Connect(function(_748, _748_2, _748_3, _748_4) end)
+_call713:AddToggle({
+    Callback = function(_751, _751_2, _751_3, _751_4, _751_5, _751_6) end,
+    Name = "[._.]  <font color='#FFFFFF'>\u{627}\u{628}\u{64a}\u{636}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_754, _754_2, _754_3, _754_4, _754_5, _754_6) end,
+    Name = "[._.]  <font color='#FF0000'>\u{627}\u{62d}\u{645}\u{631}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_757, _757_2, _757_3, _757_4) end,
+    Name = "[._.]  <font color='#0000FF'>\u{627}\u{632}\u{631}\u{642}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_760, _760_2, _760_3, _760_4, _760_5, _760_6) end,
+    Name = "[._.]  <font color='#00FF00'>\u{627}\u{62e}\u{636}\u{631}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_763, _763_2, _763_3) end,
+    Name = "[._.]  <font color='#FFFF00'>\u{627}\u{635}\u{641}\u{631}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_766, _766_2, _766_3, _766_4, _766_5) end,
+    Name = "[._.]  <font color='#00FFFF'>\u{627}\u{632}\u{631}\u{642} \u{628}\u{627}\u{631}\u{62f}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_769) end,
+    Name = "[._.]  <font color='#FF00FF'>\u{648}\u{631}\u{62f}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_772, _772_2, _772_3, _772_4, _772_5, _772_6) end,
+    Name = "[._.]  <font color='#808080'>\u{631}\u{645}\u{627}\u{62f}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_775, _775_2, _775_3, _775_4) end,
+    Name = "[._.]  <font color='#FF8C00'>\u{628}\u{631}\u{62a}\u{642}\u{627}\u{644}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_778, _778_2, _778_3, _778_4) end,
+    Name = "[._.]  <font color='#800080'>\u{628}\u{646}\u{641}\u{633}\u{62c}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_781, _781_2, _781_3, _781_4) end,
+    Name = "[._.]  <font color='#32CD32'>\u{644}\u{64a}\u{645}\u{648}\u{646}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_784, _784_2, _784_3, _784_4, _784_5) end,
+    Name = "[._.]  <font color='#8B4513'>\u{628}\u{646}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_787) end,
+    Name = "[._.]  <font color='#FFD700'>\u{630}\u{647}\u{628}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_790, _790_2, _790_3, _790_4) end,
+    Name = "[._.]  <font color='#C0C0C0'>\u{641}\u{636}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_793, _793_2) end,
+    Name = "[._.]  <font color='#98FF98'>\u{646}\u{639}\u{646}\u{627}\u{639}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_796, _796_2, _796_3, _796_4, _796_5, _796_6) end,
+    Name = "[._.]  <font color='#87CEEB'>\u{633}\u{645}\u{627}\u{648}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_799, _799_2, _799_3, _799_4, _799_5) end,
+    Name = "[._.]  <font color='#DC143C'>\u{642}\u{631}\u{645}\u{632}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_802, _802_2, _802_3) end,
+    Name = "[._.]  <font color='#000080'>\u{643}\u{62d}\u{644}\u{64a}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_805, _805_2) end,
+    Name = "[._.]  <font color='#F5F5DC'>\u{628}\u{64a}\u{62c}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_808, _808_2, _808_3, _808_4) end,
+    Name = "[._.]  <font color='#EE82EE'>\u{628}\u{646}\u{641}\u{633}\u{62c}\u{64a} \u{641}\u{627}\u{62a}\u{62d}</font>  \u{627}\u{633}\u{648}\u{62f} ",
+    Default = false,
+})
+_call713:AddSection({
+    Name = '\u{632}\u{62e}\u{631}\u{641}\u{629} \u{627}\u{644}\u{627}\u{633}\u{645} \u{648}\u{627}\u{644}\u{628}\u{627}\u{628}\u{648}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage'):WaitForChild('RE'):WaitForChild('1RPNam1eTex1t')
+_call713:AddTextBox({
+    Callback = function(_819, _819_2) end,
+    PlaceholderText = '',
+    Name = '\u{627}\u{643}\u{62a}\u{628} \u{634}\u{62a}\u{631}\u{64a}\u{62f} \u{641}\u{64a} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648} \u{647}\u{646}\u{627}',
+    Description = '',
+})
+_call713:AddTextBox({
+    Callback = function(_822) end,
+    PlaceholderText = 'LOC4T',
+    Name = '\u{627}\u{643}\u{62a}\u{628} \u{634}\u{62a}\u{631}\u{64a}\u{62f} \u{641}\u{64a} \u{627}\u{644}\u{627}\u{633}\u{645} \u{647}\u{646}\u{627}',
+    Description = '',
+})
+_call713:AddToggle({
+    Callback = function(_825, _825_2) end,
+    Name = '\u{632}\u{62e}\u{631}\u{641}\u{629} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648} \u{639}\u{627}\u{62f}\u{64a}',
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_828) end,
+    Name = '\u{632}\u{62e}\u{631}\u{641}\u{629} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648} \u{633}\u{631}\u{64a}\u{639}',
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_831, _831_2, _831_3, _831_4, _831_5) end,
+    Name = '\u{632}\u{62e}\u{631}\u{641}\u{629} \u{627}\u{644}\u{627}\u{633}\u{645} \u{639}\u{627}\u{62f}\u{64a}',
+    Default = false,
+})
+_call713:AddToggle({
+    Callback = function(_834) end,
+    Name = '\u{632}\u{62e}\u{631}\u{641}\u{629} \u{627}\u{644}\u{627}\u{633}\u{645} \u{633}\u{631}\u{64a}\u{639}',
+    Default = false,
+})
+_call713:AddSection({
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{627}\u{633}\u{645}\u{627}\u{621}',
+    Icon = 'rbxassetid://10734933966',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call713:AddTextBox({
+    Callback = function(_844, _844_2, _844_3, _844_4) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_847, _847_2, _847_3, _847_4) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_850) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_853, _853_2) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_856, _856_2, _856_3, _856_4, _856_5, _856_6) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_859, _859_2, _859_3, _859_4) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_862, _862_2, _862_3, _862_4) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_865, _865_2, _865_3, _865_4, _865_5) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_868) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_871, _871_2, _871_3) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call713:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{627}\u{633}\u{645}\u{627}\u{621}',
+    Max = 150,
+    Increment = 1,
+    Callback = function(_874) end,
+    Default = 5,
+})
+_call713:AddToggle({
+    Callback = function(_877) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{627}\u{633}\u{645}\u{627}\u{621}',
+    Default = false,
+})
+_call713:AddSection({
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{628}\u{627}\u{64a}\u{648}',
+    Icon = 'rbxassetid://10734933966',
+})
+_call713:AddTextBox({
+    Callback = function(_882) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_885) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_888, _888_2) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_891) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_894, _894_2, _894_3, _894_4, _894_5, _894_6) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_897) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_900, _900_2, _900_3) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_903) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_906, _906_2, _906_3) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_909, _909_2, _909_3, _909_4, _909_5) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call713:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648}',
+    Max = 150,
+    Increment = 1,
+    Callback = function(_912, _912_2, _912_3, _912_4, _912_5) end,
+    Default = 5,
+})
+_call713:AddToggle({
+    Callback = function(_915, _915_2, _915_3, _915_4) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{628}\u{627}\u{64a}\u{648}',
+    Default = false,
+})
+_call713:AddSection({
+    Name = '\u{633}\u{628}\u{627}\u{645} \u{643}\u{62a}\u{627}\u{628}\u{629} \u{639}\u{644}\u{649} \u{644}\u{648}\u{62d}\u{629}',
+    Icon = 'rbxassetid://',
+})
+game:GetService('ReplicatedStorage')
+
+local _ = game:GetService('Players').LocalPlayer
+
+_call713:AddTextBox({
+    Callback = function(_925, _925_2, _925_3, _925_4) end,
+    TextDisappear = true,
+    Name = '1',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_928, _928_2, _928_3) end,
+    TextDisappear = true,
+    Name = '2',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_931, _931_2, _931_3, _931_4, _931_5, _931_6) end,
+    TextDisappear = true,
+    Name = '3',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_934, _934_2, _934_3, _934_4) end,
+    TextDisappear = true,
+    Name = '4',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_937) end,
+    TextDisappear = true,
+    Name = '5',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_940, _940_2, _940_3, _940_4, _940_5, _940_6) end,
+    TextDisappear = true,
+    Name = '6',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_943, _943_2, _943_3) end,
+    TextDisappear = true,
+    Name = '7',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_946, _946_2) end,
+    TextDisappear = true,
+    Name = '8',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_949, _949_2, _949_3, _949_4) end,
+    TextDisappear = true,
+    Name = '9',
+    Default = '',
+})
+_call713:AddTextBox({
+    Callback = function(_952, _952_2) end,
+    TextDisappear = true,
+    Name = '10',
+    Default = '',
+})
+_call713:AddSlider({
+    Min = 1,
+    Name = '\u{633}\u{631}\u{639}\u{629} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{644}\u{648}\u{62d}\u{629}',
+    Max = 100,
+    Increment = 1,
+    Callback = function(_955, _955_2, _955_3, _955_4, _955_5) end,
+    Default = 5,
+})
+_call713:AddToggle({
+    Callback = function(_958, _958_2, _958_3, _958_4) end,
+    Name = '\u{62a}\u{641}\u{639}\u{64a}\u{644} \u{633}\u{628}\u{627}\u{645} \u{627}\u{644}\u{644}\u{648}\u{62d}\u{629}',
+    Default = false,
+})
+
+local _call960 = _call60:MakeTab({
+    [1] = '\u{627}\u{644}\u{62c}\u{648}\u{62f}\u{629}',
+    [2] = 'rbxassetid://108609244803977',
+})
+
+_call960:AddToggle({
+    Callback = function(_963) end,
+    Name = 'V1 \u{62c}\u{648}\u{62f}\u{629} ',
+    Default = false,
+})
+_call960:AddToggle({
+    Callback = function(_966) end,
+    Name = 'V2 \u{62c}\u{648}\u{62f}\u{629} ',
+    Default = false,
+})
+game:GetService('Lighting')
+game:GetService('StarterGui')
+game:GetService('MaterialService')
+
+local _ = game:GetService('Players').LocalPlayer
+local _ = _G.Ignore
+
+_G.Ignore = {}
+
+local _ = _G.Settings
+
+_G.Settings = {
+    Players = {
+        ['Ignore Me'] = true,
+        ['Ignore Tools'] = true,
+        ['Ignore Others'] = true,
+    },
+    Meshes = {
+        NoTexture = false,
+        NoMesh = false,
+        Destroy = false,
+    },
+    Other = {
+        ['Low Water Graphics'] = true,
+        ['FPS Cap'] = true,
+        ['No Camera Effects'] = true,
+        ['No Shadows'] = true,
+        ['No Clothes'] = true,
+        ClearNilInstances = false,
+        ['Low Quality Models'] = true,
+        ['Low Quality Parts'] = true,
+        ['Low Rendering'] = true,
+        ['Reset Materials'] = true,
+        ['Lower Quality MeshParts'] = true,
+    },
+    Images = {
+        Destroy = false,
+        Invisible = true,
+    },
+    MeshParts = {
+        Destroy = false,
+        LowerQuality = true,
+        NoTexture = false,
+        NoMesh = false,
+        Invisible = false,
+    },
+    TextLabels = {
+        Destroy = false,
+        LowerQuality = false,
+        Invisible = false,
+    },
+    Particles = {
+        Destroy = false,
+        Invisible = true,
+    },
+    Explosions = {
+        Destroy = false,
+        Invisible = false,
+        Smaller = true,
+    },
+}
+
+_call960:AddToggle({
+    Callback = function(_978, _978_2, _978_3) end,
+    Name = '120 FPS',
+    Default = false,
+})
+
+local _call980 = _call60:MakeTab({
+    Title = '\u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://10734952036',
+})
+
+_call980:AddSection({
+    Name = ' \u{646}\u{633}\u{62e} \u{633}\u{643}\u{646}\u{627}\u{62a}',
+    Icon = 'rbxassetid://',
+})
+_call980:AddParagraph({
+    [1] = '\u{628}\u{633}\u{628}\u{628} \u{627}\u{644}\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{62d}\u{642} \u{628}\u{631}\u{648}\u{643}\u{647}\u{627}\u{641}\u{646} \u{627}\u{644}\u{62c}\u{62f}\u{64a}\u{62f} \u{627}\u{644}\u{646}\u{633}\u{62e} \u{635}\u{627}\u{631} \u{62e}\u{631}\u{627} \u{627}\u{639}\u{630}\u{631}\u{648}\u{646}\u{64a} \u{62d}\u{62a}\u{649} \u{627}\u{644}\u{62a}\u{62d}\u{62f}\u{64a}\u{62b} \u{627}\u{644}\u{62c}\u{62f}\u{64a}\u{62f} ',
+})
+
+local _call986 = game:GetService('Players')
+
+game:GetService('ReplicatedStorage'):WaitForChild('Remotes')
+
+for _994, _994_2 in ipairs(_call986:GetPlayers())do
+    local _ = _994_2 == _call986.LocalPlayer
+
+    _994_2.Name:lower()
+    error('internal 557: <25ms: infinitelooperror>')
+end
