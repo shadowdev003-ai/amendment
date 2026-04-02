@@ -5619,3 +5619,504 @@ SkyboxTab:AddButton({
         ApplyEmmiter:InvokeServer(cleanId, selectedEffect.server)
     end
 })
+
+local hahtool = Window:MakeTab({"تخريب الادوات", ""})
+
+hahtool:AddSection("الهاله")
+
+local auraConnection
+local auraSpeed = 1
+
+local function stopAura()
+    if auraConnection then
+        auraConnection:Disconnect()
+        auraConnection = nil
+    end
+end
+
+local function startAura()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    
+    task.wait(2)
+    
+    local doors = {}
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("BasePart") and obj.Name:lower():find("door") then
+            local distance = (obj.Position - hrp.Position).Magnitude
+            if distance <= 1000 then
+                table.insert(doors, obj)
+                obj.CanCollide = false
+                obj.Anchored = false
+                obj.Massless = true
+            end
+        end
+    end
+    
+    if #doors == 0 then return end
+    
+    local angle = 0
+    local radius = 10
+    local height = 5
+    
+    auraConnection = RunService.Heartbeat:Connect(function(deltaTime)
+        if not player.Character or not hrp or not hrp.Parent then
+            stopAura()
+            return
+        end
+        
+        angle = angle + (deltaTime * auraSpeed)
+        
+        for i, door in pairs(doors) do
+            if not door or not door.Parent then continue end
+            
+            local doorAngle = angle + ((i - 1) * (math.pi * 2 / #doors))
+            
+            local offset = Vector3.new(
+                math.cos(doorAngle) * radius,
+                math.sin(angle * 2 + i) * 2 + height,
+                math.sin(doorAngle) * radius
+            )
+            
+            door.CFrame = hrp.CFrame * CFrame.new(offset) * CFrame.Angles(
+                math.sin(angle + i) * 0.5,
+                doorAngle + math.pi / 2,
+                math.cos(angle + i) * 0.5
+            )
+            
+            door.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+            door.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+        end
+    end)
+end
+
+hahtool:AddToggle({
+    "هاله ادوات",
+    false,
+    function(Value)
+        if Value then
+            startAura()
+        else
+            stopAura()
+        end
+    end
+})
+
+hahtool:AddSlider({
+    "سرعه الهاله",
+    1,
+    100,
+    1,
+    1,
+    function(Value)
+        auraSpeed = Value
+    end
+})
+
+hahtool:AddSection("هاله علي شكل Tornado")
+
+local tornadoConnection
+local tornadoSpeed = 1
+
+local function stopTornado()
+    if tornadoConnection then
+        tornadoConnection:Disconnect()
+        tornadoConnection = nil
+    end
+end
+
+local function startTornado()
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+    
+    local player = Players.LocalPlayer
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    
+    task.wait(2)
+    
+    local tools = {}
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("Tool") or obj:IsA("Model") and (obj.Name:lower():find("tool") or obj.Name:lower():find("weapon") or obj.Name:lower():find("sword") or obj.Name:lower():find("gun")) then
+            table.insert(tools, obj)
+        elseif obj:IsA("BasePart") and (obj.Name:lower():find("tool") or obj.Name:lower():find("weapon") or obj.Name:lower():find("sword") or obj.Name:lower():find("gun") or obj.Name:lower():find("item")) then
+            table.insert(tools, obj)
+        end
+    end
+    
+    for _, otherPlayer in pairs(Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character then
+            for _, obj in pairs(otherPlayer.Character:GetDescendants()) do
+                if obj:IsA("Tool") then
+                    table.insert(tools, obj)
+                end
+            end
+            if otherPlayer:FindFirstChild("Backpack") then
+                for _, tool in pairs(otherPlayer.Backpack:GetDescendants()) do
+                    if tool:IsA("Tool") then
+                        table.insert(tools, tool)
+                    end
+                end
+            end
+        end
+    end
+    
+    for _, tool in pairs(tools) do
+        if tool:IsA("BasePart") then
+            tool.CanCollide = false
+            tool.Anchored = false
+            tool.Massless = true
+        elseif tool:IsA("Model") and tool.PrimaryPart then
+            tool.PrimaryPart.CanCollide = false
+            tool.PrimaryPart.Anchored = false
+            tool.PrimaryPart.Massless = true
+            for _, part in pairs(tool:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                    part.Massless = true
+                end
+            end
+        elseif tool:IsA("Tool") and tool:FindFirstChild("Handle") then
+            tool.Handle.CanCollide = false
+            tool.Handle.Anchored = false
+            tool.Handle.Massless = true
+            for _, part in pairs(tool:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                    part.Massless = true
+                end
+            end
+        end
+    end
+    
+    if #tools == 0 then return end
+    
+    local angle = 0
+    local height = 0
+    
+    tornadoConnection = RunService.Heartbeat:Connect(function(deltaTime)
+        if not player.Character or not hrp or not hrp.Parent then
+            stopTornado()
+            return
+        end
+        
+        angle = angle + (deltaTime * tornadoSpeed)
+        height = height + deltaTime
+        
+        for i, tool in pairs(tools) do
+            if not tool or not tool.Parent then continue end
+            
+            local toolHeight = ((i * 2) + (math.sin(height + i) * 3)) % 50
+            local toolRadius = 8 + (toolHeight * 0.3)
+            local toolAngle = angle + ((i * 0.5) % (math.pi * 2))
+            
+            local offset = Vector3.new(
+                math.cos(toolAngle) * toolRadius,
+                toolHeight,
+                math.sin(toolAngle) * toolRadius
+            )
+            
+            local rotation = CFrame.Angles(
+                height * 2 + i,
+                toolAngle + math.pi / 2,
+                height + i
+            )
+            
+            if tool:IsA("BasePart") then
+                tool.CFrame = hrp.CFrame * CFrame.new(offset) * rotation
+                tool.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                tool.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+            elseif tool:IsA("Model") and tool.PrimaryPart then
+                tool:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(offset) * rotation)
+                tool.PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                tool.PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+            elseif tool:IsA("Tool") and tool:FindFirstChild("Handle") then
+                tool.Handle.CFrame = hrp.CFrame * CFrame.new(offset) * rotation
+                tool.Handle.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                tool.Handle.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+            end
+        end
+    end)
+end
+
+hahtool:AddToggle({
+    "تشغيل هاله ال Tornado",
+    false,
+    function(Value)
+        if Value then
+            startTornado()
+        else
+            stopTornado()
+        end
+    end
+})
+
+hahtool:AddSlider({
+    "سرعه هاله ال Tornado",
+    1,
+    100,
+    1,
+    1,
+    function(Value)
+        tornadoSpeed = Value
+    end
+})
+
+hahtool:AddSection("هاله علي الاعبين")
+
+local selectedPlayer = nil
+local playerAuraConnection
+local playerTornadoConnection
+local playerAuraSpeed = 1
+local playerTornadoSpeed = 1
+local protectedPlayer = "youssef126608"
+
+local function getPlayerNames()
+    local names = {}
+    for _, p in pairs(game:GetService("Players"):GetPlayers()) do
+        if p ~= game:GetService("Players").LocalPlayer then
+            table.insert(names, p.Name)
+        end
+    end
+    return names
+end
+
+local playerDropdown = hahtool:AddDropdown({
+    "اختار لاعب",
+    getPlayerNames(),
+    "",
+    function(Value)
+        selectedPlayer = game:GetService("Players"):FindFirstChild(Value)
+    end
+})
+
+task.spawn(function()
+    while task.wait(2) do
+        if playerDropdown and playerDropdown.Set then
+            playerDropdown:Set(getPlayerNames(), true)
+        end
+    end
+end)
+
+hahtool:AddToggle({
+    "هاله ادوات علي الاعب",
+    false,
+    function(Value)
+        if Value then
+            if not selectedPlayer or not selectedPlayer.Character then return end
+            
+            if selectedPlayer.Name == protectedPlayer then
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "حماية",
+                    Text = "ما تقدر تفعل اي شي علي المطور",
+                    Duration = 5
+                })
+                return
+            end
+            
+            local RunService = game:GetService("RunService")
+            local targetHRP = selectedPlayer.Character:WaitForChild("HumanoidRootPart")
+            
+            local doors = {}
+            for _, obj in pairs(workspace:GetDescendants()) do
+                if obj:IsA("BasePart") and obj.Name:lower():find("door") then
+                    local distance = (obj.Position - targetHRP.Position).Magnitude
+                    if distance <= 1000 then
+                        table.insert(doors, obj)
+                        obj.CanCollide = false
+                        obj.Anchored = false
+                        obj.Massless = true
+                    end
+                end
+            end
+            
+            if #doors == 0 then return end
+            
+            local angle = 0
+            local radius = 10
+            local height = 5
+            
+            playerAuraConnection = RunService.Heartbeat:Connect(function(deltaTime)
+                if not selectedPlayer or not selectedPlayer.Character or not targetHRP or not targetHRP.Parent then
+                    if playerAuraConnection then
+                        playerAuraConnection:Disconnect()
+                        playerAuraConnection = nil
+                    end
+                    return
+                end
+                
+                angle = angle + (deltaTime * playerAuraSpeed)
+                
+                for i, door in pairs(doors) do
+                    if not door or not door.Parent then continue end
+                    
+                    local doorAngle = angle + ((i - 1) * (math.pi * 2 / #doors))
+                    
+                    local offset = Vector3.new(
+                        math.cos(doorAngle) * radius,
+                        math.sin(angle * 2 + i) * 2 + height,
+                        math.sin(doorAngle) * radius
+                    )
+                    
+                    door.CFrame = targetHRP.CFrame * CFrame.new(offset) * CFrame.Angles(
+                        math.sin(angle + i) * 0.5,
+                        doorAngle + math.pi / 2,
+                        math.cos(angle + i) * 0.5
+                    )
+                    
+                    door.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                    door.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                end
+            end)
+        else
+            if playerAuraConnection then
+                playerAuraConnection:Disconnect()
+                playerAuraConnection = nil
+            end
+        end
+    end
+})
+
+hahtool:AddToggle({
+    "هاله Tornado علي الاعب",
+    false,
+    function(Value)
+        if Value then
+            if not selectedPlayer or not selectedPlayer.Character then return end
+            
+            if selectedPlayer.Name == protectedPlayer then
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "حماية",
+                    Text = "ما تقدر تفعل اي شي علي المطور",
+                    Duration = 5
+                })
+                return
+            end
+            
+            local RunService = game:GetService("RunService")
+            local targetHRP = selectedPlayer.Character:WaitForChild("HumanoidRootPart")
+            
+            local tools = {}
+            for _, obj in pairs(workspace:GetDescendants()) do
+                if obj:IsA("Tool") or obj:IsA("Model") and (obj.Name:lower():find("tool") or obj.Name:lower():find("weapon") or obj.Name:lower():find("sword") or obj.Name:lower():find("gun")) then
+                    table.insert(tools, obj)
+                elseif obj:IsA("BasePart") and (obj.Name:lower():find("tool") or obj.Name:lower():find("weapon") or obj.Name:lower():find("sword") or obj.Name:lower():find("gun") or obj.Name:lower():find("item")) then
+                    table.insert(tools, obj)
+                end
+            end
+            
+            for _, tool in pairs(tools) do
+                if tool:IsA("BasePart") then
+                    tool.CanCollide = false
+                    tool.Anchored = false
+                    tool.Massless = true
+                elseif tool:IsA("Model") and tool.PrimaryPart then
+                    tool.PrimaryPart.CanCollide = false
+                    tool.PrimaryPart.Anchored = false
+                    tool.PrimaryPart.Massless = true
+                    for _, part in pairs(tool:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                            part.Massless = true
+                        end
+                    end
+                elseif tool:IsA("Tool") and tool:FindFirstChild("Handle") then
+                    tool.Handle.CanCollide = false
+                    tool.Handle.Anchored = false
+                    tool.Handle.Massless = true
+                    for _, part in pairs(tool:GetDescendants()) do
+                        if part:IsA("BasePart") then
+                            part.CanCollide = false
+                            part.Massless = true
+                        end
+                    end
+                end
+            end
+            
+            if #tools == 0 then return end
+            
+            local angle = 0
+            local height = 0
+            
+            playerTornadoConnection = RunService.Heartbeat:Connect(function(deltaTime)
+                if not selectedPlayer or not selectedPlayer.Character or not targetHRP or not targetHRP.Parent then
+                    if playerTornadoConnection then
+                        playerTornadoConnection:Disconnect()
+                        playerTornadoConnection = nil
+                    end
+                    return
+                end
+                
+                angle = angle + (deltaTime * playerTornadoSpeed)
+                height = height + deltaTime
+                
+                for i, tool in pairs(tools) do
+                    if not tool or not tool.Parent then continue end
+                    
+                    local toolHeight = ((i * 2) + (math.sin(height + i) * 3)) % 50
+                    local toolRadius = 8 + (toolHeight * 0.3)
+                    local toolAngle = angle + ((i * 0.5) % (math.pi * 2))
+                    
+                    local offset = Vector3.new(
+                        math.cos(toolAngle) * toolRadius,
+                        toolHeight,
+                        math.sin(toolAngle) * toolRadius
+                    )
+                    
+                    local rotation = CFrame.Angles(
+                        height * 2 + i,
+                        toolAngle + math.pi / 2,
+                        height + i
+                    )
+                    
+                    if tool:IsA("BasePart") then
+                        tool.CFrame = targetHRP.CFrame * CFrame.new(offset) * rotation
+                        tool.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                        tool.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                    elseif tool:IsA("Model") and tool.PrimaryPart then
+                        tool:SetPrimaryPartCFrame(targetHRP.CFrame * CFrame.new(offset) * rotation)
+                        tool.PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                        tool.PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                    elseif tool:IsA("Tool") and tool:FindFirstChild("Handle") then
+                        tool.Handle.CFrame = targetHRP.CFrame * CFrame.new(offset) * rotation
+                        tool.Handle.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                        tool.Handle.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                    end
+                end
+            end)
+        else
+            if playerTornadoConnection then
+                playerTornadoConnection:Disconnect()
+                playerTornadoConnection = nil
+            end
+        end
+    end
+})
+
+hahtool:AddSlider({
+    "سرعه هاله الاعب",
+    1,
+    100,
+    1,
+    1,
+    function(Value)
+        playerAuraSpeed = Value
+    end
+})
+
+hahtool:AddSlider({
+    "سرعه Tornado الاعب",
+    1,
+    100,
+    1,
+    1,
+    function(Value)
+        playerTornadoSpeed = Value
+    end
+})
+
+hahtool:AddSection("اسف ذا التاب صغير")
