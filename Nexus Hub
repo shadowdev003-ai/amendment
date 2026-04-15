@@ -6120,3 +6120,25 @@ hahtool:AddSlider({
 })
 
 hahtool:AddSection("اسف ذا التاب صغير")
+
+local transformationsTab = Window:MakeTab({"التحولات", ""})
+
+transformationsTab:AddSection("لازم تكون مفعل شخصيه النوب الاول")
+
+transformationsTab:AddButton({
+    "شخصيه نوب",
+    function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/shadowdev003-ai/amendment/refs/heads/main/Nob'))()
+    end
+})
+
+transformationsTab:AddButton({
+    "تحول 1",
+    function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Icalock/Server/refs/heads/main/Xester%20FD.txt", true))()
+    end
+})
+
+transformationsTab:AddSection("ملاحظه: ترا يضهر عندك فقط")
+
+transformationsTab:AddSection("اذا تريد تتحكم بكل الشخصيه استخدم كيبورد دلتا")
