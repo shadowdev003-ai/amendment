@@ -1,6 +1,6 @@
 local allowedAdmins = {
     ["suksh0_0"] = true,
-    ["youssef126608"] = true,
+    ["test"] = true,
     ["omlabanblsokar2"] = true
 }
 
